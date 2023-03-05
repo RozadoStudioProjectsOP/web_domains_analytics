@@ -16,6 +16,6 @@ class AuthorSpider(scrapy.Spider):
             'url': response.url
         }
         #If statement ensures only internal links are followed.
-        # if self.url in response.url:
-        #     yield from response.follow_all(css='body a', callback=self.parse)
+        if self.url in response.url:
+            yield from response.follow_all(css='body a', callback=self.parse)
         
