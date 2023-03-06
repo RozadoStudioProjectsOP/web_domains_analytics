@@ -11,9 +11,9 @@ class AuthorSpider(scrapy.Spider):
         yield scrapy.Request('https://' + self.url)
 
     def parse(self, response):
-        #Outputs list of links to .json
+        #Outputs entire body as text.
         yield{            
-            'url': response.url
+            'text': response.css('body *::text').getall(),
         }
         #If statement ensures only internal links are followed.
         if self.url in response.url:
