@@ -1,9 +1,9 @@
 import './App.css';
-import WordCloud from './components/WordCloud';
+import Main from './components/Main';
 
 function App() {
   return (
-    <WordCloud></WordCloud>
+    <Main></Main>
   );
 }
 
