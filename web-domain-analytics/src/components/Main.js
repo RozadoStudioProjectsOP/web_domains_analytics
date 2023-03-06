@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
+import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles({
     main: {
@@ -10,7 +11,7 @@ const useStyles = createUseStyles({
         flexDirection: 'column'
     },
     buttons: {
-        "& > Button": {
+        "& > a": {
             margin: 10,
         }
     }
@@ -23,8 +24,8 @@ const Main = () => {
     <div className={classes.main}>
         <h1>Web Domain Analytics</h1>
         <div className={classes.buttons}>
-            <Button>Login</Button>
-            <Button>Register</Button>
+            <Link to="/login" style={{ textDecoration: 'none' }}><Button>Login</Button></Link>
+            <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
         </div>
     </div>
   )
