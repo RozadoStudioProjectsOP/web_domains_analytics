@@ -1,16 +1,45 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react';
 import { Alert, Button, Form, FormGroup, Input } from 'reactstrap'
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+    main: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        height: '100vh',
+        '& > form': {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            border: "2px solid black",
+            padding: 20,
+            borderRadius: 5,
+            '& > div': {
+                display: 'flex',
+                flexDirection: 'column',
+                margin: 20,
+                "& > input": {
+                    margin: 10
+                }
+            }
+        }
+    },
+  })
 
 const Register = () => {
   const dataRef = useRef()
+  const classes = useStyles();  
 
   const handleSubmit = () => {
-
+    
   } 
 
   return (
-    <div>
+    <div className={classes.main}>
         <h1>Register</h1>
         <Form onSubmit={handleSubmit}>
             <FormGroup>
