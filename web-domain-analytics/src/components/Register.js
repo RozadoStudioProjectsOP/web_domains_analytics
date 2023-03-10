@@ -35,14 +35,16 @@ const useStyles = createUseStyles({
 const Register = () => {
   const emailRef = useRef();
   const passRef = useRef();
+  const nameRef = useRef();
   const classes = useStyles();  
 
-  const registerUser = async (email, password) => {
+  const registerUser = async (name, email, password) => {
+    console.log(name, email, password)
     try {
-        const res = await axios.post(`http://localhost:3000/auth/register`, {
-            username: "name",
+        const res = await axios.post(`${BASE_URL}/auth/register`, {
+            username: name,
             email: email,
-            password: password
+            password: password,
         })
         if (res.status === 201){
             console.log(`Register successful. Email: ${email}`)
@@ -50,13 +52,13 @@ const Register = () => {
             console.log("Error")
         }
     } catch (error) {
-        console.log(error)
+        console.error(error.response.data)
       }
   }
 
   const submitHandler = (e) => {
     e.preventDefault()
-    registerUser(emailRef.current.value, passRef.current.value)
+    registerUser(nameRef.current.value, emailRef.current.value, passRef.current.value)
   } 
 
   return (
@@ -64,6 +66,12 @@ const Register = () => {
         <h1>Register</h1>
         <form onSubmit={submitHandler}>
             <div>
+                <input
+                    type='name'
+                    placeholder='name' 
+                    ref={nameRef}
+                    required
+                />
                 <input
                     type='email'
                     placeholder='E-mail' 
