@@ -2,7 +2,8 @@ import React from 'react'
 import { useRef, useState, useEffect } from 'react';
 import { Alert, Button, Form, FormGroup, Input } from 'reactstrap'
 import { createUseStyles } from "react-jss";
-
+import axios from 'axios';
+import { BASE_URL } from '../utils/base_url';
 const useStyles = createUseStyles({
     main: {
         display: 'flex',
@@ -31,32 +32,60 @@ const useStyles = createUseStyles({
   })
 
 const Login = () => {
-  const dataRef = useRef()
+  const emailRef = useRef();
+  const passRef = useRef();
+  const nameRef = useRef();
   const classes = useStyles();  
-  const handleSubmit = () => {
 
+  const loginUser = async (name, email, password) => {
+    console.log(name, email, password)
+    try {
+        const res = await axios.post(`${BASE_URL}/auth/login`, {
+            username: name,
+            email: email,
+            password: password,
+        })
+        if (res.status === 201){
+            console.log(`Login successful. Email: ${email}`)
+        }else{
+            console.log("Error")
+        }
+    } catch (error) {
+        console.error(error.response.data)
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    loginUser(nameRef.current.value, emailRef.current.value, passRef.current.value)
   }
 
   return (
     <div className={classes.main}>
-        <Form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <h1>Login</h1>
-            <FormGroup>
-                <Input
+            <div>
+                <input
+                    type='name'
+                    placeholder='name' 
+                    ref={nameRef}
+                    required
+                />
+                <input
                     type='email'
                     placeholder='E-mail' 
-                    ref={dataRef}
+                    ref={emailRef}
                     required
                 />
-                <Input
+                <input
                     type='password'
                     placeholder='Password' 
-                    ref={dataRef}
+                    ref={passRef}
                     required
                 />
-            </FormGroup>    
+            </div>    
                 <Button>Submit</Button>
-        </Form>
+        </form>
     </div>
   )
 }
