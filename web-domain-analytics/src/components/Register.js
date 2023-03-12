@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import { BASE_URL } from '../utils/base_url';
@@ -36,10 +36,11 @@ const Register = () => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
-  const classes = useStyles();  
+  const classes = useStyles(); 
+  const [isLoading, setIsLoading] = useState(false); 
 
   const registerUser = async (name, email, password) => {
-    console.log(name, email, password)
+    setIsLoading(true);
     try {
         const res = await axios.post(`${BASE_URL}/auth/register`, {
             username: name,
@@ -58,6 +59,7 @@ const Register = () => {
             window.alert("Sorry, a user with the same e-mail already exists")
         }
     }
+    setIsLoading(false);
   }
 
   const submitHandler = (e) => {
@@ -88,6 +90,11 @@ const Register = () => {
                     ref={passRef}
                     required
                 />
+                {isLoading ? (
+                    <p>
+                        Loading...
+                    </p>
+                ) : null}
             </div>    
                 <Button>Submit</Button>
         </form>
