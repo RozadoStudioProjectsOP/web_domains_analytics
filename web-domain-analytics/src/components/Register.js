@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react';
-import { Alert, Button, Form, FormGroup, Input } from 'reactstrap'
+import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios'
@@ -52,8 +52,12 @@ const Register = () => {
             console.log("Error")
         }
     } catch (error) {
-        console.error(error.response.data)
-      }
+        console.error(error.response.data.msg)
+        const errorMessage = error.response.data.msg;
+        if (errorMessage.includes("E11000")) {
+            window.alert("Sorry, a user with the same e-mail already exists")
+        }
+    }
   }
 
   const submitHandler = (e) => {
