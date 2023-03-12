@@ -23,6 +23,8 @@ const useStyles = createUseStyles({
             '& > div': {
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 margin: 20,
                 "& > input": {
                     margin: 10
