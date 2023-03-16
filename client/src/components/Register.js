@@ -38,11 +38,19 @@ const Register = () => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
+  const repPassRef = useRef();
   const classes = useStyles(); 
   const [isLoading, setIsLoading] = useState(false); 
 
-  const registerUser = async (name, email, password) => {
+  const registerUser = async (name, email, password, repPass) => {
     setIsLoading(true);
+
+    if (password !== repPass){
+        window.alert("Password field and Repeat password field don't coincide")
+        setIsLoading(false)
+        return
+    }
+
     try {
         const res = await axios.post(`${BASE_URL}/auth/register`, {
             username: name,
@@ -66,7 +74,7 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    registerUser(nameRef.current.value, emailRef.current.value, passRef.current.value)
+    registerUser(nameRef.current.value, emailRef.current.value, passRef.current.value, repPassRef.current.value)
   } 
 
   return (
@@ -75,8 +83,8 @@ const Register = () => {
         <form onSubmit={submitHandler}>
             <div>
                 <input
-                    type='name'
-                    placeholder='name' 
+                    type='ame'
+                    placeholder='Name' 
                     ref={nameRef}
                     required
                 />
@@ -90,6 +98,12 @@ const Register = () => {
                     type='password'
                     placeholder='Password' 
                     ref={passRef}
+                    required
+                />
+                <input
+                    type='password'
+                    placeholder='Repeat password' 
+                    ref={repPassRef}
                     required
                 />
                 {isLoading ? (
