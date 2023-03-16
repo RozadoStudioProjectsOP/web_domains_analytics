@@ -46,7 +46,7 @@ const Register = () => {
     setIsLoading(true);
 
     if (password !== repPass){
-        window.alert("Password field and Repeat password field don't coincide")
+        window.alert("Error. Password field and Repeat password field must coincide")
         setIsLoading(false)
         return
     }
@@ -67,6 +67,9 @@ const Register = () => {
         const errorMessage = error.response.data.msg;
         if (errorMessage.includes("E11000")) {
             window.alert("Sorry, a user with the same e-mail already exists")
+        }
+        if (errorMessage.includes("users validation failed: password")) {
+            window.alert("Error. Password must be at least 8 characters")
         }
     }
     setIsLoading(false);
