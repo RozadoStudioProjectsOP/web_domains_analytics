@@ -1,4 +1,4 @@
-#Example command to run: scrapy crawl spider -O test.json -a url=quotes.toscrape.com
+#Crawls through all internal links of a given domain, outputs all text data.
 
 from pathlib import Path
 
