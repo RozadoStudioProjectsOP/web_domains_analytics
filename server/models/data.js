@@ -18,4 +18,4 @@ const dataSchema = new mongoose.Schema({
     }
 })
 
-export const Data = mongoose.model("Data", dataSchema);
+export default mongoose.model("data", dataSchema);
