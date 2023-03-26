@@ -47,7 +47,7 @@ const useStyles = createUseStyles({
                 borderRadius: 5,
                 cursor: 'pointer',
                 background: '#D9E4EC',
-                boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.50)",
+                boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
                 transition: "transform 50ms",
                 '&:hover': {
                     background: '#385E72',
