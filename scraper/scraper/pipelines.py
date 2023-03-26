@@ -2,24 +2,32 @@
 
 import json
 import re
-from itemadapter import ItemAdapter
+from .items import WordsItem
 
 class ScraperPipeline:
-    wordCount = {}
+
+    def __init__(self):
+        self.item = WordsItem()
+        self.item['words'] = {}
 
     #Once the spider is finished, write contents of wordCount to JSON file.
     def close_spider(self, spider):
         self.file = open('data.json', 'w')
-        line = json.dumps(self.wordCount) + "\n"
+        line = json.dumps(dict(self.item)) + "\n"
         self.file.write(line)
         self.file.close()
 
     #Updates wordCount with data extracted from spider.
     def process_item(self, item, spider):
+        #The scraper returns a list with any text from each elements on the crawled page, we first join
+        #the text together, then make it all lower case so we don't get duplicates of different cases,
+        #then split any text seperated by space into a list.
         data = ''.join(item['text']).lower().split()
         for word in data:
+            #Further process the word so that there are no special characters.
             subWord = re.sub('[^a-z]', '', word)
-            if subWord in self.wordCount:
-                self.wordCount[subWord] += 1
+            #Add the word to dictionary or increment its value.
+            if subWord in self.item['words']:
+                self.item['words'][subWord] += 1
             else:
-                self.wordCount[subWord] = 1
+                self.item['words'][subWord] = 1
