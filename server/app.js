@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 import conn from "./db/connection.js";
 import auth from "./routes/auth.js";
+import scrapy from "./routes/scrapy.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(helmet());
 
 app.use("/auth", auth)
+app.use("/scrapy", scrapy)
 
 const start = async () => {
     await conn();
