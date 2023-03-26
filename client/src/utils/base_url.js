@@ -1,1 +1,1 @@
-export const BASE_URL = "https://s5-backend.onrender.com"
+export const BASE_URL = process.env.REACT_APP_API_URL || "https://s5-backend.onrender.com"
