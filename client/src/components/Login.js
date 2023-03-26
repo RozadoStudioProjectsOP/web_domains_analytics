@@ -17,7 +17,7 @@ const useStyles = createUseStyles({
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            border: "2px solid #a6a6a6",
+            border: "2px solid #385E72",
             padding: 40,
             borderRadius: 5,
             width: '20vw',
@@ -25,7 +25,8 @@ const useStyles = createUseStyles({
             '& > h1': {
                 fontFamily: 'Gill Sans',
                 fontSize: '2rem',
-                letterSpacing: '0.3rem'
+                letterSpacing: '0.3rem',
+                color: '#191970'
             },
             '& > div': {
                 display: 'flex',
@@ -47,6 +48,7 @@ const useStyles = createUseStyles({
                 borderRadius: 5,
                 cursor: 'pointer',
                 background: '#D9E4EC',
+                fontWeight: 'bold',
                 boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
                 transition: "transform 50ms",
                 '&:hover': {
