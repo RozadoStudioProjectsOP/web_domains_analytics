@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRef } from 'react';
-import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
+
 const useStyles = createUseStyles({
     main: {
         display: 'flex',
@@ -11,20 +11,53 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         flexDirection: 'column',
         height: '100vh',
+        backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            border: "2px solid black",
-            padding: 20,
+            border: "2px solid #385E72",
+            padding: 40,
             borderRadius: 5,
+            width: '20vw',
+            background: 'white',
+            '& > h1': {
+                fontFamily: 'Gill Sans',
+                fontSize: '2rem',
+                letterSpacing: '0.3rem',
+                color: '#191970'
+            },
             '& > div': {
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 margin: 20,
+                width: '80%',
                 "& > input": {
-                    margin: 10
+                    margin: 10,
+                    padding: 15,
+                    width: "100%"
+                }
+            },
+            '& > input': {
+                width: '100%',
+                padding: '12px 20px',
+                border: 'none',
+                borderRadius: 5,
+                cursor: 'pointer',
+                background: '#D9E4EC',
+                fontWeight: 'bold',
+                boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
+                transition: "transform 50ms",
+                '&:hover': {
+                    background: '#385E72',
+                    color: 'white'
+                },
+                "&:active": {
+                    transform: "translateY(4px)",
+                    boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
                 }
             }
         }
@@ -63,7 +96,7 @@ const Login = () => {
   return (
     <div className={classes.main}>
         <form onSubmit={handleSubmit}>
-            <h1>Login</h1>
+            <h1>LOGIN</h1>
             <div>
                 <input
                     type='name'
@@ -84,7 +117,7 @@ const Login = () => {
                     required
                 />
             </div>    
-                <Button>Submit</Button>
+            <input type="submit" value="Submit"></input>
         </form>
     </div>
   )
