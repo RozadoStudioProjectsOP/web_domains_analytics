@@ -103,6 +103,7 @@ const Register = () => {
         }
     }
     setIsLoading(false);
+    window.alert("Register Successful")
   }
 
   const submitHandler = (e) => {

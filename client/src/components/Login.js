@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
@@ -69,9 +69,11 @@ const Login = () => {
   const passRef = useRef();
   const nameRef = useRef();
   const classes = useStyles();  
+  const [isLoading, setIsLoading] = useState(false); 
 
   const loginUser = async (name, email, password) => {
     console.log(name, email, password)
+    setIsLoading(true);
     try {
         const res = await axios.post(`${BASE_URL}/auth/login`, {
             username: name,
@@ -86,6 +88,8 @@ const Login = () => {
     } catch (error) {
         console.error(error.response.data)
     }
+    setIsLoading(false);
+    window.alert("Login Successful")
   }
 
   const handleSubmit = (e) => {
