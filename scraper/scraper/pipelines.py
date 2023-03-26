@@ -5,19 +5,9 @@ import re
 from .items import WordsItem
 
 class ScraperPipeline:
-
-    def __init__(self):
-        self.item = WordsItem()
-        self.item['words'] = {}
-
-    #Once the spider is finished, write contents of wordCount to JSON file.
-    def close_spider(self, spider):
-        self.file = open('data.json', 'w')
-        line = json.dumps(dict(self.item)) + "\n"
-        self.file.write(line)
-        self.file.close()
-
-    #Updates wordCount with data extracted from spider.
+    item = WordsItem()
+    item['words'] = {}
+    
     def process_item(self, item, spider):
         #The scraper returns a list with any text from each elements on the crawled page, we first join
         #the text together, then make it all lower case so we don't get duplicates of different cases,
@@ -31,3 +21,4 @@ class ScraperPipeline:
                 self.item['words'][subWord] += 1
             else:
                 self.item['words'][subWord] = 1
+        return self.item
