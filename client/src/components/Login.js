@@ -120,6 +120,11 @@ const Login = () => {
                     ref={passRef}
                     required
                 />
+                {isLoading ? (
+                    <p>
+                        Loading...
+                    </p>
+                ) : null}
             </div>    
             <input type="submit" value="Submit"></input>
         </form>
