@@ -89,6 +89,7 @@ const Register = () => {
         })
         if (res.status === 201){
             console.log(`Register successful. Email: ${email}`)
+            window.alert("Register Successful")
         }else{
             console.log("Error")
         }
@@ -103,7 +104,6 @@ const Register = () => {
         }
     }
     setIsLoading(false);
-    window.alert("Register Successful")
   }
 
   const submitHandler = (e) => {

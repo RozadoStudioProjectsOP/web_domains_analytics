@@ -82,6 +82,7 @@ const Login = () => {
         })
         if (res.status === 201){
             console.log(`Login successful. Email: ${email}`)
+            window.alert("Login Successful")
         }else{
             console.log("Error")
         }
@@ -89,7 +90,6 @@ const Login = () => {
         console.error(error.response.data)
     }
     setIsLoading(false);
-    window.alert("Login Successful")
   }
 
   const handleSubmit = (e) => {
