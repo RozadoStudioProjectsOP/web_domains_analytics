@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
+import { Navigate } from 'react-router-dom'
 
 const useStyles = createUseStyles({
     main: {
@@ -64,12 +65,13 @@ const useStyles = createUseStyles({
     },
   })
 
-const Login = () => {
+const Login = (props) => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
   const classes = useStyles();  
   const [isLoading, setIsLoading] = useState(false); 
+  const [isHome, setIsHome] = useState(false)
 
   const loginUser = async (name, email, password) => {
     console.log(name, email, password)
@@ -81,6 +83,8 @@ const Login = () => {
             password: password,
         })
         if (res.status === 201){
+            props.login(true)
+            setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
             window.alert("Login Successful")
         }else{
@@ -95,6 +99,10 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     loginUser(nameRef.current.value, emailRef.current.value, passRef.current.value)
+  }
+
+  if (isHome === true) {
+    return <Navigate to="/" />
   }
 
   return (

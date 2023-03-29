@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
+import Landing from './Landing';
 
 const useStyles = createUseStyles({
     main: {
@@ -17,10 +18,10 @@ const useStyles = createUseStyles({
     }
   })
 
-const Main = () => {
+const Main = (props) => {
     const classes = useStyles();
 
-  return (
+  return props.isLoggedIn === false ? (
     <div className={classes.main}>
         <h1>Web Domain Analytics</h1>
         <div className={classes.buttons}>
@@ -28,6 +29,8 @@ const Main = () => {
             <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
         </div>
     </div>
+  ) : (
+    <Landing></Landing>
   )
 }
 
