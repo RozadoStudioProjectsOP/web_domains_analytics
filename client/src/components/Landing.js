@@ -1,13 +1,13 @@
 import React from 'react'
-import { createUseStyles } from "react-jss";
+//import { createUseStyles } from "react-jss";
 import { useRef } from 'react';
 
-const useStyles = createUseStyles({
+// const useStyles = createUseStyles({
 
-  })
+//   })
 
 const Landing = () => {
-    const classes = useStyles();
+    //const classes = useStyles();
     const wordRef = useRef(); 
 
   return (
