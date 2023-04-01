@@ -22,7 +22,7 @@ const BasePage = () => {
     <div>
         <Routes>    
             <Route path="/" element={<Main isLoggedIn={isLoggedIn} />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Register login={login} />} />
             <Route path="/login" element={<Login login={login} />} />
         </Routes> 
     </div>

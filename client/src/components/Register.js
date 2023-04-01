@@ -2,6 +2,7 @@ import React from 'react'
 import { useRef, useState } from 'react';
 import { createUseStyles } from "react-jss";
 import { BASE_URL } from '../utils/base_url';
+import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 
 const useStyles = createUseStyles({
@@ -64,13 +65,14 @@ const useStyles = createUseStyles({
     },
   })
 
-const Register = () => {
+const Register = (props) => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
   const repPassRef = useRef();
   const classes = useStyles(); 
   const [isLoading, setIsLoading] = useState(false); 
+  const [isHome, setIsHome] = useState(false)
 
   const registerUser = async (name, email, password, repPass) => {
     setIsLoading(true);
@@ -90,6 +92,8 @@ const Register = () => {
         if (res.status === 201){
             console.log(`Register successful. Email: ${email}`)
             window.alert("Register Successful")
+            props.login(true)
+            setIsHome(true)
         }else{
             console.log("Error")
         }
@@ -110,6 +114,10 @@ const Register = () => {
     e.preventDefault()
     registerUser(nameRef.current.value, emailRef.current.value, passRef.current.value, repPassRef.current.value)
   } 
+
+  if (isHome === true) {
+    return <Navigate to="/" />
+  }
 
   return (
     <div className={classes.main}>
