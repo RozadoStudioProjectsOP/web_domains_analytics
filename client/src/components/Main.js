@@ -2,6 +2,8 @@ import React from 'react'
 import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
+import { useContext } from 'react';
+import { LoginContext } from '../contexts/login';
 import Landing from './Landing';
 
 const useStyles = createUseStyles({
@@ -20,8 +22,9 @@ const useStyles = createUseStyles({
 
 const Main = (props) => {
     const classes = useStyles();
+    const { isLoggedIn } = useContext(LoginContext);
 
-  return props.isLoggedIn === false ? (
+  return isLoggedIn === false ? (
     <div className={classes.main}>
         <h1>Web Domain Analytics</h1>
         <div className={classes.buttons}>
@@ -30,7 +33,7 @@ const Main = (props) => {
         </div>
     </div>
   ) : (
-    <Landing></Landing>
+    <Landing login={props.isLoggedIn}></Landing>
   )
 }
 

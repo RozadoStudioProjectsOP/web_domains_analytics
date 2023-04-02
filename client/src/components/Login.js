@@ -1,9 +1,10 @@
 import React from 'react'
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
 import { Navigate } from 'react-router-dom'
+import { LoginContext } from '../contexts/login';
 
 const useStyles = createUseStyles({
     main: {
@@ -72,6 +73,7 @@ const Login = (props) => {
   const classes = useStyles();  
   const [isLoading, setIsLoading] = useState(false); 
   const [isHome, setIsHome] = useState(false)
+  const { changeLogin } = useContext(LoginContext);
 
   const loginUser = async (name, email, password) => {
     console.log(name, email, password)
@@ -83,7 +85,7 @@ const Login = (props) => {
             password: password,
         })
         if (res.status === 201){
-            props.login(true)
+            changeLogin(true)
             setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
             window.alert("Login Successful")
