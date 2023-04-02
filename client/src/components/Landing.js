@@ -54,7 +54,6 @@ const Landing = () => {
 
   return (
     <>
-        <h2>Word count</h2>
         <h3>Word to count: </h3>
         <input
             type='text'
