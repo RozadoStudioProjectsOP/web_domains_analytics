@@ -16,6 +16,8 @@ const dataSchema = new mongoose.Schema({
     scrapeDate: {
         type: Date,
     }
+}, {
+    collection: 'Words'
 })
 
 export default mongoose.model("data", dataSchema);
