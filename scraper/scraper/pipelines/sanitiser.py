@@ -2,9 +2,9 @@
 
 import json
 import re
-from .items import WordsItem
+from ..items import WordsItem
 
-class ScraperPipeline:
+class SanitiserPipeline:
     item = WordsItem()
     item['words'] = {}
     
@@ -12,6 +12,8 @@ class ScraperPipeline:
         #The scraper returns a list with any text from each elements on the crawled page, we first join
         #the text together, then make it all lower case so we don't get duplicates of different cases,
         #then split any text seperated by space into a list.
+        print(item)
+        # data = ''.join(item).lower().split()
         data = ''.join(item['text']).lower().split()
         for word in data:
             #Further process the word so that there are no special characters.
