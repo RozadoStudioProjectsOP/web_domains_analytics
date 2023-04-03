@@ -1,23 +1,19 @@
 import mongoose from "mongoose";
 
-const dataSchema = new mongoose.Schema({
+const wordCloudSchema = new mongoose.Schema({
     domain: {
         type: String,
         unique: true,
         required: true,
     },
-    URL: {
-        type: String,
-        required: true,
-    },
-    text: {
-        type: String,
+    words: {
+        type: Object,
     },
     scrapeDate: {
         type: Date,
     }
 }, {
-    collection: 'Words' // specify the collection name here
+    collection: 'wordClouds' // specify the collection name here
 });
 
-export default mongoose.model("data", dataSchema);
+export default mongoose.model("wordClouds", wordCloudSchema);
