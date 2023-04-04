@@ -25,13 +25,14 @@ const Landing = (props) => {
           const res = await axios.get(`${BASE_URL}/scrapy`, {
           })
           
-          const wordObject = res.data.data[0].words
-
+          const wordObject = res.data.data[1].words
+          //console.log(wordObject)
           //Find the word that matches in DB
           for (const w in wordObject) {
+            //console.log(wordObject[w].Total)
             if (w === word) {
               setMatch(w)
-              setWordNumb(wordObject[w])
+              setWordNumb(wordObject[w].Total)
               setWordFound(true)
               return
             }
