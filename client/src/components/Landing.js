@@ -26,13 +26,13 @@ const Landing = (props) => {
           })
           
           const wordObject = res.data.data[1].words
-          //console.log(wordObject)
+        console.log(wordObject)
           //Find the word that matches in DB
           for (const w in wordObject) {
             //console.log(wordObject[w].Total)
             if (w === word) {
               setMatch(w)
-              setWordNumb(wordObject[w].Total)
+              setWordNumb(wordObject[w].Frequency)
               setWordFound(true)
               return
             }
