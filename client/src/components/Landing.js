@@ -14,7 +14,10 @@ const Landing = (props) => {
     //const classes = useStyles();
     const wordRef = useRef(); 
     const [match, setMatch] = useState()
-    const [wordNum, setWordNumb] = useState(0)
+    const [wordNum, setWordNumb] = useState({
+      total: 0,
+      frequency: 0
+    })
     const [wordFound, setWordFound] = useState()
     const [isHome, setIsHome] = useState(false)
     const { changeLogin } = useContext(LoginContext);
@@ -26,19 +29,22 @@ const Landing = (props) => {
           })
           
           const wordObject = res.data.data[1].words
-        console.log(wordObject)
+          //console.log(wordObject)
           //Find the word that matches in DB
           for (const w in wordObject) {
             //console.log(wordObject[w].Total)
             if (w === word) {
               setMatch(w)
-              setWordNumb(wordObject[w].Frequency)
+              setWordNumb({
+                total: wordObject[w].Total,
+                frequency: wordObject[w].Frequency
+              })
               setWordFound(true)
               return
             }
             setWordFound(false)
           }
-
+          
       } catch (error) {
           console.error(error.response.data)
       }
@@ -47,7 +53,10 @@ const Landing = (props) => {
 
     // Word count conditional output
     const result = wordFound === true ? (
-      <h3>{match}: {wordNum}</h3>
+      <>
+        <h3>Total: {wordNum.total}</h3>
+        <h3>Frequency: {wordNum.frequency}</h3>
+      </>
     ) : wordFound === false ? (
       <h3>Word not found</h3>
     ) : (
