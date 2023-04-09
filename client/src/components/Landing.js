@@ -13,7 +13,7 @@ import axios from 'axios';
 const Landing = (props) => {
     //const classes = useStyles();
     const wordRef = useRef(); 
-    const [match, setMatch] = useState()
+    const [setMatch] = useState()
     const [wordNum, setWordNumb] = useState({
       total: 0,
       frequency: 0
