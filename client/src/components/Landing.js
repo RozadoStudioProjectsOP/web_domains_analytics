@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from "react-jss";
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 
@@ -69,7 +69,6 @@ const useStyles = createUseStyles({
 const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
-    const [match, setMatch] = useState()
     const [wordNum, setWordNumb] = useState({
       total: 0,
       frequency: 0
@@ -84,7 +83,6 @@ const Landing = (props) => {
         //Find the word that matches in DB
         for (const w in wordObject) {
           if (w === word) {
-            setMatch(w)
               setWordNumb({
                 total: wordObject[w].Total,
                 frequency: wordObject[w].Frequency
