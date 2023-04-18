@@ -1,7 +1,11 @@
 import React from 'react'
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { createUseStyles } from "react-jss";
 import { BASE_URL } from '../utils/base_url';
+import { LoginContext } from '../contexts/login';
+import { Navigate } from 'react-router-dom'
+import NavBar from './NavBar';
+
 import axios from 'axios'
 
 const useStyles = createUseStyles({
@@ -10,7 +14,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '100vh',
+        height: '90%',
         backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
@@ -64,13 +68,15 @@ const useStyles = createUseStyles({
     },
   })
 
-const Register = () => {
+const Register = (props) => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
   const repPassRef = useRef();
   const classes = useStyles(); 
   const [isLoading, setIsLoading] = useState(false); 
+  const [isHome, setIsHome] = useState(false)
+  const { changeLogin } = useContext(LoginContext);
 
   const registerUser = async (name, email, password, repPass) => {
     setIsLoading(true);
@@ -90,6 +96,8 @@ const Register = () => {
         if (res.status === 201){
             console.log(`Register successful. Email: ${email}`)
             window.alert("Register Successful")
+            changeLogin(true)
+            setIsHome(true)
         }else{
             console.log("Error")
         }
@@ -111,7 +119,13 @@ const Register = () => {
     registerUser(nameRef.current.value, emailRef.current.value, passRef.current.value, repPassRef.current.value)
   } 
 
+  if (isHome === true) {
+    return <Navigate to="/" />
+  }
+
   return (
+    <>
+    <NavBar></NavBar>
     <div className={classes.main}>
         <form onSubmit={submitHandler}>
             <h1>REGISTER</h1>
@@ -149,6 +163,7 @@ const Register = () => {
             <input type="submit" value="Submit"></input>
         </form>
     </div>
+    </>
   )
 }
 

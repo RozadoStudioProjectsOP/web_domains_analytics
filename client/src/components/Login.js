@@ -1,8 +1,11 @@
 import React from 'react'
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
+import { Navigate } from 'react-router-dom'
+import { LoginContext } from '../contexts/login';
+import NavBar from './NavBar';
 
 const useStyles = createUseStyles({
     main: {
@@ -10,7 +13,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '100vh',
+        height: '90%',
         backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
@@ -64,12 +67,14 @@ const useStyles = createUseStyles({
     },
   })
 
-const Login = () => {
+const Login = (props) => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
   const classes = useStyles();  
   const [isLoading, setIsLoading] = useState(false); 
+  const [isHome, setIsHome] = useState(false)
+  const { changeLogin } = useContext(LoginContext);
 
   const loginUser = async (name, email, password) => {
     console.log(name, email, password)
@@ -81,6 +86,8 @@ const Login = () => {
             password: password,
         })
         if (res.status === 201){
+            changeLogin(true)
+            setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
             window.alert("Login Successful")
         }else{
@@ -97,7 +104,13 @@ const Login = () => {
     loginUser(nameRef.current.value, emailRef.current.value, passRef.current.value)
   }
 
+  if (isHome === true) {
+    return <Navigate to="/" />
+  }
+
   return (
+    <>
+    <NavBar></NavBar>
     <div className={classes.main}>
         <form onSubmit={handleSubmit}>
             <h1>LOGIN</h1>
@@ -113,13 +126,13 @@ const Login = () => {
                     placeholder='E-mail' 
                     ref={emailRef}
                     required
-                />
+                    />
                 <input
                     type='password'
                     placeholder='Password' 
                     ref={passRef}
                     required
-                />
+                    />
                 {isLoading ? (
                     <p>
                         Loading...
@@ -129,6 +142,7 @@ const Login = () => {
             <input type="submit" value="Submit"></input>
         </form>
     </div>
+    </>
   )
 }
 
