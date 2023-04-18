@@ -5,42 +5,42 @@ import { Link } from "react-router-dom";
 import { useContext } from 'react';
 import { LoginContext } from '../contexts/login';
 import Landing from './Landing';
-
-// background: rgb(2,0,36);
-// background: linear-gradient(117deg, rgba(2,0,36,1) 0%, rgba(9,121,84,1) 35%, rgba(0,212,255,1) 100%);
+import NavBar from './NavBar';
 
 const useStyles = createUseStyles({
+    page: {
+      height: '100%',
+      background: '#E9EAEC',
+    },
     main: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      background: '#E9EAEC',
-      height: '100%',
+      height: '90%',
     },
     menu: {
       display: 'flex',
-      justifyContent: 'space-evenly',
+      flexDirection: 'column',
+      justifyContent: 'center',
       alignItems: 'center',
-      width: '50vw',
-      border: '3px solid #385E72',
+      border: "2px solid #385E72",
       borderRadius: 5,
+      width: '50vw',
       padding: 90,
       background: 'white',
       "& > h1": {
         letterSpacing: 10,
         fontSize: 50,
-        wordSpacing: '80vw', 
-        marginRight: 80,
-        lineHeight: 2.3,
-        color: '#191970',
+        color: '#385E72',
         fontFamily: 'Gill Sans',
-      }
+        textDecoration: 'underline',
+        textDecorationThickness: '0.1rem',
+        textUnderlineOffset: "10px"
+      },
     },
     buttons: {
       display: 'flex',
-      flexDirection: 'column',
       alignContent: 'space-around',
-      flexWrap: 'wrap',
         "& > a": {
             "& > button": {
               width: 300,
@@ -73,17 +73,23 @@ const Main = (props) => {
     const { isLoggedIn } = useContext(LoginContext);
 
   return isLoggedIn === false ? (
+    <div className={classes.page}>
+    <NavBar></NavBar>
     <div className={classes.main}>
       <div className={classes.menu}>
-        <h1>Web Domains Analytics</h1>
-        <div className={classes.buttons}>
-            <Link to="/login" style={{ textDecoration: 'none' }}><Button>Login</Button></Link>
-            <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
-        </div>
+          <h1>Web Domains Analytics</h1>
+          <div className={classes.buttons}>
+              <Link to="/login" style={{ textDecoration: 'none' }}><Button>Login</Button></Link>
+              <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
+          </div>
       </div>
     </div>
+    </div>
   ) : (
+    <>
+    <NavBar></NavBar>
     <Landing login={props.isLoggedIn}></Landing>
+    </>
   )
 }
 

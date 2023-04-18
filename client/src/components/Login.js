@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
 import { Navigate } from 'react-router-dom'
 import { LoginContext } from '../contexts/login';
+import NavBar from './NavBar';
 
 const useStyles = createUseStyles({
     main: {
@@ -12,7 +13,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '100vh',
+        height: '90%',
         backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
@@ -108,6 +109,8 @@ const Login = (props) => {
   }
 
   return (
+    <>
+    <NavBar></NavBar>
     <div className={classes.main}>
         <form onSubmit={handleSubmit}>
             <h1>LOGIN</h1>
@@ -123,13 +126,13 @@ const Login = (props) => {
                     placeholder='E-mail' 
                     ref={emailRef}
                     required
-                />
+                    />
                 <input
                     type='password'
                     placeholder='Password' 
                     ref={passRef}
                     required
-                />
+                    />
                 {isLoading ? (
                     <p>
                         Loading...
@@ -139,6 +142,7 @@ const Login = (props) => {
             <input type="submit" value="Submit"></input>
         </form>
     </div>
+    </>
   )
 }
 

@@ -4,6 +4,7 @@ import { createUseStyles } from "react-jss";
 import { BASE_URL } from '../utils/base_url';
 import { LoginContext } from '../contexts/login';
 import { Navigate } from 'react-router-dom'
+import NavBar from './NavBar';
 
 import axios from 'axios'
 
@@ -13,7 +14,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '100vh',
+        height: '90%',
         backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
@@ -123,6 +124,8 @@ const Register = (props) => {
   }
 
   return (
+    <>
+    <NavBar></NavBar>
     <div className={classes.main}>
         <form onSubmit={submitHandler}>
             <h1>REGISTER</h1>
@@ -160,6 +163,7 @@ const Register = (props) => {
             <input type="submit" value="Submit"></input>
         </form>
     </div>
+    </>
   )
 }
 
