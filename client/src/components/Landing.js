@@ -35,7 +35,8 @@ const useStyles = createUseStyles({
   },
   wordInput: {
     padding: 15,
-    
+    fontSize: "1rem",
+    fontWeight: "bold",
   },
   button: {
     width: '10rem',
@@ -45,6 +46,7 @@ const useStyles = createUseStyles({
     cursor: 'pointer',
     background: '#D9E4EC',
     fontWeight: 'bold',
+    fontSize: "1rem",
     marginLeft: 20,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
@@ -58,7 +60,9 @@ const useStyles = createUseStyles({
     }
   },
   results: {
-    marginTop: 30
+    marginTop: 30,
+    color: '#191970',
+    fontSize: "1.2rem"
   }
   })
 
