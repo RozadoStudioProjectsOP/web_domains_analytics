@@ -1,13 +1,16 @@
 import passport from "passport";
+import dotenv from "dotenv";
 import GoogleStrategy from 'passport-google-oauth20';
 import User from "../models/user.js";
+
+dotenv.config();
 
 passport.use(
     new GoogleStrategy({
         // options for google strategy
         callbackURL: `${process.env.CALLBACK_URL}/auth/google/callback`,
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientID: `${process.env.GOOGLE_CLIENT_ID}`,
+        clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
         scope: ['profile', 'email']
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
