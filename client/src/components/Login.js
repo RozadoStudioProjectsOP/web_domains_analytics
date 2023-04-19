@@ -6,6 +6,7 @@ import { BASE_URL } from '../utils/base_url';
 import { Navigate } from 'react-router-dom'
 import { LoginContext } from '../contexts/login';
 import NavBar from './NavBar';
+import { SocialLogins } from './OAuth/Loginfunc.js';
 
 const useStyles = createUseStyles({
     main: {
@@ -140,6 +141,7 @@ const Login = (props) => {
                 ) : null}
             </div>    
             <input type="submit" value="Submit"></input>
+            <SocialLogins />
         </form>
     </div>
     </>
