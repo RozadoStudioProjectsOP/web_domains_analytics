@@ -1,14 +1,18 @@
+import bcryptjs from "bcryptjs";
 import User from "../models/user.js"
 import getTokenUserData from "../utils/getTokenUserData.js"
 import { attachCookiesToResponse } from "../utils/jwt.js"
 
 const register = async (req, res) => {
+    const { password } = req.body;
     try {
         if (req.body.role === "admin") {
             return res.status(401).json({
               msg: "Not authorized to register as an admin",
             });
         }
+        const salt = await bcryptjs.genSalt(10)
+        password = await bcryptjs.hash(password, salt)
         const user = await User.create(req.body);
         const tokenUser = getTokenUserData(user);
         return res.status(201).json({ success: true, data: tokenUser, msg: "Registered" });

@@ -5,6 +5,10 @@ import jwt from "jsonwebtoken";
 const roles = ["user", "admin"];
 
 const userSchema = new mongoose.Schema({
+    accountId: {
+        type: String,
+        required: false,
+    },
     username: {
         type: String,
         required: true,
@@ -13,13 +17,14 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
         unique: true,
     },
     password: {
         type: String,
-        required: true,
-        minlength: 8,
+    },
+    provider: {
+        type: String,
+        required: false,
     },
     role: {
         type: String,
@@ -28,23 +33,18 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-userSchema.pre("save", async function () {
-    const salt = await bcryptjs.genSalt(10)
-    this.password = await bcryptjs.hash(this.password, salt)
-  })
+userSchema.methods.comparePassword = function (password) {
+  return bcryptjs.compare(password, this.password)
+}
   
-  userSchema.methods.comparePassword = function (password) {
-    return bcryptjs.compare(password, this.password)
-  }
-  
-  userSchema.methods.createJWT = function () {
-    return jwt.sign(
-      { userId: this._id, name: this.username, role: this.role },
+userSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { userId: this._id, name: this.username, role: this.role },
       process.env.JWT_SECRET,
-      {
-        expiresIn: process.env.JWT_LIFETIME,
-      }
-    )
-  }
+    {
+      expiresIn: process.env.JWT_LIFETIME,
+    }
+  )
+}
 
 export default mongoose.model("users", userSchema);
