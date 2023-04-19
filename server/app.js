@@ -3,10 +3,12 @@ import express, { urlencoded, json } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 
 import conn from "./db/connection.js";
 import auth from "./routes/auth.js";
 import scrapy from "./routes/scrapy.js";
+import passport from "./controllers/passport.js";
 
 dotenv.config();
 
@@ -16,9 +18,20 @@ const { PORT } = process.env;
 
 app.use(urlencoded({ extended: false }));
 app.use(json());
+app.use(
+    session({
+        secret: process.env.JWT_SECRET,
+        resave: true,
+        saveUninitialized: true,
+    })
+);
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
 app.use(helmet());
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/auth", auth)
 app.use("/scrapy", scrapy)
