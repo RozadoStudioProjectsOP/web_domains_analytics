@@ -7,10 +7,12 @@ import User from "../models/user.js";
 
 dotenv.config();
 
+const CALLBACK_URL = process.env.NODE_ENV === "production" ? process.env.CALLBACK_URL_PROD : process.env.CALLBACK_URL_DEV;
+
 passport.use(
     new GoogleStrategy({
         // options for google strategy
-        callbackURL: `${process.env.CALLBACK_URL}/auth/google/callback`,
+        callbackURL: `${CALLBACK_URL}/auth/google/callback`,
         clientID: `${process.env.GOOGLE_CLIENT_ID}`,
         clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
         scope: ['profile', 'email']
@@ -42,7 +44,7 @@ passport.use(
         // options for facebook strategy
         clientID: `${process.env.FACEBOOK_CLIENT_ID}`,
         clientSecret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
-        callbackURL: `${process.env.CALLBACK_URL}/auth/facebook/callback`,
+        callbackURL: `${CALLBACK_URL}/auth/facebook/callback`,
         profileFields: ['id', 'displayName', 'emails'],
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
@@ -73,7 +75,7 @@ passport.use(
         // options for github strategy
         clientID: `${process.env.GITHUB_CLIENT_ID}`,
         clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
-        callbackURL: `${process.env.CALLBACK_URL}/auth/github/callback`,
+        callbackURL: `${CALLBACK_URL}/auth/github/callback`,
         scope: ['profile', 'user:email'],
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
