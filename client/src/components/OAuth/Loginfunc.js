@@ -1,4 +1,8 @@
 import React from "react";
+import "./Loginfunc.css"
+import googleImage from "../../assets/googleImage.png";
+import facebookImage from "../../assets/facebookImage.png";
+import githubImage from "../../assets/githubImage.png";
 import { BASE_URL } from "../../utils/base_url.js";
 
 const SocialLogins = () => {
@@ -18,15 +22,18 @@ const SocialLogins = () => {
     }
 
     return (
-        <div>
-            <div onClick={googleLogin}>
-                <p>Login With Google</p>
-            </div>
-            <div onClick={facebookLogin}>
-                <p>Login With Facebook</p>
-            </div>
-            <div onClick={githubLogin}>
-                <p>Login With Github</p>
+        <div className="socialContainer">
+            <p>Login with social media</p>
+            <div className="socials">
+                <div className="socialItem" onClick={googleLogin}>
+                    <img src={googleImage} alt="" />
+                </div>
+                <div className="socialItem" onClick={facebookLogin}>
+                    <img src={facebookImage} alt="" />
+                </div>
+                <div className="socialItem" onClick={githubLogin}>
+                    <img src={githubImage} alt="" />
+                </div>
             </div>
         </div>
     )
