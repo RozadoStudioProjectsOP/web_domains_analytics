@@ -5,6 +5,7 @@ import { BASE_URL } from '../utils/base_url';
 import { LoginContext } from '../contexts/login';
 import { Navigate } from 'react-router-dom'
 import NavBar from './NavBar';
+import { SocialLogins } from './OAuth/Loginfunc.js';
 
 import axios from 'axios'
 
@@ -161,6 +162,7 @@ const Register = (props) => {
                 ) : null}
             </div>    
             <input type="submit" value="Submit"></input>
+            <SocialLogins />
         </form>
     </div>
     </>
