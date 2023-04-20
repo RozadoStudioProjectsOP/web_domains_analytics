@@ -43,6 +43,7 @@ passport.use(
         clientID: `${process.env.FACEBOOK_CLIENT_ID}`,
         clientSecret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
         callbackURL: `${process.env.CALLBACK_URL}/auth/facebook/callback`,
+        profileFields: ['id', 'displayName', 'emails'],
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         console.log('facebook passport callback function fired');
@@ -51,9 +52,11 @@ passport.use(
                 console.log(currentUser)
                 done(null, currentUser);
             } else {
+                const email = profile.emails ? profile.emails[0].value : profile.id + '@facebook.com';
                 const userData = {
                     accountId: profile.id,
                     username: profile.displayName,
+                    email: email,
                     provider: profile.provider,
                 }
                 console.log(userData)
