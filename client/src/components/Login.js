@@ -87,7 +87,10 @@ const Login = (props) => {
             password: password,
         })
         if (res.status === 201){
-            changeLogin(true)
+            changeLogin(true, res.data.data)
+            sessionStorage.setItem("token", res.data.token)
+            sessionStorage.setItem("currentUser", JSON.stringify(res.data.data))
+            sessionStorage.setItem("isLoggedIn", true)
             setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
             window.alert("Login Successful")
