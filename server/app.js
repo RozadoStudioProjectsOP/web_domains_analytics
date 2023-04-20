@@ -26,7 +26,7 @@ app.use(
     })
 );
 app.use(cookieParser(process.env.JWT_SECRET));
-app.use(cors());
+app.use(cors({ origin: [process.env.CORS_ORIGIN_PROD, process.env.CORS_ORIGIN_DEV], credentials: true }));
 app.use(helmet());
 
 
