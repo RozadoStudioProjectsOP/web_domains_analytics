@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
                 letterSpacing: '0.3rem',
                 color: '#191970'
             },
-            '& > div': {
+            '& > div[class^="login"]': {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -118,7 +118,7 @@ const Login = (props) => {
     <div className={classes.main}>
         <form onSubmit={handleSubmit}>
             <h1>LOGIN</h1>
-            <div>
+            <div className='login'>
                 <input
                     type='name'
                     placeholder='name' 
