@@ -8,6 +8,9 @@ import { register, login, logout } from "../controllers/auth.js"
 router.route("/register").post(register);
 router.route("/login").post(login);
 router.route("/logout").post(logout);
+router.route("/user").get((req, res) => {
+    res.send(req.user);
+});
 
 // Google OAuth
 router.route('/google').get(passport.authenticate('google', { scope: ['profile', 'email'] }));

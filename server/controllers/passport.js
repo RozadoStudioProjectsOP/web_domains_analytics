@@ -75,7 +75,6 @@ passport.use(
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         console.log('github passport callback function fired');
-        console.log(profile)
         User.findOne({ accountId: profile.id, provider: profile.provider }).then((currentUser) => {
             if (currentUser !== null) {
                 console.log(currentUser)
