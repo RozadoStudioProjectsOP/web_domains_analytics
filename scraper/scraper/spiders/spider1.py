@@ -1,7 +1,7 @@
 #Crawls through all internal links of a given domain, outputs all text data.
 
 from pathlib import Path
-
+from trafilatura import fetch_url, extract
 import scrapy
 
 class AuthorSpider(scrapy.Spider):
@@ -11,10 +11,10 @@ class AuthorSpider(scrapy.Spider):
         yield scrapy.Request('https://' + self.url)
 
     def parse(self, response):
-        #Outputs entire body as text.
-        yield{            
-            'text': response.css('body *::text').getall(),
-        }
+        #Extract text and pass to pipeline.
+        downloaded = fetch_url(response.url)
+        result = extract(downloaded)
+        yield { 'text': result }
         #If statement ensures only internal links are followed.
         if self.url in response.url:
             yield from response.follow_all(css='body a', callback=self.parse)

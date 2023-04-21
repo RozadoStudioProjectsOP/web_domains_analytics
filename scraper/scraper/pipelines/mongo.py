@@ -3,10 +3,12 @@ import pymongo
 import sys
 import dotenv
 import os
-from .items import WordsItem
+from ..items import WordsItem
+import json
 
 class MongoDBPipeline:
-    item = WordsItem()
+    item = {}
+    item['domain'] = ''
 
     def __init__(self):
         dotenv.load_dotenv()
@@ -16,13 +18,15 @@ class MongoDBPipeline:
         self.client = pymongo.MongoClient(MONGO_URI)
         self.db = self.client[MONGO_DB]
         self.col = self.db[MONGO_COLLECTION]
-        self.col.delete_many({})
 
     def close_spider(self, spider):
-        self.col.insert_one(dict(self.item))
+        query = { 'domain': self.item['domain'] }
+        data = dict(self.item)
+        self.col.update_one(query, { '$set':  data }, upsert=True)
         self.client.close()
     
     def process_item(self, item, spider):
         self.item = item
+        self.item['domain'] = spider.url
 
         
