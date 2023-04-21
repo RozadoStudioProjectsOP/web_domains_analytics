@@ -23,6 +23,11 @@ app.use(
         secret: process.env.JWT_SECRET,
         resave: true,
         saveUninitialized: true,
+        cookie: {
+            sameSite: "none",
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+        },
     })
 );
 app.use(cookieParser(process.env.JWT_SECRET));
