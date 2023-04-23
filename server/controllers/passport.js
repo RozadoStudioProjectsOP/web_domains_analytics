@@ -87,7 +87,7 @@ passport.use(
             } else {
                 const userData = {
                     accountId: profile.id,
-                    username: profile.displayName,
+                    username: profile.username,
                     email: profile.emails[0].value,
                     provider: profile.provider,
                 }
