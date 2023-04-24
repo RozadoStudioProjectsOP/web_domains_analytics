@@ -24,6 +24,10 @@ router.route('/facebook').get(passport.authenticate('facebook', { scope: ['profi
 router.route('/facebook/callback').get(passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
     res.redirect(`${BASE_URL}/`);
 });
+router.route("/user/facebook").get((req, res) => {
+    res.status(200);
+    res.type("html").send("<h1>Facebook user</h1>");
+});
 
 // Github OAuth
 router.route('/github').get(passport.authenticate('github', { scope: ['profile', 'email'] }));
