@@ -3,6 +3,7 @@ import { createUseStyles } from "react-jss";
 import { useRef, useState } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
+import Histogram from './Histogram';
 
 const useStyles = createUseStyles({
   page: {
@@ -73,13 +74,15 @@ const Landing = (props) => {
       total: 0,
       frequency: 0
     })
-    const [wordFound, setWordFound] = useState()
+    const [wordFound, setWordFound] = useState();
+    const [wordList, setWordList] = useState();
 
     const getWords = async (word) => {
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, {
         })
         const wordObject = res.data.data[1].words
+        setWordList(wordObject)
         //Find the word that matches in DB
         for (const w in wordObject) {
           if (w === word) {
@@ -133,6 +136,7 @@ const Landing = (props) => {
           </div>
           {result}   
         </div>
+        <Histogram data={wordList}></Histogram>
     </div>
   )
 }
