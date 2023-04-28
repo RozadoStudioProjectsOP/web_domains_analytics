@@ -8,13 +8,14 @@ const Histogram = (props) => {
     const [data, setData] = useState();
 
     useEffect (() => {
-        if(props.data){
-            const allData = Object.values(props.data)
-            setData(allData.slice(0, 9))
-        }     
+      // Modify data to have a numeric index
+      if(props.data){
+          const allData = Object.values(props.data)
+          setData(allData.slice(0, 9))
+      }     
     },[props]);
 
-    //Add word name to word objects
+    // Add word name as a data field to the indexed data 
     if (props.data){
       const keys = Object.keys(props.data)
             if (data) {
@@ -22,14 +23,18 @@ const Histogram = (props) => {
                 data[i].name = keys[i]              
               }
             }
-    // console.log(data)
     }
 
       return (
         <ResponsiveContainer width="60%" height="70%">
           <BarChart
             data={data}
+            margin={{
+              top: 40,
+              bottom: 5,
+            }}
           >
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 10 Words</text>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis yAxisId="left"/>
