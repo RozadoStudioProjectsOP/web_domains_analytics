@@ -1,12 +1,15 @@
 import React from 'react'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from 'react';
-import { all } from 'axios';
 
 const Histogram = (props) => {
 
-    const [data, setData] = useState();
-
+    const [data, setData] = useState([{
+      Total: 0,
+      Frequency: 0,
+      name: 'test'
+    }]);
+    console.log(data)
     useEffect (() => {
       // Modify data to have a numeric index
       if(props.data){
@@ -18,11 +21,11 @@ const Histogram = (props) => {
     // Add word name as a data field to the indexed data 
     if (props.data){
       const keys = Object.keys(props.data)
-            if (data) {
-              for (let i = 0; i < data.length; i++) {
-                data[i].name = keys[i]              
-              }
-            }
+        if (data) {
+          for (let i = 0; i < data.length; i++) {
+            data[i].name = keys[i]              
+          }
+        }
     }
 
       return (
