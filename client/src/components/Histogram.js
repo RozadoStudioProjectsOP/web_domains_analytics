@@ -1,19 +1,30 @@
 import React from 'react'
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from 'react';
+import { all } from 'axios';
 
 const Histogram = (props) => {
 
     const [data, setData] = useState();
-    //console.log(data[0])
+
     useEffect (() => {
         if(props.data){
-            setData(Object.values(props.data))
-            console.log(data)
-        }
-        
+            const allData = Object.values(props.data)
+            setData(allData.slice(0, 9))
+        }     
     },[props]);
-           
+
+    //Add word name to word objects
+    if (props.data){
+      const keys = Object.keys(props.data)
+            if (data) {
+              for (let i = 0; i < data.length; i++) {
+                data[i].name = keys[i]              
+              }
+            }
+    // console.log(data)
+    }
+
       return (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
