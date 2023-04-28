@@ -29,19 +29,15 @@ const Histogram = (props) => {
         <ResponsiveContainer width="60%" height="70%">
           <BarChart
             data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis yAxisId="left"/>
+            <YAxis yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="Frequency" fill="#8884d8" />
+            <Bar dataKey="Total" fill="#82ca9d" yAxisId="left"/>
+            <Bar dataKey="Frequency" fill="#8884d8" yAxisId="right"/> 
           </BarChart>
         </ResponsiveContainer>
       );
