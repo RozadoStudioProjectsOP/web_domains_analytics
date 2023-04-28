@@ -26,10 +26,8 @@ const Histogram = (props) => {
     }
 
       return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="60%" height="70%">
           <BarChart
-            width={30}
-            height={30}
             data={data}
             margin={{
               top: 5,

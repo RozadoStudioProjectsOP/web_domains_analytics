@@ -10,7 +10,7 @@ const useStyles = createUseStyles({
     height: '90%',
     background: '#E9EAEC',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     '& > div': {
       display: 'flex',
@@ -20,8 +20,8 @@ const useStyles = createUseStyles({
       background: 'white',
       border: "2px solid #385E72",
       borderRadius: 5,
-      width: '60vw',
-      minHeight: '50vh',
+      width: '35vw',
+      height: '70%',
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '2rem',
