@@ -7,14 +7,14 @@ const Histogram = (props) => {
     const [data, setData] = useState([{
       Total: 0,
       Frequency: 0,
-      name: 'test'
+      name: ''
     }]);
     console.log(data)
     useEffect (() => {
       // Modify data to have a numeric index
       if(props.data){
           const allData = Object.values(props.data)
-          setData(allData.slice(0, 9))
+          setData(allData.slice(0, 19))
       }     
     },[props]);
 
@@ -37,15 +37,13 @@ const Histogram = (props) => {
               bottom: 5,
             }}
           >
-            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 10 Words</text>
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 20 Words</text>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis yAxisId="left"/>
-            <YAxis yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend />
             <Bar dataKey="Total" fill="#82ca9d" yAxisId="left"/>
-            <Bar dataKey="Frequency" fill="#8884d8" yAxisId="right"/> 
           </BarChart>
         </ResponsiveContainer>
       );
