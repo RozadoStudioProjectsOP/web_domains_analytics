@@ -2,8 +2,7 @@
 import Data from "../models/data.js";
 
 const getOne = async (req, res) => {
-    const { domain } = req.params.id;
-
+    const domain = req.params.id;
     try {
         const data = await Data.findOne({ domain });
         if (!data) {

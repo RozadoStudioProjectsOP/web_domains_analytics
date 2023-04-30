@@ -6,6 +6,7 @@ import { BASE_URL } from '../utils/base_url';
 import { Navigate } from 'react-router-dom'
 import { LoginContext } from '../contexts/login';
 import NavBar from './NavBar';
+import { SocialLogins } from './OAuth/Loginfunc.js';
 
 const useStyles = createUseStyles({
     main: {
@@ -31,7 +32,7 @@ const useStyles = createUseStyles({
                 letterSpacing: '0.3rem',
                 color: '#191970'
             },
-            '& > div': {
+            '& > div[class^="login"]': {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -86,7 +87,10 @@ const Login = (props) => {
             password: password,
         })
         if (res.status === 201){
-            changeLogin(true)
+            changeLogin(true, res.data.data)
+            sessionStorage.setItem("token", res.data.token)
+            sessionStorage.setItem("currentUser", JSON.stringify(res.data.data))
+            sessionStorage.setItem("isLoggedIn", true)
             setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
             window.alert("Login Successful")
@@ -114,7 +118,7 @@ const Login = (props) => {
     <div className={classes.main}>
         <form onSubmit={handleSubmit}>
             <h1>LOGIN</h1>
-            <div>
+            <div className='login'>
                 <input
                     type='name'
                     placeholder='name' 
@@ -140,6 +144,7 @@ const Login = (props) => {
                 ) : null}
             </div>    
             <input type="submit" value="Submit"></input>
+            <SocialLogins />
         </form>
     </div>
     </>

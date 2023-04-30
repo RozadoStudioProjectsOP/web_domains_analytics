@@ -62,9 +62,8 @@ const useStyles = createUseStyles({
 const NavBar = () => {
   const classes = useStyles();  
   const [isHome, setIsHome] = useState(false)
-  const { changeLogin } = useContext(LoginContext);
-  const { isLoggedIn } = useContext(LoginContext);
-
+  const { changeLogin, isLoggedIn } = useContext(LoginContext);
+  
   const logout = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/auth/logout`, {
@@ -74,7 +73,7 @@ const NavBar = () => {
       })
       
       if (res.status === 200) {
-        changeLogin(false)
+        changeLogin(false, null)
         sessionStorage.clear();       
         alert("Logout successful");  
         setIsHome(true);
