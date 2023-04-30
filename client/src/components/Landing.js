@@ -70,19 +70,41 @@ const useStyles = createUseStyles({
 const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
+    const urlRef = useRef(); 
+    const [url, setUrl] = useState({ words: "" })
+    const [urlFound, setUrlFound] = useState();
     const [wordNum, setWordNumb] = useState({
       total: 0,
       frequency: 0
     })
     const [wordFound, setWordFound] = useState();
-    const [wordList, setWordList] = useState();
+    //const [wordList, setWordList] = useState();
 
-    const getWords = async (word) => {
+    const getURL = async (urlInput) => {
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, {
         })
-        const wordObject = res.data.data[1].words
-        setWordList(wordObject)
+        const urlArray = res.data.data
+        urlArray.forEach(u => {
+          // console.log(u.domain)
+          if (u.domain === urlInput){
+            setUrl(u)
+            setUrlFound(true)
+            return
+          }
+        });
+          // if(!urlFound) {
+          //   alert("Sorry, URL no found")
+          // }  
+      } catch (error) {
+        console.error(error.response.data)
+      }
+    }
+
+    const getWords = async (word) => {
+      try {
+        const wordObject = url.words
+        // setWordList(wordObject)
         //Find the word that matches in DB
         for (const w in wordObject) {
           if (w === word) {
@@ -97,11 +119,11 @@ const Landing = (props) => {
           }
           
       } catch (error) {
-          console.error(error.response.data)
+        console.error(error.response.data)
       }
   
     }
-    
+
     // Word count conditional output
     const result = wordFound === true ? (
       <div className={classes.results}>
@@ -111,12 +133,26 @@ const Landing = (props) => {
     ) : wordFound === false ? (
       <div className={classes.results}>
         <h4>Sorry, word not found</h4>
+        <h4 style={{color: 'white'}}>Total:</h4>
       </div>
+    // ) : urlFound === false ? (
+    //   <div className={classes.results}>
+    //     <h4>Sorry, URL not found</h4>
+    //     <h4 style={{color: 'white'}}>Total:</h4>
+    //   </div>
     ) : (
-      <></>
+      <div className={classes.results}>
+        <h4 style={{color: 'white'}}>Total:</h4>
+        <h4 style={{color: 'white'}}>Frequency:</h4>
+      </div>
     )
 
-    const handleSubmit = (e) => {
+    const handleSubmitURL = (e) => {
+      e.preventDefault()
+      getURL(urlRef.current.value)
+    }  
+
+    const handleSubmitWord = (e) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
@@ -124,6 +160,17 @@ const Landing = (props) => {
   return (
     <div className={classes.page}>
         <div>
+          <h3>Choose a URL</h3>
+          <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
+          <div className={classes.inputs}>  
+            <input
+                className={classes.wordInput}
+                type='text'
+                ref={urlRef}
+                required>
+            </input>
+            <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
+          </div>
           <h3>Choose a word: </h3>
           <div className={classes.inputs}>  
             <input
@@ -132,11 +179,11 @@ const Landing = (props) => {
                 ref={wordRef}
                 required>
             </input>
-            <input className={classes.button} onClick={handleSubmit} type="submit" value="Check"></input>
+            <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
           </div>
           {result}   
         </div>
-        <Histogram data={wordList}></Histogram>
+        <Histogram data={url.words}></Histogram>
     </div>
   )
 }

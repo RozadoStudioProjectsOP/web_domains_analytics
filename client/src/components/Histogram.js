@@ -14,7 +14,7 @@ const Histogram = (props) => {
       // Modify data to have a numeric index
       if(props.data){
           const allData = Object.values(props.data)
-          setData(allData.slice(0, 19))
+          setData(allData.slice(0, 10))
       }     
     },[props]);
 
@@ -37,7 +37,7 @@ const Histogram = (props) => {
               bottom: 5,
             }}
           >
-            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 20 Words</text>
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 10 Words</text>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis yAxisId="left"/>
