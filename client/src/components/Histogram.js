@@ -35,6 +35,7 @@ const Histogram = (props) => {
             margin={{
               top: 40,
               bottom: 5,
+              right: 30
             }}
           >
             <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 10 Words</text>
