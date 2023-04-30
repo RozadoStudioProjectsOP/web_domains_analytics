@@ -72,7 +72,7 @@ const Landing = (props) => {
     const wordRef = useRef(); 
     const urlRef = useRef(); 
     const [url, setUrl] = useState({ words: "" })
-    const [urlFound, setUrlFound] = useState();
+    //const [urlFound, setUrlFound] = useState();
     const [wordNum, setWordNumb] = useState({
       total: 0,
       frequency: 0
@@ -89,7 +89,7 @@ const Landing = (props) => {
           // console.log(u.domain)
           if (u.domain === urlInput){
             setUrl(u)
-            setUrlFound(true)
+            //setUrlFound(true)
             return
           }
         });
