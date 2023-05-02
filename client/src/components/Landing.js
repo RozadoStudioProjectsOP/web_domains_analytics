@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
+import Wordcloud from './WordCloud';
 
 const useStyles = createUseStyles({
   page: {
@@ -12,6 +13,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+    flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
       flexDirection: 'column',
@@ -184,6 +186,7 @@ const Landing = (props) => {
           {result}   
         </div>
         <Histogram data={url.words}></Histogram>
+        <Wordcloud class="Hey"></Wordcloud>
     </div>
   )
 }
