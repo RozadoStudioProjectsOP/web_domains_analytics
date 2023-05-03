@@ -9,7 +9,7 @@ const Histogram = (props) => {
       Frequency: 0,
       name: ''
     }]);
-    //console.log(data)
+
     useEffect (() => {
       // Modify data to have a numeric index
       if(props.data){
@@ -22,7 +22,7 @@ const Histogram = (props) => {
               allData[i].name = keys[i]              
             }
           }
-        
+          
         allData.sort((a, b) => {
           if (a.Total > b.Total) {
             return -1;
@@ -31,14 +31,18 @@ const Histogram = (props) => {
             return 1;
           }
           return 0;
-        })          
-          setData(allData.slice(0, 10))
+        })    
+        // I had to create a new array to avoid a bug 
+        const allDataHist = allData.map((a) => {
+          return {Total:a.Total, Frequency:a.Frequency, name:a.name}
+        })
+        
+        setData(allDataHist.slice(0, 10))
       }     
     },[props]);
-    console.log(data)
 
       return (
-        <ResponsiveContainer width="60%" height="70%">
+        <ResponsiveContainer width="60%" height="54%">
           <BarChart
             data={data}
             margin={{

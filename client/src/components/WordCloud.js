@@ -39,7 +39,7 @@ const Wordcloud = (props) => {
             setData(allData.slice(0, 30))
         }     
       },[props]);
-console.log(data)
+// console.log(data)
   return (
     <WordCloud
         data={data}

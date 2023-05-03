@@ -8,7 +8,7 @@ import Wordcloud from './WordCloud';
 
 const useStyles = createUseStyles({
   page: {
-    height: '100%',
+    height: "130vh",
     background: '#E9EAEC',
     display: 'flex',
     justifyContent: 'space-around',
@@ -24,7 +24,6 @@ const useStyles = createUseStyles({
       borderRadius: 5,
       width: '35vw',
       height: '70vh',
-      marginBottom: 30,
       '&:nth-child(3)': {
         width: '30vw',
         height: '50vh'
@@ -192,6 +191,7 @@ const Landing = (props) => {
         </div>
         <Histogram data={url.words}></Histogram>
         <Wordcloud data={url.words}></Wordcloud>
+        <div style={{width:'64vw', height:'50vh'}}></div>
     </div>
   )
 }
