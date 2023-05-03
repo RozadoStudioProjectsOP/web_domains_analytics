@@ -25,8 +25,8 @@ const useStyles = createUseStyles({
       width: '35vw',
       height: '70vh',
       '&:nth-child(3)': {
-        width: '30vw',
-        height: '50vh'
+        width: '60vw',
+        height: 'auto'
       },
       '& > h3': {
         fontFamily: 'Gill Sans',
@@ -191,7 +191,7 @@ const Landing = (props) => {
         </div>
         <Histogram data={url.words}></Histogram>
         <Wordcloud data={url.words}></Wordcloud>
-        <div style={{width:'64vw', height:'50vh'}}></div>
+        {/* <div style={{width:'64vw', height:'50vh'}}></div> */}
     </div>
   )
 }
