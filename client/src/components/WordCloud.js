@@ -18,8 +18,12 @@ const Wordcloud = (props) => {
   
           let keys = Object.keys(props.data)
           if (allData) {
+              //let totalWords = allData.length
               for (let i = 0; i < allData.length; i++) {
-                allData[i].text = keys[i]              
+                // console.log(totalWords)
+                allData[i].text = keys[i] 
+                // allData[i].Total = totalWords / allData.length
+                // totalWords--       
               }
             }
           
@@ -42,7 +46,7 @@ console.log(data)
         font="Times"
         fontStyle="italic"
         fontWeight="bold"
-        fontSize={(word) => Math.sqrt(word.Total) * 2}
+        fontSize={(word) => Math.sqrt(word.Frequency) * 700}
         spiral="rectangular"
         padding={10}
         onWordClick={(event, d) => {
