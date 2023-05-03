@@ -39,16 +39,17 @@ const Wordcloud = (props) => {
             setData(allData.slice(0, 30))
         }     
       },[props]);
-// console.log(data)
+
   return (
     <WordCloud
         data={data}
-        font="Times"
+        font="Verdana"
         fontStyle="italic"
         fontWeight="bold"
         fontSize={(word) => Math.sqrt(word.Frequency) * 700}
         spiral="rectangular"
-        padding={10}
+        padding={2}
+        // fill='#191970'
         onWordClick={(event, d) => {
         //   console.log(`onWordClick: ${d.text}`);
         }}
