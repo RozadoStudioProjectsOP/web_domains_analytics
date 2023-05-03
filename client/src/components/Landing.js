@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
       height: '70vh',
       marginBottom: 30,
       '&:nth-child(3)': {
-        width: '40vw',
+        width: '30vw',
         height: '50vh'
       },
       '& > h3': {
