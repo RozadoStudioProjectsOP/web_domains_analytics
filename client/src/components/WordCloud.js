@@ -36,7 +36,7 @@ const Wordcloud = (props) => {
             }
             return 0;
           })          
-            setData(allData.slice(0, 30))
+            setData(allData.slice(0, 40))
         }     
       },[props]);
 
