@@ -1,50 +1,59 @@
 import React from 'react'
 import WordCloud from 'react-d3-cloud';
-import { scaleOrdinal } from 'd3-scale';
-import { schemeCategory10 } from 'd3-scale-chromatic';
+import { useEffect, useState } from 'react';
 
-const data = [
-  { text: 'Hey', value: 1000 },
-  { text: 'lol', value: 200 },
-  { text: 'first impression', value: 800 },
-  { text: 'very cool', value: 1000000 },
-  { text: 'duck', value: 10 },
-  { text: 'Hey', value: 1000 },
-  { text: 'lol', value: 200 },
-  { text: 'first impression', value: 800 },
-  { text: 'very cool', value: 1000000 },
-  { text: 'duck', value: 10 },
-  { text: 'Hey', value: 1000 },
-  { text: 'lol', value: 200 },
-  { text: 'first impression', value: 800 },
-  { text: 'very cool', value: 1000000 },
-  { text: 'duck', value: 10 },
-  { text: 'Hey', value: 1000 },
-  { text: 'lol', value: 200 },
-  { text: 'first impression', value: 800 },
-  { text: 'very cool', value: 1000000 },
-  { text: 'duck', value: 10 },
-];
+const Wordcloud = (props) => {
 
-const Wordcloud = () => {
+    const [data, setData] = useState([{
+        Total: 0,
+        Frequency: 0,
+        text: ''
+      }]);
+      //console.log(data)
+      useEffect (() => {
+        // Modify data to have a numeric index
+        if(props.data){
+  
+          let allData = Object.values(props.data)
+  
+          let keys = Object.keys(props.data)
+          if (allData) {
+              for (let i = 0; i < allData.length; i++) {
+                allData[i].text = keys[i]              
+              }
+            }
+          
+          allData.sort((a, b) => {
+            if (a.Total > b.Total) {
+              return -1;
+            }
+            if (a.Total < b.Total) {
+              return 1;
+            }
+            return 0;
+          })          
+            setData(allData.slice(0, 30))
+        }     
+      },[props]);
+console.log(data)
   return (
     <WordCloud
         data={data}
         font="Times"
         fontStyle="italic"
         fontWeight="bold"
-        fontSize={(word) => Math.log2(word.value) * 5}
+        fontSize={(word) => Math.sqrt(word.Total) * 2}
         spiral="rectangular"
-        padding={5}
+        padding={10}
         onWordClick={(event, d) => {
-          console.log(`onWordClick: ${d.text}`);
+        //   console.log(`onWordClick: ${d.text}`);
         }}
         onWordMouseOver={(event, d) => {
-          console.log(`onWordMouseOver: ${d.text}`);
+            // console.log(`onWordMouseOver: ${d.text}`);
         }}
         onWordMouseOut={(event, d) => {
-          console.log(`onWordMouseOut: ${d.text}`);
-        }}
+            // console.log(`onWordMouseOut: ${d.text}`);
+        }}    
     />
 );
 }

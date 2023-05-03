@@ -8,7 +8,7 @@ import Wordcloud from './WordCloud';
 
 const useStyles = createUseStyles({
   page: {
-    height: '90%',
+    height: '100%',
     background: '#E9EAEC',
     display: 'flex',
     justifyContent: 'space-around',
@@ -23,14 +23,19 @@ const useStyles = createUseStyles({
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '35vw',
-      height: '70%',
+      height: '70vh',
+      marginBottom: 30,
+      '&:nth-child(3)': {
+        width: '40vw',
+        height: '50vh'
+      },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '2rem',
         letterSpacing: '0.3rem',
         color: '#191970'
       }
-    }
+    },
   },
   inputs: {
     display: 'flex',
@@ -158,7 +163,7 @@ const Landing = (props) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
-
+    
   return (
     <div className={classes.page}>
         <div>
@@ -186,7 +191,7 @@ const Landing = (props) => {
           {result}   
         </div>
         <Histogram data={url.words}></Histogram>
-        <Wordcloud class="Hey"></Wordcloud>
+        <Wordcloud data={url.words}></Wordcloud>
     </div>
   )
 }

@@ -32,11 +32,10 @@ const Histogram = (props) => {
           }
           return 0;
         })          
-          console.log(allData)
           setData(allData.slice(0, 10))
       }     
     },[props]);
-    //console.log(data)
+    console.log(data)
 
       return (
         <ResponsiveContainer width="60%" height="70%">
