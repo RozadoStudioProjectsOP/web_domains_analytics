@@ -5,6 +5,7 @@ import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
 import Wordcloud from './WordCloud';
+import Sentiment from './Sentiment';
 
 const useStyles = createUseStyles({
   page: {
@@ -27,6 +28,10 @@ const useStyles = createUseStyles({
       '&:nth-child(3)': {
         width: '60vw',
         height: 'auto'
+      },
+      '&:nth-child(4)': {
+        width: '60vw',
+        height: '40vh'
       },
       '& > h3': {
         fontFamily: 'Gill Sans',
@@ -191,7 +196,7 @@ const Landing = (props) => {
         </div>
         <Histogram data={url.words}></Histogram>
         <Wordcloud data={url.words}></Wordcloud>
-        {/* <div style={{width:'64vw', height:'50vh'}}></div> */}
+        <Sentiment></Sentiment>
     </div>
   )
 }
