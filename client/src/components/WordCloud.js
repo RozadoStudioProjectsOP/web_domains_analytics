@@ -50,6 +50,7 @@ const Wordcloud = (props) => {
         spiral="rectangular"
         padding={2}
         width={1400}
+        rotate={0}
         // fill='#191970'
         onWordClick={(event, d) => {
         //   console.log(`onWordClick: ${d.text}`);
