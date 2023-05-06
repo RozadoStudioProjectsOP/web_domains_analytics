@@ -1,6 +1,6 @@
 import React from 'react'
 import WordCloud from 'react-d3-cloud';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const Wordcloud = (props) => {
 
@@ -36,30 +36,29 @@ const Wordcloud = (props) => {
             }
             return 0;
           })          
-            setData(allData.slice(0, 50))
+            setData(allData.slice(0, 100))
         }     
       },[props]);
+
+      const calculateFontSize = useCallback((word) => Math.sqrt(word.Frequency) * 900, []);
+
+      const options = useCallback(() => ({
+        font: 'Verdana',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        padding: 2,
+        width: 1400,
+        rotate: 0,
+      }), []);
 
   return (
     <WordCloud
         data={data}
-        font="Verdana"
-        fontStyle="italic"
-        fontWeight="bold"
-        fontSize={(word) => Math.sqrt(word.Frequency) * 700}
-        spiral="rectangular"
+        options={options}
+        fontSize={calculateFontSize}
         padding={2}
         width={1400}
-        // fill='#191970'
-        onWordClick={(event, d) => {
-        //   console.log(`onWordClick: ${d.text}`);
-        }}
-        onWordMouseOver={(event, d) => {
-            // console.log(`onWordMouseOver: ${d.text}`);
-        }}
-        onWordMouseOut={(event, d) => {
-            // console.log(`onWordMouseOut: ${d.text}`);
-        }}    
+        rotate={0} 
     />
 );
 }
