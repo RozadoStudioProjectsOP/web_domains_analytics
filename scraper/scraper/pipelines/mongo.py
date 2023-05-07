@@ -53,5 +53,4 @@ class MongoDBPipeline:
 
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
-        buildPayload(item['trigrams'], 'trigrams')
-        print(self.payload['words']['value']['Frequency'])                    
+        buildPayload(item['trigrams'], 'trigrams')           
