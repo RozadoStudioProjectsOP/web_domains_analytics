@@ -8,6 +8,6 @@ class FrequencyPipeline:
 
         # Gets the relative frequency of a word by, dividing its occurance by the total number of words.
         for word in item['words']:
-            item['words'][word]['Frquency'] = item['words'][word]['Total'] / item['count']
-
+            item['words'][word]['Frequency'] = item['words'][word]['Total'] / item['counts']['words']
+        
         return item

@@ -12,7 +12,9 @@ class MongoDBPipeline:
     # Declaring the payload that will be sent to DB, think of it as a collection model.
     payload = {
         'words': {},
-        'domain': ''
+        'domain': '',
+        'bigrams': {},
+        'trigrams': {}
     }
 
     def __init__(self):
@@ -37,13 +39,18 @@ class MongoDBPipeline:
 
         self.payload['domain'] = item['domain']
 
-        # Check if word already exists in payload.
-        for key, value in item['words'].items():
-            if key in self.payload['words']:
-                # Adds up totals.
-                self.payload['words'][key]['Total'] = self.payload['words'][key]['Total'] + item['words'][key]['Total']
-                # Averages frequencies.
-                self.payload['words'][key]['Frequency'] = (self.payload['words'][key]['Frequency'] + item['words'][key]['Frequency']) / 2
-            else:
-                # Adds new word to payload.
-                self.payload['words'][key] = value
+        def buildPayload(wordList, target):
+            for key, value in wordList.items():                
+                # Check if word already exists in payload.
+                if key in self.payload[target]:
+                    # Adds up totals.
+                    self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + wordList['Total']
+                    # Averages frequencies.
+                    self.payload[target][key]['Frequency'] = (self.payload[target][key]['Frequency'] + wordList['Frequency']) / 2
+                else:
+                    # Adds new word to payload.
+                    self.payload[target][key] = value
+
+        buildPayload(item['words'], 'words')
+        buildPayload(item['bigrams'], 'bigrams')
+        buildPayload(item['trigrams'], 'trigrams')
