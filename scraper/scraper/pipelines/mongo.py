@@ -44,9 +44,9 @@ class MongoDBPipeline:
                 # Check if word already exists in payload.
                 if key in self.payload[target]:
                     # Adds up totals.
-                    self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + wordList['Total']
+                    self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + wordList[key]['Total']
                     # Averages frequencies.
-                    self.payload[target][key]['Frequency'] = (self.payload[target][key]['Frequency'] + wordList['Frequency']) / 2
+                    self.payload[target][key]['Frequency'] = (self.payload[target][key]['Frequency'] + wordList[key]['Frequency']) / 2
                 else:
                     # Adds new word to payload.
                     self.payload[target][key] = value
@@ -54,3 +54,4 @@ class MongoDBPipeline:
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
         buildPayload(item['trigrams'], 'trigrams')
+        print(self.payload['words']['value']['Frequency'])                    
