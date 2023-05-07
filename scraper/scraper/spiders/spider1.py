@@ -12,16 +12,13 @@ class AuthorSpider(scrapy.Spider):
         yield scrapy.Request('https://' + self.url)
 
     def parse(self, response):
-        item = DomainAnalyitcs()
-        #Extract text and pass to pipeline.
-        downloaded = fetch_url(response.url)
-        
-        item['domain'] = self.url
-        item['raw'] = extract(downloaded)
-
-        yield item
-
-        #If statement ensures only internal links are followed.
+        #If statement ensures only internal links are processed.
         if self.url in response.url:
+            item = DomainAnalyitcs()
+            #Extract text and pass to pipeline.
+            item['domain'] = self.url
+            item['raw'] = extract(response.body)
+
             yield from response.follow_all(css='body a', callback=self.parse)
+            yield item        
         
