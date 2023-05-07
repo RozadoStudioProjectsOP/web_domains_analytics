@@ -1,14 +1,16 @@
-#https://www.mongodb.com/basics/how-to-use-mongodb-to-store-scraped-data
+from ..items import DomainAnalyitcs
 import pymongo
 import sys
 import dotenv
 import os
-from ..items import WordsItem
 import json
 
 class MongoDBPipeline:
-    item = {}
-    item['domain'] = ''
+
+    payload = {
+        'words': {},
+        'domain': ''
+    }
 
     def __init__(self):
         dotenv.load_dotenv()
@@ -20,13 +22,19 @@ class MongoDBPipeline:
         self.col = self.db[MONGO_COLLECTION]
 
     def close_spider(self, spider):
-        query = { 'domain': self.item['domain'] }
-        data = dict(self.item)
-        self.col.update_one(query, { '$set':  data }, upsert=True)
+        query = { 'domain': self.payload['domain'] }
+        data = dict(self.payload)        
+        self.col.update_one(query, { '$set': data }, upsert=True)
         self.client.close()
     
     def process_item(self, item, spider):
-        self.item = item
-        self.item['domain'] = spider.url
+        item = DomainAnalyitcs(item)
 
-        
+        self.payload['domain'] = item['domain']
+
+        for key, value in item['words'].items():
+            if key in self.payload['words']:
+                self.payload['words'][key]['Total'] = self.payload['words'][key]['Total'] + item['words'][key]['Total']
+                self.payload['words'][key]['Frequency'] = (self.payload['words'][key]['Frequency'] + item['words'][key]['Frequency']) / 2
+            else:
+                self.payload['words'][key] = value

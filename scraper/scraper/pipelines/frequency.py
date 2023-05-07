@@ -1,12 +1,12 @@
 from collections import Counter
+from ..items import DomainAnalyitcs
 
 class FrequencyPipeline:
-    item = {}
-    item['words'] = {}
-
     
     def process_item(self, item, spider): 
-        count = Counter(item['words']).most_common(100)
-        for word in count:
-            self.item['words'][word[0]] = { 'Frequency': word[1]/item['count'], 'Total': word[1]}
-        return self.item
+        item = DomainAnalyitcs(item)
+
+        for word in item['words']:
+            item['words'][word]['Frquency'] = item['words'][word]['Total'] / item['count']
+
+        return item

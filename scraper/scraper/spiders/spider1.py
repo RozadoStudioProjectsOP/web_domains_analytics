@@ -3,6 +3,7 @@
 from pathlib import Path
 from trafilatura import fetch_url, extract
 import scrapy
+from ..items import DomainAnalyitcs
 
 class AuthorSpider(scrapy.Spider):
     name = 'spider'
@@ -11,10 +12,15 @@ class AuthorSpider(scrapy.Spider):
         yield scrapy.Request('https://' + self.url)
 
     def parse(self, response):
+        item = DomainAnalyitcs()
         #Extract text and pass to pipeline.
         downloaded = fetch_url(response.url)
-        result = extract(downloaded)
-        yield { 'text': result }
+        
+        item['domain'] = self.url
+        item['raw'] = extract(downloaded)
+
+        yield item
+
         #If statement ensures only internal links are followed.
         if self.url in response.url:
             yield from response.follow_all(css='body a', callback=self.parse)

@@ -1,15 +1,17 @@
 import re
+from ..items import DomainAnalyitcs
+from collections import Counter
 
 class CountPipeline:
-    item = {}
-    item['words'] = {}
-    item['count'] = 0
     
-    def process_item(self, item, spider):
-        for word in item:
-            self.item['count'] += 1
-            if word in self.item['words']:
-                self.item['words'][word] += 1
-            else:
-                self.item['words'][word] = 1
-        return self.item
+    def process_item(self, item, spider):        
+        item = DomainAnalyitcs(item)
+
+        item['count'] = len(item['words'])
+
+        item['words'] = dict(Counter(item['words']))
+
+        for word, count in item['words'].items():
+            item['words'][word] = {'Total': count}
+
+        return item
