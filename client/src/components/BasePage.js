@@ -7,7 +7,7 @@ import Register from './Register';
 const BasePage = () => {
 
   return (
-    <div>
+    <div style={{height: '100%'}}>
         <Routes>    
             <Route path="/" element={<Main/>} />
             <Route path="/register" element={<Register/>} />

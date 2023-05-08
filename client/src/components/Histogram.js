@@ -9,27 +9,40 @@ const Histogram = (props) => {
       Frequency: 0,
       name: ''
     }]);
-    console.log(data)
+
     useEffect (() => {
       // Modify data to have a numeric index
       if(props.data){
-          const allData = Object.values(props.data)
-          setData(allData.slice(0, 10))
+
+        let allData = Object.values(props.data)
+
+        let keys = Object.keys(props.data)
+        if (allData) {
+            for (let i = 0; i < allData.length; i++) {
+              allData[i].name = keys[i]              
+            }
+          }
+          
+        allData.sort((a, b) => {
+          if (a.Total > b.Total) {
+            return -1;
+          }
+          if (a.Total < b.Total) {
+            return 1;
+          }
+          return 0;
+        })    
+        // I had to create a new array to avoid a bug 
+        const allDataHist = allData.map((a) => {
+          return {Total:a.Total, Frequency:a.Frequency, name:a.name}
+        })
+        
+        setData(allDataHist.slice(0, 10))
       }     
     },[props]);
 
-    // Add word name as a data field to the indexed data 
-    if (props.data){
-      const keys = Object.keys(props.data)
-        if (data) {
-          for (let i = 0; i < data.length; i++) {
-            data[i].name = keys[i]              
-          }
-        }
-    }
-
       return (
-        <ResponsiveContainer width="60%" height="70%">
+        <ResponsiveContainer width="60%" height="54%">
           <BarChart
             data={data}
             margin={{

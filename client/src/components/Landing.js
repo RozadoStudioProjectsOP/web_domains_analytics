@@ -4,14 +4,17 @@ import { useRef, useState } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
+import Wordcloud from './WordCloud';
+import Sentiment from './Sentiment';
 
 const useStyles = createUseStyles({
   page: {
-    height: '90%',
+    height: "130vh",
     background: '#E9EAEC',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+    flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
       flexDirection: 'column',
@@ -21,14 +24,22 @@ const useStyles = createUseStyles({
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '35vw',
-      height: '70%',
+      height: '70vh',
+      '&:nth-child(3)': {
+        width: '60vw',
+        height: 'auto'
+      },
+      '&:nth-child(4)': {
+        width: '60vw',
+        height: '40vh'
+      },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '2rem',
         letterSpacing: '0.3rem',
         color: '#191970'
       }
-    }
+    },
   },
   inputs: {
     display: 'flex',
@@ -156,7 +167,7 @@ const Landing = (props) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
-
+    
   return (
     <div className={classes.page}>
         <div>
@@ -184,6 +195,8 @@ const Landing = (props) => {
           {result}   
         </div>
         <Histogram data={url.words}></Histogram>
+        <Wordcloud data={url.words}></Wordcloud>
+        <Sentiment></Sentiment>
     </div>
   )
 }
