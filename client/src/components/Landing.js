@@ -43,7 +43,13 @@ const useStyles = createUseStyles({
   },
   inputs: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > div': {
+      display: 'flex',
+      marginTop: 20,
+      width: '70%',
+    },
   },
   wordInput: {
     padding: 15,
@@ -72,7 +78,6 @@ const useStyles = createUseStyles({
     }
   },
   results: {
-    marginTop: 30,
     color: '#191970',
     fontSize: "1.2rem"
   }
@@ -82,6 +87,7 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
+    const [outputMode, setOutputMode] = useState('words')
     const [url, setUrl] = useState({ words: "" })
     //const [urlFound, setUrlFound] = useState();
     const [wordNum, setWordNumb] = useState({
@@ -167,7 +173,11 @@ const Landing = (props) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
-    
+
+    const handleModeSelection = (mode) => {
+      setOutputMode(mode)
+    }
+
   return (
     <div className={classes.page}>
         <div>
@@ -181,6 +191,11 @@ const Landing = (props) => {
                 required>
             </input>
             <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
+            <div>
+              <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
+              <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
+              <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
+            </div>
           </div>
           <h3>Choose a word: </h3>
           <div className={classes.inputs}>  
@@ -194,8 +209,8 @@ const Landing = (props) => {
           </div>
           {result}   
         </div>
-        <Histogram data={url.words}></Histogram>
-        <Wordcloud data={url.words}></Wordcloud>
+        <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
+        <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud>
         <Sentiment></Sentiment>
     </div>
   )
