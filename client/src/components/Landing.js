@@ -87,15 +87,13 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
-    const [outputMode, setOutputMode] = useState('words')
+    const [outputMode, setOutputMode] = useState()
     const [url, setUrl] = useState({ words: "" })
-    //const [urlFound, setUrlFound] = useState();
     const [wordNum, setWordNumb] = useState({
       total: 0,
       frequency: 0
     })
     const [wordFound, setWordFound] = useState();
-    //const [wordList, setWordList] = useState();
 
     const getURL = async (urlInput) => {
       try {
@@ -103,16 +101,12 @@ const Landing = (props) => {
         })
         const urlArray = res.data.data
         urlArray.forEach(u => {
-          // console.log(u.domain)
           if (u.domain === urlInput){
             setUrl(u)
-            //setUrlFound(true)
             return
           }
         });
-          // if(!urlFound) {
-          //   alert("Sorry, URL no found")
-          // }  
+
       } catch (error) {
         console.error(error.response.data)
       }
@@ -121,8 +115,7 @@ const Landing = (props) => {
     const getWords = async (word) => {
       try {
         const wordObject = url.words
-        // setWordList(wordObject)
-        //Find the word that matches in DB
+
         for (const w in wordObject) {
           if (w === word) {
               setWordNumb({
@@ -152,11 +145,6 @@ const Landing = (props) => {
         <h4>Sorry, word not found</h4>
         <h4 style={{color: 'white'}}>Total:</h4>
       </div>
-    // ) : urlFound === false ? (
-    //   <div className={classes.results}>
-    //     <h4>Sorry, URL not found</h4>
-    //     <h4 style={{color: 'white'}}>Total:</h4>
-    //   </div>
     ) : (
       <div className={classes.results}>
         <h4 style={{color: 'white'}}>Total:</h4>
@@ -166,6 +154,7 @@ const Landing = (props) => {
 
     const handleSubmitURL = (e) => {
       e.preventDefault()
+      setOutputMode('words')
       getURL(urlRef.current.value)
     }  
 

@@ -43,6 +43,7 @@ const Histogram = (props) => {
   }
 
   useEffect (() => {
+    console.log(props.mode)
     if (props.mode === 'words'){
       processData(props.data) 
     };
