@@ -6,6 +6,7 @@ import axios from 'axios';
 import Histogram from './Histogram';
 import Wordcloud from './WordCloud';
 import Sentiment from './Sentiment';
+import { ProgressBar } from 'react-loader-spinner';
 
 const useStyles = createUseStyles({
   page: {
@@ -89,13 +90,18 @@ const Landing = (props) => {
     const urlRef = useRef(); 
     const [outputMode, setOutputMode] = useState()
     const [url, setUrl] = useState({ words: "" })
-    const [wordNum, setWordNumb] = useState({
-      total: 0,
-      frequency: 0
-    })
+    const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
+    const [isLoading, setIsLoading] = useState(false); 
 
     const getURL = async (urlInput) => {
+
+      setIsLoading(true)
+      if (urlInput === "") {
+        alert("Enter a Valid URL");
+        setIsLoading(false)
+        return;
+    };
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, {
         })
@@ -103,12 +109,14 @@ const Landing = (props) => {
         urlArray.forEach(u => {
           if (u.domain === urlInput){
             setUrl(u)
+            setIsLoading(false)
             return
           }
         });
 
       } catch (error) {
         console.error(error.response.data)
+        setIsLoading(false)
       }
     }
 
@@ -179,7 +187,11 @@ const Landing = (props) => {
                 ref={urlRef}
                 required>
             </input>
-            <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
+            {isLoading ? (
+                  <ProgressBar height={50} width={180}/>
+                ) : (
+                  <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
+                )}
             <div>
               <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
               <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
