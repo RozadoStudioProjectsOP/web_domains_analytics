@@ -1,4 +1,9 @@
-import scrapy
+from scrapy.item import Item, Field
 
-class WordsItem(scrapy.Item):
-    words = scrapy.Field()
+class DomainAnalyitcs(Item):
+    raw = Field()
+    counts = Field()
+    domain = Field()
+    words = Field()
+    bigrams = Field()
+    trigrams = Field()

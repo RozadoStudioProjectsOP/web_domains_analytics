@@ -63,9 +63,9 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+   'scraper.pipelines.ngrams.NGramPipeline': 290,
    'scraper.pipelines.sanitiser.SanitiserPipeline': 300,
-   'scraper.pipelines.count.CountPipeline': 301,
-   'scraper.pipelines.frequency.FrequencyPipeline': 302,
+   'scraper.pipelines.count.CountPipeline': 310,
    'scraper.pipelines.mongo.MongoDBPipeline': 399,
 }
 
