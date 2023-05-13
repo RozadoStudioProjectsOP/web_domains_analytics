@@ -2,10 +2,6 @@
 
 from ..items import DomainAnalyitcs
 import pymongo
-import sys
-import dotenv
-import os
-import json
 
 class MongoDBPipeline:
 
@@ -22,15 +18,11 @@ class MongoDBPipeline:
         'trigrams': 0
     }
 
-    def __init__(self):
+    def open_spider(self, spider):
         # Establishes a connection to the DB
-        dotenv.load_dotenv()
-        MONGO_URI = os.environ["MONGO_URI"]
-        MONGO_DB =  os.environ["MONGO_DB"]
-        MONGO_COLLECTION =  os.environ["MONGO_COLLECTION"]
-        self.client = pymongo.MongoClient(MONGO_URI)
-        self.db = self.client[MONGO_DB]
-        self.col = self.db[MONGO_COLLECTION]
+        self.client = pymongo.MongoClient(spider.MONGO_URI)
+        self.db = self.client[spider.MONGO_DB]
+        self.col = self.db[spider.MONGO_COLLECTION]
 
     def close_spider(self, spider):
         # Tries to update a document or creates a new one based on the given domain.
