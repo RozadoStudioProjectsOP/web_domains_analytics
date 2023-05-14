@@ -178,7 +178,7 @@ const Landing = (props) => {
   return (
     <div className={classes.page}>
         <div>
-          <h3>Choose an URL</h3>
+          <h3>Choose a URL</h3>
           <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
           <div className={classes.inputs}>  
             <input
