@@ -6,6 +6,7 @@ import { LoginContext } from '../contexts/login';
 import { Navigate } from 'react-router-dom'
 import NavBar from './NavBar';
 import { SocialLogins } from './OAuth/Loginfunc.js';
+import { ProgressBar } from 'react-loader-spinner';
 
 import axios from 'axios'
 
@@ -161,7 +162,11 @@ const Register = (props) => {
                     </p>
                 ) : null}
             </div>    
-            <input type="submit" value="Submit"></input>
+            {isLoading ? (
+                    <ProgressBar type="Circles" color="#00BFFF" height={80} width={80}/>
+                ) : (
+                    <input type="submit" value="Submit"></input>
+                )}
             <SocialLogins />
         </form>
     </div>
