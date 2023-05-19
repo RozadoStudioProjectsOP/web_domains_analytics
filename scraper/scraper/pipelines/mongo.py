@@ -14,7 +14,8 @@ class MongoDBPipeline:
         'words': {},
         'domain': '',
         'bigrams': {},
-        'trigrams': {}
+        'trigrams': {},
+        'sentiment': {}
     }
     counts = {
         'words': 0,

@@ -66,6 +66,7 @@ ITEM_PIPELINES = {
    'scraper.pipelines.ngrams.NGramPipeline': 290,
    'scraper.pipelines.sanitiser.SanitiserPipeline': 300,
    'scraper.pipelines.count.CountPipeline': 310,
+   'scraper.pipelines.sentiment.SentimentPipeline': 398,
    'scraper.pipelines.mongo.MongoDBPipeline': 399,
 }
 
