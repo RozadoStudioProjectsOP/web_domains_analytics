@@ -59,6 +59,8 @@ class MongoDBPipeline:
         self.counts['bigrams'] += item['counts']['bigrams']
         self.counts['trigrams'] += item['counts']['trigrams']
 
+        self.payload['sentiment'] = item['sentiment']
+
         def buildPayload(wordList, target):
             for key, value in wordList.items():                
                 # Check if word already exists in payload.
