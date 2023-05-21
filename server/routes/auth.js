@@ -3,7 +3,7 @@ import passport from "passport";
 const router = Router();
 
 import { register, login, logout } from "../controllers/auth.js"
-import { BASE_URL } from "../controllers/passport.js"
+import { BASE_URL } from "../utils/envSetup.js"
 
 // Auth Routes
 router.route("/register").post(register);

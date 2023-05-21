@@ -1,13 +1,10 @@
 import passport from "passport";
-import dotenv from "dotenv";
 import GoogleStrategy from 'passport-google-oauth20';
 import FacebookStrategy from 'passport-facebook';
 import GitHubStrategy from 'passport-github2';
 import User from "../models/user.js";
 
-dotenv.config();
-export const BASE_URL = process.env.NODE_ENV === "production" ? process.env.CORS_ORIGIN_PROD : process.env.CORS_ORIGIN_DEV;
-const CALLBACK_URL = process.env.NODE_ENV === "production" ? process.env.CALLBACK_URL_PROD : process.env.CALLBACK_URL_DEV;
+import { CALLBACK_URL } from "../utils/envSetup.js";
 
 passport.use(
     new GoogleStrategy({

@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 
+import { MONGO_URI } from '../utils/envSetup.js';
+
 const conn = async () => {
-    const MONGO_URI = process.env.NODE_ENV === "production" ? process.env.MONGO_URI_PROD
-    : process.env.NODE_ENV === "development" ? process.env.MONGO_URI_DEV
-    : process.env.MONGO_URI_TEST;
     try {
         await mongoose.connect(MONGO_URI);
         console.log(`Connected to the ${process.env.NODE_ENV} database`);
