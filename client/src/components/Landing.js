@@ -101,21 +101,26 @@ const Landing = (props) => {
         alert("Enter a Valid URL");
         setIsLoading(false)
         return;
-    };
+      };
       try {
-        const res = await axios.get(`${BASE_URL}/scrapy`, {
-        })
+        // refactor:
+        // changed request to get only a list of domains from db
+        // instead of requesting all data for every scraped site
+        const res = await axios.get(`${BASE_URL}/scrapy/domains`)
         const urlArray = res.data.data
-        urlArray.forEach(u => {
-          if (u.domain === urlInput){
-            setUrl(u)
-            setIsLoading(false)
-            return
-          }
-        });
-
+        // changed urlArray.ForEach to .find
+        const foundUrl = urlArray.find((u) => u === urlInput)
+        // request data for the url if found, otherwise scrape the url
+        if (foundUrl) {
+          const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+          setUrl(res.data.data);
+        } else {
+          // Make a 'POST' request to scrape the website
+          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput });
+        }
       } catch (error) {
         console.error(error.response.data)
+      } finally {
         setIsLoading(false)
       }
     }
