@@ -27,13 +27,10 @@ const scrape = async (req, res) => {
         });
     }
 }
-const getOne = async (req, res) => {
-    const domain = req.params.id;
+
+const getDomains = async (req, res) => {
     try {
-        const data = await Data.findOne({ domain });
-        if (!data) {
-            return res.status(404).json({ success: false, msg: "Data not found" });
-        }
+        const data = await Data.find().distinct('domain');
         return res.status(200).json({ success: true, data: data });
     } catch (err) {
         return res.status(500).json({
@@ -43,8 +40,9 @@ const getOne = async (req, res) => {
 }
 
 const getData = async (req, res) => {
+    const { domain } = req.query;
     try {
-        const data = await Data.find();
+        const data = domain ? await Data.findOne({ domain }) : await Data.find();
         return res.status(200).json({ success: true, data: data });
     } catch (err) {
         return res.status(500).json({
@@ -66,4 +64,4 @@ const saveData = async (req, res) => {
     }
 }
 
-export { scrape, getOne, getData, saveData };
+export { scrape, getDomains, getData, saveData };
