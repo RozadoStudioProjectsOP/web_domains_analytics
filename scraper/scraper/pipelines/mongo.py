@@ -15,18 +15,7 @@ class MongoDBPipeline:
         'domain': '',
         'bigrams': {},
         'trigrams': {},
-        'sentiment': {
-            'fear': 0,
-            'anger': 0,
-            'anticipation': 0,
-            'rust': 0,
-            'surprise': 0,
-            'positive': 0,
-            'negative': 0,
-            'sadness': 0,
-            'disgust': 0,
-            'joy': 0,
-        }
+        'sentiment': {}
     }
     counts = {
         'words': 0,
@@ -70,8 +59,6 @@ class MongoDBPipeline:
         self.counts['bigrams'] += item['counts']['bigrams']
         self.counts['trigrams'] += item['counts']['trigrams']
 
-        self.payload['sentiment'] = item['sentiment']
-
         def buildPayload(wordList, target):
             for key, value in wordList.items():                
                 # Check if word already exists in payload.
@@ -87,12 +74,14 @@ class MongoDBPipeline:
         buildPayload(item['trigrams'], 'trigrams')   
 
         def buildSentimentPayload(sentiment, target):
-            print(sentiment.items())
             for key, value in sentiment.items():
-                # print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-                # print(key, ': ', value) 
-                self.payload[target][key] = self.payload[target][key] + sentiment[key]
+                if key in self.payload[target]:
+                    self.payload[target][key] = self.payload[target][key] + sentiment[key]
+                    print(sentiment[key])
+                else:
+                    self.payload[target][key] = value  
                     
+            print("Payload: ", self.payload[target])
         
         buildSentimentPayload(item['sentiment'], 'sentiment')
         
