@@ -46,8 +46,15 @@ const Sentiment = (props) => {
   const [data, setData] = useState();
   // console.log(data)
 
+  const processData = (datas) => {
+    let allData = Object.values(datas)
+
+    setData(allData)
+
+  }
+
   useEffect(() => {
-    setData([props.data])
+    processData(props.data)
   }, [])
 
     return (
