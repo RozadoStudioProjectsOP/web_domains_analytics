@@ -1,65 +1,28 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-
-// const testData = [
-//     {
-//       subject: 'Negative',
-//       A: 120,
-//       B: 110,
-//       fullMark: 150,
-//     },
-//     {
-//       subject: 'Positive',
-//       A: 98,
-//       B: 130,
-//       fullMark: 150,
-//     },
-//     {
-//       subject: 'Fear',
-//       A: 86,
-//       B: 130,
-//       fullMark: 150,
-//     },
-//     {
-//       subject: 'Anger',
-//       A: 99,
-//       B: 100,
-//       fullMark: 150,
-//     },
-//     {
-//       subject: 'Trust',
-//       A: 85,
-//       B: 90,
-//       fullMark: 150,
-//     },
-//     {
-//       subject: 'Sadness',
-//       A: 65,
-//       B: 85,
-//       fullMark: 150,
-//     },
-//   ];
+import baseSentimentData from '../utils/sentimentBaseData';
 
 const Sentiment = (props) => {
 
-  const [data, setData] = useState();
+  const [data, setData] = useState(baseSentimentData);
   
   const processData = (datas) => {
-    let allData = Object.values(datas)
-    
-    setData(allData)
-    
+    let allData = Object.values(datas) 
+    setData(allData)   
   }
   console.log(data)
 
   useEffect(() => {
-    processData(props.data)
+    if(props.data){
+      processData(props.data)
+    }
   }, [props.data])
 
     return (
         <ResponsiveContainer width="35%" height="40%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Sentiment Data</text>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
