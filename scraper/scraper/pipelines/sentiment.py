@@ -9,6 +9,6 @@ class SentimentPipeline:
         # Get sentiment scores for the scraped page
         text_object = NRCLex(item['raw'])
 
-        item['sentiment'] = text_object.raw_emotion_scores
+        item['sentiment']['total'] = text_object.raw_emotion_scores
 
         return item

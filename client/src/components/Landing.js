@@ -174,7 +174,7 @@ const Landing = (props) => {
     const handleModeSelection = (mode) => {
       setOutputMode(mode)
     }
-
+    console.log(url)
   return (
     <div className={classes.page}>
         <div>
@@ -212,7 +212,7 @@ const Landing = (props) => {
         </div>
         <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
         <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud>
-        <Sentiment></Sentiment>
+        <Sentiment data={url.sentiment}></Sentiment>
     </div>
   )
 }
