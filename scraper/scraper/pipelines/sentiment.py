@@ -1,6 +1,5 @@
 from ..items import DomainAnalyitcs
 from nrclex import NRCLex
-from collections import Counter
 
 class SentimentPipeline:
     
