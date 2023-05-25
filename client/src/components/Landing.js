@@ -105,6 +105,7 @@ const Landing = (props) => {
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, {
         })
+        console.log(res)
         const urlArray = res.data.data
         urlArray.forEach(u => {
           if (u.domain === urlInput){

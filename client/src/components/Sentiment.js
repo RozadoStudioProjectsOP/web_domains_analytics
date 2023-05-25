@@ -44,18 +44,18 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 const Sentiment = (props) => {
 
   const [data, setData] = useState();
-  // console.log(data)
-
+  
   const processData = (datas) => {
     let allData = Object.values(datas)
-
+    
     setData(allData)
-
+    
   }
+  console.log(data)
 
   useEffect(() => {
     processData(props.data)
-  }, [])
+  }, [props.data])
 
     return (
         <ResponsiveContainer width="35%" height="40%">
