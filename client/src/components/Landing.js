@@ -174,7 +174,7 @@ const Landing = (props) => {
     const handleModeSelection = (mode) => {
       setOutputMode(mode)
     }
-    console.log(url)
+    // console.log(url)
   return (
     <div className={classes.page}>
         <div>

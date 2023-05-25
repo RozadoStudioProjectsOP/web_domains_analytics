@@ -11,7 +11,7 @@ const Histogram = (props) => {
     name: ''
   }]);
   const [histoText, setHistoText] = useState()
-
+  console.log(data)
 // Modify data to have a numeric index
   const processData = (datas) => {
     let allData = Object.values(datas)

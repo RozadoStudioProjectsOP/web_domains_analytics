@@ -44,18 +44,19 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 const Sentiment = (props) => {
 
   const [data, setData] = useState();
+  // console.log(data)
 
   useEffect(() => {
-    setData(props.data)
+    setData([props.data])
   }, [])
 
     return (
         <ResponsiveContainer width="35%" height="40%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
             <PolarGrid />
-            <PolarAngleAxis dataKey="subject" />
+            <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
-            <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+            <Radar name="Mike" dataKey="total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
           </RadarChart>
         </ResponsiveContainer>
       );
