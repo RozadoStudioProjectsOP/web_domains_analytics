@@ -76,8 +76,7 @@ class MongoDBPipeline:
         def buildSentimentPayload(sentiment, target):
             for key, value in sentiment.items():
                 if key in self.payload[target]:
-                    self.payload[target][key]['total'] = self.payload[target][key]['total'] + sentiment[key]['total']
-                    print(sentiment[key])
+                    self.payload[target][key] = self.payload[target][key] + sentiment[key]
                 else:
                     self.payload[target][key] = value  
                     
