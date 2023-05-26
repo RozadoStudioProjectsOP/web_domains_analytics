@@ -19,7 +19,8 @@ const Sentiment = (props) => {
   }, [props.data])
 
     return (
-        <ResponsiveContainer width="35%" height="40%">
+      <div style={{minWidth: '30vw', height: '60vh'}}> 
+        <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
             <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Sentiment Data</text>
             <PolarGrid />
@@ -28,6 +29,7 @@ const Sentiment = (props) => {
             <Radar name="Mike" dataKey="total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
           </RadarChart>
         </ResponsiveContainer>
+      </div>  
       );
 }
 

@@ -56,7 +56,8 @@ const Histogram = (props) => {
   },[props]);
 
   return (
-    <ResponsiveContainer width="60%" height="54%">
+    <div style={{minWidth: '60vw'}}>       
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart
         data={data}
         margin={{
@@ -64,7 +65,7 @@ const Histogram = (props) => {
           bottom: 5,
           right: 30
         }}
-      >
+        >
         <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 10 {histoText}</text>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
@@ -74,6 +75,7 @@ const Histogram = (props) => {
         <Bar dataKey="Total" fill="#82ca9d" yAxisId="left"/>
       </BarChart>
     </ResponsiveContainer>
+      </div>
   );
 }
 

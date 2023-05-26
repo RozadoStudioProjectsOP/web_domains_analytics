@@ -10,7 +10,7 @@ import { ProgressBar } from 'react-loader-spinner';
 
 const useStyles = createUseStyles({
   page: {
-    height: "130vh",
+    height: "auto",
     background: '#E9EAEC',
     display: 'flex',
     justifyContent: 'space-around',
@@ -22,17 +22,15 @@ const useStyles = createUseStyles({
       justifyContent: 'center',
       alignItems: 'center',
       background: 'white',
+      marginBottom: 10,
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '35vw',
       height: '70vh',
-      '&:nth-child(3)': {
-        width: '60vw',
-        height: 'auto'
-      },
-      '&:nth-child(4)': {
-        width: '60vw',
-        height: '40vh'
+      '&:nth-child(3)': { //Word cloud
+        minWidth: '60vw',
+        height: 'auto',
+        minHeight: '60vh'
       },
       '& > h3': {
         fontFamily: 'Gill Sans',
@@ -105,7 +103,7 @@ const Landing = (props) => {
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, {
         })
-
+        console.log(res)
         const urlArray = res.data.data
         urlArray.forEach(u => {
           if (u.domain === urlInput){
@@ -181,6 +179,8 @@ const Landing = (props) => {
     }
     // console.log(url)
   return (
+    <div>
+
     <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
@@ -218,6 +218,7 @@ const Landing = (props) => {
         <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
         <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud>
         <Sentiment data={url.sentiment}></Sentiment>
+    </div>
     </div>
   )
 }
