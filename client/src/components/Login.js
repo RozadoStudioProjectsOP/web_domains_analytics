@@ -81,7 +81,6 @@ const Login = (props) => {
     console.log(name, email, password)
     setIsLoading(true);
     try {
-        console.log(BASE_URL)
         const res = await axios.post(`${BASE_URL}/auth/login`, {
             username: name,
             email: email,

@@ -63,12 +63,12 @@ const useStyles = createUseStyles({
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
     '&:hover': {
-      background: '#385E72',
-      color: 'white'
+        background: '#385E72',
+        color: 'white'
     },
     "&:active": {
-      transform: "translateY(4px)",
-      boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
+        transform: "translateY(4px)",
+        boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
     }
   },
   results: {
@@ -76,144 +76,127 @@ const useStyles = createUseStyles({
     color: '#191970',
     fontSize: "1.2rem"
   }
-})
+  })
 
 const Landing = (props) => {
-  const classes = useStyles();
-  const wordRef = useRef();
-  const urlRef = useRef();
-  const [url, setUrl] = useState({ words: "" })
-  //const [urlFound, setUrlFound] = useState();
-  const [wordNum, setWordNumb] = useState({
-    total: 0,
-    frequency: 0
-  })
-  const [wordFound, setWordFound] = useState();
-  //const [wordList, setWordList] = useState();
+    const classes = useStyles();
+    const wordRef = useRef(); 
+    const urlRef = useRef(); 
+    const [url, setUrl] = useState({ words: "" })
+    //const [urlFound, setUrlFound] = useState();
+    const [wordNum, setWordNumb] = useState({
+      total: 0,
+      frequency: 0
+    })
+    const [wordFound, setWordFound] = useState();
+    //const [wordList, setWordList] = useState();
 
-  const getURL = async (urlInput) => {
-    try {
-      const res = await axios.get(`${BASE_URL}/scrapy`, {
-      })
-      const urlArray = res.data.data
-      urlArray.forEach(u => {
-        // console.log(u.domain)
-        if (u.domain === urlInput) {
-          setUrl(u)
-          //setUrlFound(true)
-          return
-        }
-      });
-      // if(!urlFound) {
-      //   alert("Sorry, URL no found")
-      // }  
-    } catch (error) {
-      console.error(error.response.data)
-    }
-  }
-
-  const getWords = async (word) => {
-    try {
-      const wordObject = url.words
-      // setWordList(wordObject)
-      //Find the word that matches in DB
-      for (const w in wordObject) {
-        if (w === word) {
-          setWordNumb({
-            total: wordObject[w].Total,
-            frequency: wordObject[w].Frequency
-          })
-          setWordFound(true)
-          return
-        }
-        setWordFound(false)
+    const getURL = async (urlInput) => {
+      try {
+        const res = await axios.get(`${BASE_URL}/scrapy`, {
+        })
+        const urlArray = res.data.data
+        urlArray.forEach(u => {
+          // console.log(u.domain)
+          if (u.domain === urlInput){
+            setUrl(u)
+            //setUrlFound(true)
+            return
+          }
+        });
+          // if(!urlFound) {
+          //   alert("Sorry, URL no found")
+          // }  
+      } catch (error) {
+        console.error(error.response.data)
       }
-
-    } catch (error) {
-      console.error(error.response.data)
     }
 
-  }
+    const getWords = async (word) => {
+      try {
+        const wordObject = url.words
+        // setWordList(wordObject)
+        //Find the word that matches in DB
+        for (const w in wordObject) {
+          if (w === word) {
+              setWordNumb({
+                total: wordObject[w].Total,
+                frequency: wordObject[w].Frequency
+              })
+              setWordFound(true)
+              return
+            }
+            setWordFound(false)
+          }
+          
+      } catch (error) {
+        console.error(error.response.data)
+      }
+  
+    }
 
-  // Word count conditional output
-  const result = wordFound === true ? (
-    <div className={classes.results}>
-      <h4>Total: {wordNum.total}</h4>
-      <h4>Frequency: {wordNum.frequency}</h4>
-    </div>
-  ) : wordFound === false ? (
-    <div className={classes.results}>
-      <h4>Sorry, word not found</h4>
-      <h4 style={{ color: 'white' }}>Total:</h4>
-    </div>
+    // Word count conditional output
+    const result = wordFound === true ? (
+      <div className={classes.results}>
+        <h4>Total: {wordNum.total}</h4>
+        <h4>Frequency: {wordNum.frequency}</h4>
+      </div>
+    ) : wordFound === false ? (
+      <div className={classes.results}>
+        <h4>Sorry, word not found</h4>
+        <h4 style={{color: 'white'}}>Total:</h4>
+      </div>
     // ) : urlFound === false ? (
     //   <div className={classes.results}>
     //     <h4>Sorry, URL not found</h4>
     //     <h4 style={{color: 'white'}}>Total:</h4>
     //   </div>
-  ) : (
-    <div className={classes.results}>
-      <h4 style={{ color: 'white' }}>Total:</h4>
-      <h4 style={{ color: 'white' }}>Frequency:</h4>
-    </div>
-  )
+    ) : (
+      <div className={classes.results}>
+        <h4 style={{color: 'white'}}>Total:</h4>
+        <h4 style={{color: 'white'}}>Frequency:</h4>
+      </div>
+    )
 
-  const handleSubmitURL = (e) => {
-    e.preventDefault()
-    getURL(urlRef.current.value)
-  }
-  const scrape = async () => {
-    await axios.post(
-      'https://app.scrapinghub.com/api/run.json',
-      new URLSearchParams({
-        'project': 650305,
-        'spider': 'spider',
-        'url': 'quotes.toscrape.com',
-        'MONGO_DB': 'dev',
-        'MONGO_URI': 'mongodb+srv://admin:studio.12345@cluster0.8kunbaq.mongodb.net/dev?retryWrites=true&w=majority',
-        'MONGO_COLLECTION': 'wordClouds'
-      }),
-      {
-        auth: {
-          username: '18295ffa01b14bdb9160fad8c6f944d4'
-        }
-      }
-    );
-  }
+    const handleSubmitURL = (e) => {
+      e.preventDefault()
+      getURL(urlRef.current.value)
+    }  
 
-
-  const handleSubmitWord = (e) => {
-    e.preventDefault()
-    getWords(wordRef.current.value)
-  }
-
+    const handleSubmitWord = (e) => {
+      e.preventDefault()
+      getWords(wordRef.current.value)
+    }
+    
   return (
     <div className={classes.page}>
-      <div>
-        <h3>Choose an URL</h3>
-        <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
-        <div className={classes.inputs}>
-          <input
-            className={classes.wordInput}
-            type='text'
-            ref={urlRef}
-            required>
-          </input>
-          <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
+        <div>
+          <h3>Choose an URL</h3>
+          <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
+          <div className={classes.inputs}>  
+            <input
+                className={classes.wordInput}
+                type='text'
+                ref={urlRef}
+                required>
+            </input>
+            <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
+          </div>
+          <h3>Choose a word: </h3>
+          <div className={classes.inputs}>  
+            <input
+                className={classes.wordInput}
+                type='text'
+                ref={wordRef}
+                required>
+            </input>
+            <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
+          </div>
+          {result}   
         </div>
-        <h3>Choose a word: </h3>
-        <div className={classes.inputs}>
-          <input
-            className={classes.wordInput}
-            type='text'
-            ref={wordRef}
-            required>
-          </input>
-          <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
-        </div>
-        {result}
-      </div>
-      <button onClick={() => scrape()}>TEST</button>
+        <Histogram data={url.words}></Histogram>
+        <Wordcloud data={url.words}></Wordcloud>
+        <Sentiment></Sentiment>
     </div>
   )
 }

@@ -2,7 +2,6 @@
 
 from ..items import DomainAnalyitcs
 import pymongo
-from datetime import datetime
 
 class MongoDBPipeline:
 
@@ -24,19 +23,13 @@ class MongoDBPipeline:
         self.client = pymongo.MongoClient(spider.MONGO_URI)
         self.db = self.client[spider.MONGO_DB]
         self.col = self.db[spider.MONGO_COLLECTION]
-        #
-        jobData = {
-            'timestamp':  datetime.now(),
-            'pending': True,
-            'domain': spider.url
-        }
-        self.jobs = self.db['scrapy']
-        self.jobs.insert_one(jobData)
 
     def close_spider(self, spider):
+        pass
         # Tries to update a document or creates a new one based on the given domain.
         
         def calculateFrequency(target):
+            pass
             #Calculate relative frequency of words
             for word in self.payload[target]:
                 self.payload[target][word]['Frequency'] = self.payload[target][word]['Total'] / self.counts[target]
@@ -48,9 +41,6 @@ class MongoDBPipeline:
         query = { 'domain': self.payload['domain'] }
         data = dict(self.payload)        
         self.col.update_one(query, { '$set': data }, upsert=True)
-
-        query = { 'domain': spider.url }
-        self.jobs.update_one(query, { '$set': { 'pending': False } }, upsert=True)
         self.client.close()
     
     def process_item(self, item, spider):        
