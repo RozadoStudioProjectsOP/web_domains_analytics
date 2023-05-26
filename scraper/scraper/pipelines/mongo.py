@@ -25,9 +25,11 @@ class MongoDBPipeline:
         self.col = self.db[spider.MONGO_COLLECTION]
 
     def close_spider(self, spider):
+        pass
         # Tries to update a document or creates a new one based on the given domain.
         
         def calculateFrequency(target):
+            pass
             #Calculate relative frequency of words
             for word in self.payload[target]:
                 self.payload[target][word]['Frequency'] = self.payload[target][word]['Total'] / self.counts[target]
@@ -41,7 +43,7 @@ class MongoDBPipeline:
         self.col.update_one(query, { '$set': data }, upsert=True)
         self.client.close()
     
-    def process_item(self, item, spider):
+    def process_item(self, item, spider):        
         item = DomainAnalyitcs(item)
 
         self.payload['domain'] = item['domain']
@@ -62,5 +64,5 @@ class MongoDBPipeline:
 
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
-        buildPayload(item['trigrams'], 'trigrams')       
-       
+        buildPayload(item['trigrams'], 'trigrams')      
+        return item
