@@ -1,11 +1,13 @@
 #Prcoess the data from the spider into a dictionary that counts the freqency of words.
 import re
 from nltk.corpus import stopwords
-from nltk import ngrams
-from nltk.corpus import stopwords
+from nltk import ngrams, download
 from ..items import DomainAnalyitcs
 
 class NGramPipeline: 
+
+    def open_spider(self, spider):
+        download('stopwords')        
 
     def process_item(self, item, spider):
         item = DomainAnalyitcs(item)
@@ -36,6 +38,5 @@ class NGramPipeline:
 
         item['bigrams'] = CreateNGrams(sanitizedData, 2)
         item['trigrams'] = CreateNGrams(sanitizedData, 3)
-
         return item
         
