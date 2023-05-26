@@ -110,13 +110,14 @@ const Landing = (props) => {
         urlArray.forEach(u => {
           if (u.domain === urlInput){
             setUrl(u)
+            setOutputMode('words')
             setIsLoading(false)
             return
           }
         });
-
+        
         setIsLoading(false)
-        alert("Sorry, URL not found")
+        
         return
 
       } catch (error) {
@@ -167,7 +168,6 @@ const Landing = (props) => {
 
     const handleSubmitURL = (e) => {
       e.preventDefault()
-      setOutputMode('words')
       getURL(urlRef.current.value)
     }  
 

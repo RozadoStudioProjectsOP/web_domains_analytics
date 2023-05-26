@@ -11,7 +11,6 @@ const Sentiment = (props) => {
     let allData = Object.values(datas) 
     setData(allData)   
   }
-  console.log(data)
 
   useEffect(() => {
     if(props.data){
