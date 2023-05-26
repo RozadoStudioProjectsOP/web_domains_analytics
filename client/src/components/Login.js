@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom'
 import { LoginContext } from '../contexts/login';
 import NavBar from './NavBar';
 import { SocialLogins } from './OAuth/Loginfunc.js';
+import { ProgressBar } from 'react-loader-spinner';
 
 const useStyles = createUseStyles({
     main: {
@@ -137,13 +138,12 @@ const Login = (props) => {
                     ref={passRef}
                     required
                     />
-                {isLoading ? (
-                    <p>
-                        Loading...
-                    </p>
-                ) : null}
             </div>    
-            <input type="submit" value="Submit"></input>
+            {isLoading ? (
+                    <ProgressBar type="Circles" color="#00BFFF" height={80} width={80}/>
+                ) : (
+                    <input type="submit" value="Submit"></input>
+                )}
             <SocialLogins />
         </form>
     </div>

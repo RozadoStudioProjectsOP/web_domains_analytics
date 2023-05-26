@@ -10,7 +10,8 @@ class MongoDBPipeline:
         'words': {},
         'domain': '',
         'bigrams': {},
-        'trigrams': {}
+        'trigrams': {},
+        'sentiment': {}
     }
     counts = {
         'words': 0,
@@ -62,5 +63,17 @@ class MongoDBPipeline:
 
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
-        buildPayload(item['trigrams'], 'trigrams')      
+        buildPayload(item['trigrams'], 'trigrams')   
+
+        def buildSentimentPayload(sentiment, target):
+            for key, value in sentiment.items():
+                if key in self.payload[target]:
+                    self.payload[target][key] = self.payload[target][key] + sentiment[key]
+                    print(sentiment[key])
+                else:
+                    self.payload[target][key] = value  
+                    
+            print("Payload: ", self.payload[target])
+        
+        buildSentimentPayload(item['sentiment'], 'sentiment')
         return item
