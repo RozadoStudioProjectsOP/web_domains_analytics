@@ -46,13 +46,18 @@ const Histogram = (props) => {
   useEffect (() => {
     if (props.mode === 'words'){
       processData(props.data) 
-    };
-    if (props.mode === 'bigrams'){
+    } else if (props.mode === 'bigrams'){
       processData(props.bigrams) 
-    };
-    if (props.mode === 'trigrams'){
+    } else if (props.mode === 'trigrams'){
       processData(props.trigrams) 
-    };
+    } else {
+      // If no data 
+      setData([{
+        Total: 0,
+        Frequency: 0,
+        name: ''
+      }])
+    }
   },[props]);
 
   return (

@@ -8,13 +8,17 @@ const Sentiment = (props) => {
   const [data, setData] = useState(baseSentimentData);
   
   const processData = (datas) => {
+    // Need to do this to index the data with numbers
     let allData = Object.values(datas) 
-    setData(allData)   
+    setData(allData)  
   }
 
   useEffect(() => {
     if(props.data){
       processData(props.data)
+    } else {
+      // If no data
+      setData(baseSentimentData)
     }
   }, [props.data])
 
