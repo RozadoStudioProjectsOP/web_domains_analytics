@@ -14,7 +14,7 @@ NEWSPIDER_MODULE = 'domainScraper.spiders'
 
 DEPTH_LIMIT = 3
 DEPTH_PRIOPRITY = 1
-CLOSESPIDER_PAGECOUNT=5
+CLOSESPIDER_ITEMCOUNT=50
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
