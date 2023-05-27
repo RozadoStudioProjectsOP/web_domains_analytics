@@ -2,6 +2,7 @@
 
 from ..items import DomainAnalyitcs
 import pymongo
+from datetime import datetime
 
 class MongoDBPipeline:
 
@@ -10,8 +11,7 @@ class MongoDBPipeline:
         'words': {},
         'domain': '',
         'bigrams': {},
-        'trigrams': {},
-        'sentiment': {}
+        'trigrams': {}
     }
     counts = {
         'words': 0,
@@ -24,6 +24,14 @@ class MongoDBPipeline:
         self.client = pymongo.MongoClient(spider.MONGO_URI)
         self.db = self.client[spider.MONGO_DB]
         self.col = self.db[spider.MONGO_COLLECTION]
+        #
+        jobData = {
+            'timestamp':  datetime.now(),
+            'pending': True,
+            'domain': spider.url
+        }
+        self.jobs = self.db['scrapy']
+        self.job = self.jobs.insert_one(jobData)      
 
     def close_spider(self, spider):
         # Tries to update a document or creates a new one based on the given domain.
@@ -40,6 +48,7 @@ class MongoDBPipeline:
         query = { 'domain': self.payload['domain'] }
         data = dict(self.payload)        
         self.col.update_one(query, { '$set': data }, upsert=True)
+        self.jobs.update_one({ '_id': self.job.inserted_id}, { '$set': { 'pending': False } }, upsert=True)
         self.client.close()
     
     def process_item(self, item, spider):        
@@ -63,17 +72,5 @@ class MongoDBPipeline:
 
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
-        buildPayload(item['trigrams'], 'trigrams')   
-
-        def buildSentimentPayload(sentiment, target):
-            for key, value in sentiment.items():
-                if key in self.payload[target]:
-                    self.payload[target][key] = self.payload[target][key] + sentiment[key]
-                    print(sentiment[key])
-                else:
-                    self.payload[target][key] = value  
-                    
-            print("Payload: ", self.payload[target])
-        
-        buildSentimentPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['trigrams'], 'trigrams')      
         return item
