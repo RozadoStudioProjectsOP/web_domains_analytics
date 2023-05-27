@@ -4,3 +4,4 @@ __pycache__
 /build
 project.egg*
 setup.py
+scrapinghub.yml
