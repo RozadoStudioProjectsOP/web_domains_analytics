@@ -1,55 +1,39 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import baseSentimentData from '../utils/sentimentBaseData';
 
-const testData = [
-    {
-      subject: 'Negative',
-      A: 120,
-      B: 110,
-      fullMark: 150,
-    },
-    {
-      subject: 'Positive',
-      A: 98,
-      B: 130,
-      fullMark: 150,
-    },
-    {
-      subject: 'Fear',
-      A: 86,
-      B: 130,
-      fullMark: 150,
-    },
-    {
-      subject: 'Anger',
-      A: 99,
-      B: 100,
-      fullMark: 150,
-    },
-    {
-      subject: 'Trust',
-      A: 85,
-      B: 90,
-      fullMark: 150,
-    },
-    {
-      subject: 'Sadness',
-      A: 65,
-      B: 85,
-      fullMark: 150,
-    },
-  ];
+const Sentiment = (props) => {
 
-const Sentiment = () => {
+  const [data, setData] = useState(baseSentimentData);
+  
+  const processData = (datas) => {
+    // Need to do this to index the data with numbers
+    let allData = Object.values(datas) 
+    setData(allData)  
+  }
+
+  useEffect(() => {
+    if(props.data){
+      processData(props.data)
+    } else {
+      // If no data
+      setData(baseSentimentData)
+    }
+  }, [props.data])
+
     return (
-        <ResponsiveContainer width="35%" height="40%">
-          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={testData}>
+      <div style={{minWidth: '30vw', height: '60vh'}}> 
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Sentiment Data</text>
             <PolarGrid />
-            <PolarAngleAxis dataKey="subject" />
+            <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
-            <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+            <Radar name="Mike" dataKey="total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
           </RadarChart>
         </ResponsiveContainer>
+      </div>  
       );
 }
 
