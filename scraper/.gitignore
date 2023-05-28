@@ -1,7 +1,3 @@
 *.json
 __pycache__
 .env
-/build
-project.egg*
-setup.py
-scrapinghub.yml

@@ -11,4 +11,16 @@ class SentimentPipeline:
 
         item['sentiment'] = text_object.raw_emotion_scores
 
+        def getTotals(sentiment):
+
+            for item, value in sentiment.items():
+                sentiment[item] = {
+                    'total': value,
+                    'name': item.capitalize()
+                } 
+            return sentiment 
+
+        item['sentiment'] = getTotals(item['sentiment'])
+        print (item['sentiment'])
+
         return item

@@ -2,7 +2,10 @@
 
 from ..items import DomainAnalyitcs
 import pymongo
-from datetime import datetime
+import sys
+import dotenv
+import os
+import json
 
 class MongoDBPipeline:
 
@@ -11,7 +14,8 @@ class MongoDBPipeline:
         'words': {},
         'domain': '',
         'bigrams': {},
-        'trigrams': {}
+        'trigrams': {},
+        'sentiment': {}
     }
     counts = {
         'words': 0,
@@ -19,19 +23,15 @@ class MongoDBPipeline:
         'trigrams': 0
     }
 
-    def open_spider(self, spider):
+    def __init__(self):
         # Establishes a connection to the DB
-        self.client = pymongo.MongoClient(spider.MONGO_URI)
-        self.db = self.client[spider.MONGO_DB]
-        self.col = self.db[spider.MONGO_COLLECTION]
-        #
-        jobData = {
-            'timestamp':  datetime.now(),
-            'pending': True,
-            'domain': spider.url
-        }
-        self.jobs = self.db['scrapy']
-        self.job = self.jobs.insert_one(jobData)      
+        dotenv.load_dotenv()
+        MONGO_URI = os.environ["MONGO_URI"]
+        MONGO_DB =  os.environ["MONGO_DB"]
+        MONGO_COLLECTION =  os.environ["MONGO_COLLECTION"]
+        self.client = pymongo.MongoClient(MONGO_URI)
+        self.db = self.client[MONGO_DB]
+        self.col = self.db[MONGO_COLLECTION]
 
     def close_spider(self, spider):
         # Tries to update a document or creates a new one based on the given domain.
@@ -48,10 +48,9 @@ class MongoDBPipeline:
         query = { 'domain': self.payload['domain'] }
         data = dict(self.payload)        
         self.col.update_one(query, { '$set': data }, upsert=True)
-        self.jobs.update_one({ '_id': self.job.inserted_id}, { '$set': { 'pending': False } }, upsert=True)
         self.client.close()
     
-    def process_item(self, item, spider):        
+    def process_item(self, item, spider):
         item = DomainAnalyitcs(item)
 
         self.payload['domain'] = item['domain']
@@ -72,5 +71,16 @@ class MongoDBPipeline:
 
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
-        buildPayload(item['trigrams'], 'trigrams')      
-        return item
+        buildPayload(item['trigrams'], 'trigrams')   
+
+        def buildSentimentPayload(sentiment, target):
+            for key, value in sentiment.items():
+                if key in self.payload[target]:
+                    self.payload[target][key]['total'] = self.payload[target][key]['total'] + sentiment[key]['total']
+                else:
+                    self.payload[target][key] = value  
+                    
+            print("Payload: ", self.payload[target])
+        
+        buildSentimentPayload(item['sentiment'], 'sentiment')
+        
