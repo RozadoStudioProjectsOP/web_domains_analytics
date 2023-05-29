@@ -7,17 +7,25 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'scraper'
+BOT_NAME = 'scrapers'
 
-SPIDER_MODULES = ['scraper.spiders']
-NEWSPIDER_MODULE = 'scraper.spiders'
+SPIDER_MODULES = ['domainScraper.spiders']
+NEWSPIDER_MODULE = 'domainScraper.spiders'
 
+DEPTH_LIMIT = 3
+DEPTH_PRIOPRITY = 1
+CLOSESPIDER_ITEMCOUNT=50
+CLOSESPIDER_PAGECOUNT=200
+SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
+SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
+COOKIES_ENABLED = False
+DOWNLOAD_DELAY = 3
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -63,11 +71,11 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'scraper.pipelines.ngrams.NGramPipeline': 290,
-   'scraper.pipelines.sanitiser.SanitiserPipeline': 300,
-   'scraper.pipelines.count.CountPipeline': 310,
-   'scraper.pipelines.sentiment.SentimentPipeline': 398,
-   'scraper.pipelines.mongo.MongoDBPipeline': 399,
+   'domainScraper.pipelines.ngrams.NGramPipeline': 290,
+   'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,
+   'domainScraper.pipelines.count.CountPipeline': 310,
+   'domainScraper.pipelines.sentiment.SentimentPipeline': 398,
+   'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

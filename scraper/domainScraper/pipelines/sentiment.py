@@ -1,4 +1,4 @@
-from ..items import DomainAnalyitcs
+from ...scraper.items import DomainAnalyitcs
 from nrclex import NRCLex
 
 class SentimentPipeline:
