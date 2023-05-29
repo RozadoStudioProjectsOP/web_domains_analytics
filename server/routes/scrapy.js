@@ -1,10 +1,11 @@
 import { Router } from "express";
 const router = Router();
 
-import { getOne, getData, saveData } from "../controllers/scrapy.js";
+import { getData, saveData, scrape, getDomains } from "../controllers/scrapy.js";
 
 router.route("/").get(getData);
-router.route("/:id").get(getOne);
+router.route("/domains").get(getDomains);
 router.route("/save").post(saveData);
+router.route("/scrape").post(scrape);
 
 export default router;

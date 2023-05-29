@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from "react-jss";
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
@@ -46,8 +46,9 @@ const useStyles = createUseStyles({
     flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
+      alignItems: 'center',
       marginTop: 20,
-      width: '70%',
+      width: '80%',
     },
   },
   wordInput: {
@@ -91,6 +92,31 @@ const Landing = (props) => {
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
     const [isLoading, setIsLoading] = useState(false); 
+    const [isScraping, setIsScraping] = useState(false);
+
+    useEffect(() => {
+      // while data is being scraped
+      if (isScraping) {
+        const interval = setInterval(async () => {
+          try {
+            // requests to backend are made every 5 seconds
+            // to check if the scraping is complete
+            const res = await axios.get(`${BASE_URL}/scrapy/domains`);
+            const foundUrl = res.data.data.find((u) => u === urlRef.current.value);
+            // when it is complete, the data is fetched
+            if (foundUrl) {
+              const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+              setUrl(res.data.data);
+              setIsScraping(false);
+            }
+          } catch (error) {
+            console.error(error.response.data);
+            setIsScraping(false);
+          }
+        }, 5000);
+        return () => clearInterval(interval);
+      }
+    }, [isScraping])
 
     const getURL = async (urlInput) => {
 
@@ -99,27 +125,28 @@ const Landing = (props) => {
         alert("Enter a Valid URL");
         setIsLoading(false)
         return;
-    };
+      };
       try {
-        const res = await axios.get(`${BASE_URL}/scrapy`, {
-        })
-        // console.log(res)
+        // refactor:
+        // changed request to get only a list of domains from db
+        // instead of requesting all data for every scraped site
+        const res = await axios.get(`${BASE_URL}/scrapy/domains`)
         const urlArray = res.data.data
-        urlArray.forEach(u => {
-          if (u.domain === urlInput){
-            setUrl(u)
-            setOutputMode('words')
-            setIsLoading(false)
-            return
-          }
-        });
-        
-        setIsLoading(false)
-        
-        return
-
+        // changed urlArray.ForEach to .find
+        const foundUrl = urlArray.find((u) => u === urlInput)
+        // request data for the url if found, otherwise scrape the url
+        if (foundUrl) {
+          const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+          setUrl(res.data.data);
+          setOutputMode('words');
+        } else {
+          // Make a 'POST' request to scrape the website
+          setIsScraping(true);
+          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput });
+        }
       } catch (error) {
         console.error(error.response.data)
+      } finally {
         setIsLoading(false)
       }
     }
@@ -177,7 +204,22 @@ const Landing = (props) => {
     const handleModeSelection = (mode) => {
       setOutputMode(mode)
     }
-    // console.log(url.sentiment)
+    
+    // refactored conditional rendering checks for loading and scraping
+    const loading = isLoading ? 
+    ( 
+      <div>
+        <ProgressBar height={50} width={180}/>
+        <h4>Loading...</h4>
+      </div>
+    ) : isScraping ? 
+    ( 
+      <div>
+        <ProgressBar height={50} width={180}/>
+        <h4>Scraping...this may take a while</h4>
+      </div>
+    ) : ( <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input> )
+
   return (
     <div>
 
@@ -192,16 +234,12 @@ const Landing = (props) => {
                 ref={urlRef}
                 required>
             </input>
-            {isLoading ? (
-                  <ProgressBar height={50} width={180}/>
-                ) : (
-                  <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input>
-                )}
+            {loading}
             <div>
               <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
               <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
               <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
-            </div>
+          </div>
           </div>
           <h3>Choose a word: </h3>
           <div className={classes.inputs}>  
