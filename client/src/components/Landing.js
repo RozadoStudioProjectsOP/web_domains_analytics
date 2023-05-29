@@ -10,7 +10,7 @@ import { ProgressBar } from 'react-loader-spinner';
 
 const useStyles = createUseStyles({
   page: {
-    height: "auto",
+    height: "130vh",
     background: '#E9EAEC',
     display: 'flex',
     justifyContent: 'space-around',
@@ -22,15 +22,17 @@ const useStyles = createUseStyles({
       justifyContent: 'center',
       alignItems: 'center',
       background: 'white',
-      marginBottom: 10,
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '35vw',
       height: '70vh',
-      '&:nth-child(3)': { //Word cloud
-        minWidth: '60vw',
-        height: 'auto',
-        minHeight: '60vh'
+      '&:nth-child(3)': {
+        width: '60vw',
+        height: 'auto'
+      },
+      '&:nth-child(4)': {
+        width: '60vw',
+        height: '40vh'
       },
       '& > h3': {
         fontFamily: 'Gill Sans',
@@ -103,20 +105,14 @@ const Landing = (props) => {
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, {
         })
-        // console.log(res)
         const urlArray = res.data.data
         urlArray.forEach(u => {
           if (u.domain === urlInput){
             setUrl(u)
-            setOutputMode('words')
             setIsLoading(false)
             return
           }
         });
-        
-        setIsLoading(false)
-        
-        return
 
       } catch (error) {
         console.error(error.response.data)
@@ -166,6 +162,7 @@ const Landing = (props) => {
 
     const handleSubmitURL = (e) => {
       e.preventDefault()
+      setOutputMode('words')
       getURL(urlRef.current.value)
     }  
 
@@ -177,10 +174,8 @@ const Landing = (props) => {
     const handleModeSelection = (mode) => {
       setOutputMode(mode)
     }
-    // console.log(url.sentiment)
-  return (
-    <div>
 
+  return (
     <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
@@ -217,8 +212,7 @@ const Landing = (props) => {
         </div>
         <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
         <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud>
-        <Sentiment data={url.sentiment}></Sentiment>
-    </div>
+        <Sentiment></Sentiment>
     </div>
   )
 }
