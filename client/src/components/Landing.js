@@ -57,7 +57,7 @@ const useStyles = createUseStyles({
     fontWeight: "bold",
   },
   button: {
-    width: '10rem',
+    width: '10vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
