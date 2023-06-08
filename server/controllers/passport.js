@@ -1,6 +1,5 @@
 import passport from "passport";
 import GoogleStrategy from 'passport-google-oauth20';
-import FacebookStrategy from 'passport-facebook';
 import GitHubStrategy from 'passport-github2';
 import User from "../models/user.js";
 
@@ -25,37 +24,6 @@ passport.use(
                     accountId: profile.id,
                     username: profile.displayName,
                     email: profile.emails[0].value,
-                    provider: profile.provider,
-                }
-                console.log(userData)
-                User.create(userData).then((newUser) => {
-                    done(null, newUser);
-                });
-            }
-        });
-    })
-);
-
-passport.use(
-    new FacebookStrategy({
-        // options for facebook strategy
-        clientID: `${process.env.FACEBOOK_CLIENT_ID}`,
-        clientSecret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
-        callbackURL: `${CALLBACK_URL}/auth/facebook/callback`,
-        profileFields: ['id', 'displayName', 'emails'],
-    }, (accessToken, refreshToken, profile, done) => {
-        // passport callback function
-        console.log('facebook passport callback function fired');
-        User.findOne({ accountId: profile.id, provider: profile.provider }).then((currentUser) => {
-            if (currentUser !== null) {
-                console.log(currentUser)
-                done(null, currentUser);
-            } else {
-                const email = profile.emails ? profile.emails[0].value : profile.id + '@facebook.com';
-                const userData = {
-                    accountId: profile.id,
-                    username: profile.displayName,
-                    email: email,
                     provider: profile.provider,
                 }
                 console.log(userData)
