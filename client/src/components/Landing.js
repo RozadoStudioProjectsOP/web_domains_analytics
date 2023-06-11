@@ -107,6 +107,7 @@ const Landing = (props) => {
             if (foundUrl) {
               const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
               setUrl(res.data.data);
+              setOutputMode('words');
               setIsScraping(false);
             }
           } catch (error) {
