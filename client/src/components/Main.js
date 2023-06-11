@@ -16,7 +16,7 @@ const useStyles = createUseStyles({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '90%',
+      height: '90vh',
     },
     menu: {
       display: 'flex',
@@ -43,12 +43,12 @@ const useStyles = createUseStyles({
       alignContent: 'space-around',
         "& > a": {
             "& > button": {
-              width: 300,
-              height: 70,
+              width: "20vw",
+              height: "8vh",
               margin: 50,
               cursor: 'pointer',
-              fontSize: 20,
-              letterSpacing: 6,
+              fontSize: "1.5rem",
+              letterSpacing: "0.5rem",
               background: '#D9E4EC',
               border: 'none',
               borderRadius: 5,

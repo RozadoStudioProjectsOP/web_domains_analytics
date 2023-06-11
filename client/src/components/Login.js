@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '90%',
+        height: '90vh',
         backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
