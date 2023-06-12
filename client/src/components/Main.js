@@ -16,7 +16,7 @@ const useStyles = createUseStyles({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '90vh',
+      height: '100%',
     },
     menu: {
       display: 'flex',
@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
       background: 'white',
       "& > h1": {
         letterSpacing: 10,
-        fontSize: 50,
+        fontSize: "2rem",
         color: '#385E72',
         fontFamily: 'Gill Sans',
         textDecoration: 'underline',
@@ -47,7 +47,7 @@ const useStyles = createUseStyles({
               height: "8vh",
               margin: 50,
               cursor: 'pointer',
-              fontSize: "1.5rem",
+              fontSize: "1.2rem",
               letterSpacing: "0.5rem",
               background: '#D9E4EC',
               border: 'none',

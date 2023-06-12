@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
       },
       '& > h3': {
         fontFamily: 'Gill Sans',
-        fontSize: '2rem',
+        fontSize: '150%',
         letterSpacing: '0.3rem',
         color: '#191970'
       }
@@ -52,7 +52,7 @@ const useStyles = createUseStyles({
     },
   },
   wordInput: {
-    padding: 15,
+    padding: 10,
     fontSize: "1rem",
     fontWeight: "bold",
   },
@@ -64,7 +64,7 @@ const useStyles = createUseStyles({
     cursor: 'pointer',
     background: '#D9E4EC',
     fontWeight: 'bold',
-    fontSize: "1rem",
+    fontSize: "80%",
     marginLeft: 20,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
@@ -226,7 +226,7 @@ const Landing = (props) => {
     <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
-          <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
+          {/* <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p> */}
           <div className={classes.inputs}>  
             <input
                 className={classes.wordInput}

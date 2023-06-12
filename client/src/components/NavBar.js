@@ -20,6 +20,7 @@ const useStyles = createUseStyles({
             fontFamily: 'Gill Sans',
             letterSpacing: 1,
             '& > h2': {
+              fontSize: "120%",
                 '&:hover': {
                     textDecoration: 'underline',
                     textDecorationThickness: '0.1rem',
@@ -36,6 +37,7 @@ const useStyles = createUseStyles({
                 color: '#191970',
                 fontFamily: 'Gill Sans',
                 letterSpacing: 1,
+                fontSize: "120%",
                 '&:hover': {
                     textDecoration: 'underline',
                     textDecorationThickness: '0.1rem',
@@ -48,6 +50,7 @@ const useStyles = createUseStyles({
                 fontFamily: 'Gill Sans',
                 letterSpacing: 1,
                 '& > h2': {
+                  fontSize: "120%",
                     '&:hover': {
                         textDecoration: 'underline',
                         textDecorationThickness: '0.1rem',

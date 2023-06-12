@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '90vh',
+        height: '100%',
         backgroundColor: '#E9EAEC',
         '& > form': {
             display: 'flex',
@@ -29,7 +29,7 @@ const useStyles = createUseStyles({
             background: 'white',
             '& > h1': {
                 fontFamily: 'Gill Sans',
-                fontSize: '2rem',
+                fontSize: '150%',
                 letterSpacing: '0.3rem',
                 color: '#191970'
             },
