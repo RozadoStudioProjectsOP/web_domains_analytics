@@ -17,6 +17,13 @@
     height: 50px;
     cursor: pointer;
     margin: 10px;
+    padding: 10px;
+    border: 1px solid white;
+}
+.socialItem:hover {
+    border: 1px solid #191970;
+    background-color: #D9E4EC;
+    border-radius: 5px;
 }
 .socialItem > img {
     width: 100%;

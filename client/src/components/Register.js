@@ -25,6 +25,7 @@ const useStyles = createUseStyles({
             flexDirection: 'column',
             border: "2px solid #385E72",
             padding: 40,
+            paddingBottom: 0,
             borderRadius: 5,
             width: '20vw',
             background: 'white',

@@ -221,6 +221,16 @@ const Landing = (props) => {
       </div>
     ) : ( <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input> )
 
+    const ngrams = !isLoading ? (
+      <div>
+        <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
+        <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
+        <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
+      </div>
+    ) : (
+      <></>
+    )
+
   return (
     <div>
 
@@ -236,11 +246,7 @@ const Landing = (props) => {
                 required>
             </input>
             {loading}
-            <div>
-              <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
-              <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
-              <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
-          </div>
+            {ngrams}
           </div>
           <h3>Choose a word: </h3>
           <div className={classes.inputs}>  
