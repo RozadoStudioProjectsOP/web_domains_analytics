@@ -15,7 +15,7 @@ Install the following packages in your python enviroment.
 Run locally: `scrapy crawl spider -a url=<url> -a MONGO_URI=<uri> -a MONGO_DB=<db> -a MONGO_COLLECTION=<col>`
 
 # Useful:
-To use scrapy in git bash:
+To use scrapy in git bash (this is assuming your use Anaconda):
 1. Install Anaconda Python
 2. Find where conda.sh is, probably: C:\Users\<USER>\anaconda3\etc\profile.d
 3. Open Git Bash in the folder.
