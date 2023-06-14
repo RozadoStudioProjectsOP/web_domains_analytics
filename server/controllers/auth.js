@@ -4,7 +4,8 @@ import getTokenUserData from "../utils/getTokenUserData.js"
 import { attachCookiesToResponse } from "../utils/jwt.js"
 
 const register = async (req, res) => {
-    const { password } = req.body;
+    const { username, email } = req.body;
+    let { password } = req.body;
     try {
         if (req.body.role === "admin") {
             return res.status(401).json({
@@ -13,7 +14,11 @@ const register = async (req, res) => {
         }
         const salt = await bcryptjs.genSalt(10)
         password = await bcryptjs.hash(password, salt)
-        const user = await User.create(req.body);
+        const user = await User.create({
+            username: username,
+            email: email,
+            password: password,
+        });
         const tokenUser = getTokenUserData(user);
         return res.status(201).json({ success: true, data: tokenUser, msg: "Registered" });
     } catch (err) {
