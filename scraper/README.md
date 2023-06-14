@@ -6,11 +6,10 @@ Install the following packages in your python enviroment.
 
 - Scrapy: `pip install Scrapy`, https://docs.scrapy.org/en/latest/
 - PyMongo: `pip install pymongo`, https://pymongo.readthedocs.io/en/stable/
-- Python-Dotenv: `pip install python-dotenv`, https://pypi.org/project/python-dotenv/
 - Trafilatura: `pip install trafilatura`, https://trafilatura.readthedocs.io/en/latest/installation.html
+- NRCLex  `pip install NRCLex`, https://pypi.org/project/NRCLex/
+- NLTK `pip install NLTK`, https://www.nltk.org/install.html
 
 # Usage
 
-Run spider: `scrapy crawl spider -a url=<DOMAIN>`
-
-Example domain: quotes.toscrape.com
+Run locally: `scrapy crawl spider -a url=<url> -a MONGO_URI=<uri> -a MONGO_DB=<db> -a MONGO_COLLECTION=<col>`
