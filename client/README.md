@@ -2,6 +2,7 @@
 
 ---
 ## Run frontend locally
-1. Open the project and move to client directory ``` cd client ```.
-2. Make a copy of the example.env file and fill the variables with the needed data.
-3. ``` npm run start ``` in the terminal to start the app.
+1. Get the server running (instructions in server README file).
+2. Move to client directory ``` cd client ```.
+3. Make a copy of the example.env file and fill the variables with the needed data.
+4. ``` npm run start ``` in the terminal to start the app.
