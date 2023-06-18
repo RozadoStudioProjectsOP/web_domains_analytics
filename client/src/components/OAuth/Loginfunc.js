@@ -4,6 +4,7 @@ import googleImage from "../../assets/googleImage.png";
 import githubImage from "../../assets/githubImage.png";
 import { BASE_URL } from "../../utils/base_url.js";
 
+//Login with google and github
 const SocialLogins = () => {
     const googleLogin = async () => {
         window.open(`${BASE_URL}/auth/google/callback`, "_self");

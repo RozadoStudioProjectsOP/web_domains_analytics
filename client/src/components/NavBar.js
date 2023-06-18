@@ -84,6 +84,7 @@ const NavBar = () => {
 
   }
 
+  // If isHome is true, go to main page.
   if (isHome === true) {
     return <Navigate to="/" />
   }

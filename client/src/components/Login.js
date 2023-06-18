@@ -80,9 +80,10 @@ const Login = (props) => {
   const { changeLogin } = useContext(LoginContext);
 
   const loginUser = async (name, email, password) => {
-    console.log(name, email, password)
+    //console.log(name, email, password)
     setIsLoading(true);
     try {
+        //Fetch backend login route
         const res = await axios.post(`${BASE_URL}/auth/login`, {
             username: name,
             email: email,
@@ -101,6 +102,7 @@ const Login = (props) => {
         }
     } catch (error) {
         console.error(error.response.data)
+        alert(error)
     }
     setIsLoading(false);
   }

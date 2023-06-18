@@ -152,6 +152,7 @@ const Landing = (props) => {
       }
     }
 
+    // Take list of words out of the fetched data
     const getWords = async (word) => {
       try {
         const wordObject = url.words
@@ -221,7 +222,7 @@ const Landing = (props) => {
       </div>
     ) : ( <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input> )
 
-    const ngrams = !isLoading ? (
+    const ngrams = !isLoading && !isScraping ? (
       <div>
         <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
         <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>

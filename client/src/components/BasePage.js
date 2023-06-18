@@ -4,6 +4,9 @@ import Login from './Login';
 import Main from './Main';
 import Register from './Register';
 
+/**
+ * This component holds the app routes
+ */
 const BasePage = () => {
 
   return (

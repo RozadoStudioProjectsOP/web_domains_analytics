@@ -110,8 +110,11 @@ const Register = (props) => {
         if (errorMessage.includes("E11000")) {
             window.alert("Sorry, a user with the same e-mail already exists")
         }
-        if (errorMessage.includes("users validation failed: password")) {
+        else if (errorMessage.includes("users validation failed: password")) {
             window.alert("Error. Password must be at least 8 characters")
+        }
+        else {
+            alert(error)
         }
     }
     setIsLoading(false);

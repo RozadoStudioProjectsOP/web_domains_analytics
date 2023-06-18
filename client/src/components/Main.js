@@ -68,6 +68,8 @@ const useStyles = createUseStyles({
     }
   })
 
+//Initial page 
+
 const Main = (props) => {
     const classes = useStyles();
     const { isLoggedIn } = useContext(LoginContext);

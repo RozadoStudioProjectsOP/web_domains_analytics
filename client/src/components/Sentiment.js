@@ -8,7 +8,7 @@ const Sentiment = (props) => {
   const [data, setData] = useState(baseSentimentData);
   
   const processData = (datas) => {
-    // Need to do this to index the data with numbers
+    // Data need to be processed to index it with numbers
     let allData = Object.values(datas) 
     setData(allData)  
   }

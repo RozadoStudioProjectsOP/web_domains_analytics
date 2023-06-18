@@ -12,17 +12,22 @@ const Histogram = (props) => {
   }]);
   const [histoText, setHistoText] = useState()
 
-// Modify data to have a numeric index
+// Modify data to have a numeric index. The index of the words array from the DB is the word itself.
+// The chart needs a numeric index to work.
   const processData = (datas) => {
-    let allData = Object.values(datas)
 
+    //Separate values from index.
+    let allData = Object.values(datas)
     let keys = Object.keys(datas)
+
+    //Put the index value as a parameter called 'name' inside of the object.
     if (allData) {
         for (let i = 0; i < allData.length; i++) {
           allData[i].name = keys[i]              
         }
       }
 
+    // Sort words from most to less repeated  
     allData.sort((a, b) => {
       if (a.Total > b.Total) {
         return -1;
@@ -32,17 +37,22 @@ const Histogram = (props) => {
       }
       return 0;
     })    
-    // I had to create a new array to avoid a bug 
+
+    // Map all data to get a new array with numeric indexes
     const allDataHist = allData.map((a) => {
       return {Total:a.Total, Frequency:a.Frequency, name:a.name}
     })
 
+    //Convert to upper case histogram's title
     const toUpper = (props.mode).charAt(0).toUpperCase() + (props.mode).slice(1)
     setHistoText(toUpper)
+
+    //Take top 10 words for the histogram
     setData(allDataHist.slice(0, 10))   
 
   }
 
+  //Histogram output changes depending on the mode 
   useEffect (() => {
     if (props.mode === 'words'){
       processData(props.data) 
