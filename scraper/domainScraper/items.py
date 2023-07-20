@@ -8,3 +8,4 @@ class DomainAnalyitcs(Item):
     bigrams = Field()
     trigrams = Field()
     sentiment = Field()
+    AI_Sentiment = Field()
