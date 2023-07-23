@@ -12,8 +12,29 @@ class AISentimentPipeline:
         text = item['raw']
 
         phrasesArray = text.split('. ')
+        emotionsArray= []
 
-        print(phrasesArray)
+        for phrase in phrasesArray:
+            emotion_labels = emotion(phrase)
+            emotionL = emotion_labels[0]['label']
+            # print('##################################################33')
+            # print(emotionL)
+            score = emotion_labels[0]['score']
+            emotionObject = {'emotion': emotionL, 'score': score}
+
+            if not emotionsArray:
+                emotionsArray.append(emotionObject)
+
+            if any(e['emotion'] == emotionL for e in emotionsArray):
+                for element in emotionsArray:
+                    if element['emotion'] == emotionL:
+                        element['score'] = (element['score'] + score) / 2
+                        break    
+            else:
+                emotionsArray.append(emotionObject)
+
+            print(emotionsArray)
+            
 
         # item['sentiment'] = text_object.raw_emotion_scores
 
