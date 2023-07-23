@@ -82,7 +82,7 @@ class MongoDBPipeline:
                 else:
                     self.payload[target][key] = value  
                     
-            print("Payload: ", self.payload[target])
+            # print("Payload: ", self.payload[target])
         
         buildSentimentPayload(item['sentiment'], 'sentiment')
 
