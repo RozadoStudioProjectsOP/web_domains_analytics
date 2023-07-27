@@ -21,6 +21,6 @@ class SentimentPipeline:
             return sentiment 
 
         item['sentiment'] = getTotals(item['sentiment'])
-        # print (item['sentiment'])
+        #print (item['sentiment'])
 
         return item

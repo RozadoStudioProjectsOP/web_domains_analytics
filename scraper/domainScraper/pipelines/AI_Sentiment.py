@@ -14,24 +14,26 @@ class AISentimentPipeline:
         phrasesArray = text.split('. ')
         item['AI_Sentiment'] = []
 
-        for phrase in phrasesArray:
-            emotion_labels = emotion(phrase)
-            emotionL = emotion_labels[0]['label']
-            score = emotion_labels[0]['score']
-            emotionObject = {'emotion': emotionL, 'score': score}
+        def getTotals(sentiment):
+            for phrase in phrasesArray:
+                emotion_labels = emotion(phrase)
+                emotionL = emotion_labels[0]['label']
+                score = emotion_labels[0]['score']
+                emotionObject ={ emotionL: {'total': score, 'name': emotionL}} 
 
-            if not item['AI_Sentiment']:
-                item['AI_Sentiment'].append(emotionObject)
+                if not sentiment:
+                    sentiment.append(emotionObject)
 
-            if any(e['emotion'] == emotionL for e in item['AI_Sentiment']):
-                for element in item['AI_Sentiment']:
-                    if element['emotion'] == emotionL:
-                        element['score'] = (element['score'] + score) / 2
-                        break    
-            else:
-                item['AI_Sentiment'].append(emotionObject)
-
-            #print(item['AI_Sentiment'])
-            
-
+                else:
+                    for element in sentiment:
+                        if 'name' in element and element['name'] == emotionL:
+                            element[emotionL]['total'] = (element[emotionL]['total'] + score) / 2
+                            break
+                    else:  # If the loop didn't break, the emotionL was not found in any element
+                        sentiment.append(emotionObject)
+                    
+            return sentiment
+        
+        print(item['AI_Sentiment'])    
+        item['AI_Sentiment'] = getTotals(item['AI_Sentiment'])     
         return item
