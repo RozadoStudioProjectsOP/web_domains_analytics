@@ -93,7 +93,7 @@ class MongoDBPipeline:
 
             for key, value in sentiment.items():
                 if key in self.payload[target]:
-                    self.payload[target][key]['total'] = self.payload[target][key]['total'] + sentiment[key]['total']
+                    self.payload[target][key]['total'] = (self.payload[target][key]['total'] + sentiment[key]['total']) / 2
                 else:
                     self.payload[target][key] = value   
                     

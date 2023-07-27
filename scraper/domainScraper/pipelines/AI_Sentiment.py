@@ -26,6 +26,7 @@ class AISentimentPipeline:
 
                 else:
                     for element in sentiment:
+                        # If sentiment already exists, add the scores and divide by 2 to get the average
                         if 'name' in element and element['name'] == emotionL:
                             element[emotionL]['total'] = (element[emotionL]['total'] + score) / 2
                             break
@@ -33,7 +34,6 @@ class AISentimentPipeline:
                         sentiment.append(emotionObject)
                     
             return sentiment
-        
-        print(item['AI_Sentiment'])    
+           
         item['AI_Sentiment'] = getTotals(item['AI_Sentiment'])     
         return item
