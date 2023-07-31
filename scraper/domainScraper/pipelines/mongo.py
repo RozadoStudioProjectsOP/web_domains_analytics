@@ -78,8 +78,6 @@ class MongoDBPipeline:
 
         def buildSentimentPayload(sentiment, target):
             for key, value in sentiment.items():
-                # print(key)
-                # print(value)
                 if key in self.payload[target]:
                     self.payload[target][key]['total'] = self.payload[target][key]['total'] + sentiment[key]['total']
                 else:
@@ -89,17 +87,19 @@ class MongoDBPipeline:
         
         buildSentimentPayload(item['sentiment'], 'sentiment')
         
-        def buildAI_SentimentPayload(sentiment, target):
-
-            for key, value in sentiment.items():
-                if key in self.payload[target]:
-                    self.payload[target][key]['total'] = (self.payload[target][key]['total'] + sentiment[key]['total']) / 2
-                    self.payload[target][key]['count'] = self.payload[target][key]['count'] + sentiment[key]['count']
-                else:
-                    self.payload[target][key] = value   
+        def buildAI_SentimentPayload(sentimentArray, target):
+            for sentiment in sentimentArray:
+                for key, value in sentiment.items():
+                    if key in self.payload[target]:
+                        print(self.payload[target][key])
+                        self.payload[target][key]['total'] = (self.payload[target][key]['total'] + sentiment[key]['total']) / 2
+                        self.payload[target][key]['count'] = self.payload[target][key]['count'] + sentiment[key]['count']
+                        print(self.payload[target][key])
+                    else:
+                        self.payload[target][key] = value   
                     
-            #print("Payload: ", self.payload[target])
-        
-        buildAI_SentimentPayload(item['AI_Sentiment'][0], 'AI_Sentiment')
+           # print("Payload: ", self.payload[target])
+
+        buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
 
         return item

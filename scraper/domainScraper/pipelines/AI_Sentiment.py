@@ -1,7 +1,10 @@
+#from __future__ import unicode_literals, print_function 
 from ..items import DomainAnalyitcs
 from transformers import pipeline
+import spacy 
 
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
+nlp = spacy.load('en_core_web_sm') 
 
 class AISentimentPipeline:
     
@@ -9,9 +12,10 @@ class AISentimentPipeline:
         item = DomainAnalyitcs(item)
 
         # Get sentiment scores for the scraped page
-        text = item['raw']
+        raw_text = item['raw']
+        doc = nlp(raw_text) 
 
-        phrasesArray = text.split('. ')
+        phrasesArray = [sent.text.strip() for sent in doc.sents] 
         item['AI_Sentiment'] = []
 
         def getTotals(sentiment):
@@ -33,7 +37,7 @@ class AISentimentPipeline:
                             break
                     else:  # If the loop didn't break, the emotionL was not found in any element
                         sentiment.append(emotionObject)
-            #print(sentiment)        
+        
             return sentiment
         
         counts = []  
@@ -50,7 +54,7 @@ class AISentimentPipeline:
 
                 # Check if the key already exists in the key_counts dictionary
                 if key in key_counts:
-                    key_counts[key] += 1  # Increment the count if the key is repeated
+                    key_counts[key] = 1  # Increment the count if the key is repeated
                 else:
                     key_counts[key] = 1   # Initialize the count if the key is encountered for the first time
 
@@ -59,5 +63,5 @@ class AISentimentPipeline:
             return sentiment
         
         item['AI_Sentiment'] = getCounts(item['AI_Sentiment'])                
-         
+
         return item
