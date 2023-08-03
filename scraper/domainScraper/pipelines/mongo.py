@@ -73,17 +73,7 @@ class MongoDBPipeline:
 
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
-        buildPayload(item['trigrams'], 'trigrams')     
-
-        def buildSentimentPayload(sentiment, target):
-            for key, value in sentiment.items():
-                if key in self.payload[target]:
-                    self.payload[target][key]['total'] = self.payload[target][key]['total'] + sentiment[key]['total']
-                else:
-                    self.payload[target][key] = value  
-                    
-            print("Payload: ", self.payload[target])
-        
-        buildSentimentPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['trigrams'], 'trigrams')
+        buildPayLoad(item['sentiment'], 'sentiment')
 
         return item
