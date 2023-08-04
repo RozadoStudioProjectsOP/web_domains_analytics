@@ -8,16 +8,23 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'scrapers'
-
 SPIDER_MODULES = ['domainScraper.spiders']
 NEWSPIDER_MODULE = 'domainScraper.spiders'
 
+
+# Limits the depth the crawler will go into the website.
 DEPTH_LIMIT = 3
+# Determines if crawl is breadth first (positive value), or depth first (negative value).
 DEPTH_PRIOPRITY = 1
+# Stops spider when items return meets set amount.
 CLOSESPIDER_ITEMCOUNT=50
+# Stops spider after making set amount of requests.
 CLOSESPIDER_PAGECOUNT=200
+# Uses fifo method (default lifo) for breadth first crawls.
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
+
+
 COOKIES_ENABLED = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -69,6 +76,8 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+
+# Format: Directory, pipeline order.
 ITEM_PIPELINES = {
    'domainScraper.pipelines.ngrams.NGramPipeline': 290,
    'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,

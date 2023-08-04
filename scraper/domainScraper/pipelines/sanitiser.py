@@ -10,7 +10,7 @@ class SanitiserPipeline:
         stop_words = set(stopwords.words('english'))    
         def Sanatize(wordList):
             # Remove single quotes, except where used as apostrophees
-            wordList[:] = [re.sub('/\s\'|\'\s', '', word) for word in wordList]    
+            wordList[:] = [re.sub('/^\'|\'$', '', word) for word in wordList]    
             # Removes any character that is not lower case alphabet or single quote.    
             wordList[:] = [re.sub('[^a-z\']', '', word) for word in wordList]    
             #Removes stopwords
