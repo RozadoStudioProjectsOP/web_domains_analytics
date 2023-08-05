@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     height: "auto",
     background: '#E9EAEC',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexWrap: 'wrap',
     '& > div': {
@@ -23,15 +23,16 @@ const useStyles = createUseStyles({
       alignItems: 'center',
       background: 'white',
       marginBottom: 10,
+      marginLeft: 20,
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '35vw',
       height: '70vh',
-      '&:nth-child(3)': { //Word cloud
-        minWidth: '60vw',
-        height: 'auto',
-        minHeight: '60vh'
-      },
+      // '&:nth-child(3)': { //Word cloud
+      //   minWidth: '60vw',
+      //   height: 'auto',
+      //   minHeight: '60vh'
+      // },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '2rem',
@@ -138,6 +139,7 @@ const Landing = (props) => {
         // request data for the url if found, otherwise scrape the url
         if (foundUrl) {
           const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+          console.log(res)
           setUrl(res.data.data);
           setOutputMode('words');
         } else {
@@ -231,11 +233,10 @@ const Landing = (props) => {
     ) : (
       <></>
     )
-
+    console.log(url)
   return (
     <div>
-
-    <div className={classes.page}>
+      <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
           <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
@@ -262,9 +263,9 @@ const Landing = (props) => {
           {result}   
         </div>
         <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
-        <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud>
-        <Sentiment data={url.sentiment}></Sentiment>
-    </div>
+        {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
+        <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
+      </div>
     </div>
   )
 }
