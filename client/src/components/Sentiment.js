@@ -40,12 +40,23 @@ const Sentiment = (props) => {
     setData(allData)  
   }
 
-  // Toggle between 
+  // Toggle charts
   const toggleChart = () => {
     if(!toggle) {
       setToggle(true)
       setTitle("Sentiment Data (RoBERTa)")
-      processData(props.ai_data)
+      
+      // Convert the object properties into an array of objects
+      const aiSentimentArray = Object.values(props.ai_data);
+      console.log(aiSentimentArray)
+
+      // Sort the array in descending order based on the 'Total' property
+      const sortedData = aiSentimentArray.sort((a, b) => b.Total - a.Total);
+
+      // Get the first 6 elements from the sorted array
+      const top5Sentiments = sortedData.slice(0, 6);
+
+      processData(top5Sentiments)
     } else {
       setToggle(false)
       setTitle("Sentiment Data (NRCLex)")
