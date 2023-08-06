@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
-import Wordcloud from './WordCloud';
+//import Wordcloud from './WordCloud';
 import Sentiment from './Sentiment';
 import { ProgressBar } from 'react-loader-spinner';
 
@@ -139,7 +139,6 @@ const Landing = (props) => {
         // request data for the url if found, otherwise scrape the url
         if (foundUrl) {
           const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
-          console.log(res)
           setUrl(res.data.data);
           setOutputMode('words');
         } else {
