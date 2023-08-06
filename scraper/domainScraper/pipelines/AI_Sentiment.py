@@ -16,6 +16,7 @@ class AISentimentPipeline:
         doc = nlp(raw_text) 
 
         phrasesArray = [sent.text.strip() for sent in doc.sents] 
+
         item['AI_Sentiment'] = []
 
         def getTotals(sentiment):
@@ -24,7 +25,7 @@ class AISentimentPipeline:
                 emotion_labels = emotion(phrase) #Get sentiment
                 emotionL = emotion_labels[0]['label']
                 score = emotion_labels[0]['score']
-                emotionObject = {emotionL: {'total': score, 'name': emotionL, 'count': 0}} 
+                emotionObject = {emotionL: {'frequency': score, 'name': emotionL, 'Total': 0}} 
 
                 if not sentiment:
                     sentiment.append(emotionObject)
@@ -33,7 +34,7 @@ class AISentimentPipeline:
                     for element in sentiment:
                         # If sentiment already exists, add the scores and divide by 2 to get the average
                         if 'name' in element and element['name'] == emotionL:
-                            element[emotionL]['total'] = (element[emotionL]['total'] + score) / 2
+                            element[emotionL]['frequency'] = (element[emotionL]['frequency'] + score) / 2
                             break
                     else:  # If the loop didn't break, the emotionL was not found in any element
                         sentiment.append(emotionObject)
@@ -59,7 +60,7 @@ class AISentimentPipeline:
                     key_counts[key] = 1   # Initialize the count if the key is encountered for the first time
 
                 # Add the 'count' key to each dictionary and update its value
-                value['count'] = key_counts[key]
+                value['Total'] = key_counts[key]
             return sentiment
         
         item['AI_Sentiment'] = getCounts(item['AI_Sentiment'])                

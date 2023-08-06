@@ -15,7 +15,7 @@ class SentimentPipeline:
 
             for item, value in sentiment.items():
                 sentiment[item] = {
-                    'total': value,
+                    'Total': value,
                     'name': item.capitalize()
                 } 
             return sentiment 
