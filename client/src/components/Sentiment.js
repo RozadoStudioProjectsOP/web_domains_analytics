@@ -25,6 +25,15 @@ const useStyles = createUseStyles({
         boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
     }
   },
+  buttonDis: {
+    width: '6vw',
+    padding: '12px 20px',
+    border: 'none',
+    borderRadius: 5,
+    background: '#D9E4EC',
+    fontWeight: 'bold',
+    marginRight: 15,
+  }
 })
 
 const Sentiment = (props) => {
@@ -33,6 +42,7 @@ const Sentiment = (props) => {
   const [data, setData] = useState(baseSentimentData);
   const [toggle, setToggle] = useState(false)
   const [title, setTitle] = useState("Sentiment Data (NRCLex)")
+  const [buttonDisabled, setButtonDissabled] = useState(true)
   
   const processData = (datas) => {
     // Data need to be processed to index it with numbers
@@ -69,6 +79,7 @@ const Sentiment = (props) => {
       setToggle(false)
       processData(props.data)
       setTitle("Sentiment Data (NRCLex)")
+      setButtonDissabled(false)
     } else {
       // If no data
       setData(baseSentimentData)
@@ -88,7 +99,11 @@ const Sentiment = (props) => {
           </RadarChart>
         </ResponsiveContainer>
         <div>
-          <button className={classes.button} onClick={toggleChart}>Change</button>
+          {buttonDisabled ? (
+            <button className={classes.buttonDis} onClick={toggleChart} disabled>Change</button>
+          ) : (
+            <button className={classes.button} onClick={toggleChart}>Change</button>
+          )}
         </div>
       </div>  
       );
