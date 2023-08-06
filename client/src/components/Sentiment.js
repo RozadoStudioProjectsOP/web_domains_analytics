@@ -66,10 +66,13 @@ const Sentiment = (props) => {
   
   useEffect(() => {
     if(props.data){
+      setToggle(false)
       processData(props.data)
+      setTitle("Sentiment Data (NRCLex)")
     } else {
       // If no data
       setData(baseSentimentData)
+      setTitle("Sentiment Data")
     }
   }, [props.data])
 
