@@ -25,7 +25,7 @@ class AISentimentPipeline:
                 emotion_labels = emotion(phrase) #Get sentiment
                 emotionL = emotion_labels[0]['label']
                 score = emotion_labels[0]['score']
-                emotionObject = {emotionL: {'frequency': score, 'name': emotionL, 'Total': 0}} 
+                emotionObject = {emotionL: {'frequency': score, 'name': emotionL.capitalize(), 'Total': 0}} 
 
                 if not sentiment:
                     sentiment.append(emotionObject)

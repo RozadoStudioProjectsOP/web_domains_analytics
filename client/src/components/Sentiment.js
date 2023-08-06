@@ -70,7 +70,7 @@ const Sentiment = (props) => {
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
-            <Radar name="Mike" dataKey="total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+            <Radar name="Mike" dataKey="Total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
           </RadarChart>
         </ResponsiveContainer>
         <div>
