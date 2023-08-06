@@ -9,3 +9,4 @@ nltk == 3.7
 pymongo == 4.3.3
 python-dotenv == 1.0.0
 NRCLex == 3.0
+spacy

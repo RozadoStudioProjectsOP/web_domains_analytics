@@ -25,7 +25,7 @@ class AISentimentPipeline:
                 emotion_labels = emotion(phrase) #Get sentiment
                 emotionL = emotion_labels[0]['label']
                 score = emotion_labels[0]['score']
-                emotionObject = {emotionL: {'frequency': score, 'name': emotionL.capitalize(), 'Total': 0}} 
+                emotionObject = {emotionL: {'accuracy': score, 'name': emotionL.capitalize(), 'Total': 0}} 
 
                 if not sentiment:
                     sentiment.append(emotionObject)
@@ -34,7 +34,7 @@ class AISentimentPipeline:
                     for element in sentiment:
                         # If sentiment already exists, add the scores and divide by 2 to get the average
                         if 'name' in element and element['name'] == emotionL:
-                            element[emotionL]['frequency'] = (element[emotionL]['frequency'] + score) / 2
+                            element[emotionL]['accuracy'] = (element[emotionL]['accuracy'] + score) / 2
                             break
                     else:  # If the loop didn't break, the emotionL was not found in any element
                         sentiment.append(emotionObject)
