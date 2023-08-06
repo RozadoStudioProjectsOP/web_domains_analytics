@@ -238,7 +238,7 @@ const Landing = (props) => {
       <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
-          <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
+          {/* <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p> */}
           <div className={classes.inputs}>  
             <input
                 className={classes.wordInput}
