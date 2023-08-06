@@ -43,6 +43,7 @@ const Sentiment = (props) => {
   const [toggle, setToggle] = useState(false)
   const [title, setTitle] = useState("Sentiment Data (NRCLex)")
   const [buttonDisabled, setButtonDissabled] = useState(true)
+  const [neutral, setNeutral] = useState("")
   
   const processData = (datas) => {
     // Data need to be processed to index it with numbers
@@ -58,15 +59,21 @@ const Sentiment = (props) => {
       
       // Convert the object properties into an array of objects
       const aiSentimentArray = Object.values(props.ai_data);
-      console.log(aiSentimentArray)
+
+      // Find the element with name 'Neutral'
+      const neutralElement = aiSentimentArray.find(item => item.name === 'Neutral');
+      setNeutral(neutralElement.Total)
+
+      // Filter out the element with name 'Neutral'
+      const filteredData = aiSentimentArray.filter(item => item.name !== 'Neutral');
 
       // Sort the array in descending order based on the 'Total' property
-      const sortedData = aiSentimentArray.sort((a, b) => b.Total - a.Total);
+      const sortedData = filteredData.sort((a, b) => b.Total - a.Total);
 
       // Get the first 6 elements from the sorted array
-      const top5Sentiments = sortedData.slice(0, 6);
+      const top6Sentiments = sortedData.slice(0, 6);
 
-      processData(top5Sentiments)
+      processData(top6Sentiments)
     } else {
       setToggle(false)
       setTitle("Sentiment Data (NRCLex)")
@@ -103,6 +110,11 @@ const Sentiment = (props) => {
             <button className={classes.buttonDis} onClick={toggleChart} disabled>Change</button>
           ) : (
             <button className={classes.button} onClick={toggleChart}>Change</button>
+          )}
+          {toggle ? (
+            <p style={{marginTop: 25, fontWeight: 'bold', fontFamily: 'Gill Sans', color: '#191970'}}>Neutral: {neutral}</p>
+          ) : (
+            null
           )}
         </div>
       </div>  
