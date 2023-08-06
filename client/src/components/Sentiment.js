@@ -70,8 +70,8 @@ const Sentiment = (props) => {
       // Sort the array in descending order based on the 'Total' property
       const sortedData = filteredData.sort((a, b) => b.Total - a.Total);
 
-      // Get the first 6 elements from the sorted array
-      const top6Sentiments = sortedData.slice(0, 6);
+      // Get the first 10 elements from the sorted array
+      const top6Sentiments = sortedData.slice(0, 10);
 
       processData(top6Sentiments)
     } else {
