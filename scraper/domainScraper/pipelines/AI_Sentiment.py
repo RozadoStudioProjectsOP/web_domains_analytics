@@ -1,9 +1,9 @@
-#from __future__ import unicode_literals, print_function 
 from ..items import DomainAnalyitcs
 from transformers import pipeline
 import spacy 
 
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
+spacy.cli.download("en_core_web_sm")
 nlp = spacy.load('en_core_web_sm') 
 
 class AISentimentPipeline:
