@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
-import Wordcloud from './WordCloud';
+//import Wordcloud from './WordCloud';
 import Sentiment from './Sentiment';
 import { ProgressBar } from 'react-loader-spinner';
 
@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     height: "auto",
     background: '#E9EAEC',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexWrap: 'wrap',
     '& > div': {
@@ -23,15 +23,16 @@ const useStyles = createUseStyles({
       alignItems: 'center',
       background: 'white',
       marginBottom: 10,
+      marginLeft: 20,
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '35vw',
       height: '70vh',
-      '&:nth-child(3)': { //Word cloud
-        minWidth: '60vw',
-        height: 'auto',
-        minHeight: '60vh'
-      },
+      // '&:nth-child(3)': { //Word cloud
+      //   minWidth: '60vw',
+      //   height: 'auto',
+      //   minHeight: '60vh'
+      // },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '2rem',
@@ -231,14 +232,13 @@ const Landing = (props) => {
     ) : (
       <></>
     )
-
+    console.log(url)
   return (
     <div>
-
-    <div className={classes.page}>
+      <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
-          <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p>
+          {/* <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p> */}
           <div className={classes.inputs}>  
             <input
                 className={classes.wordInput}
@@ -262,9 +262,9 @@ const Landing = (props) => {
           {result}   
         </div>
         <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
-        <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud>
-        <Sentiment data={url.sentiment}></Sentiment>
-    </div>
+        {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
+        <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
+      </div>
     </div>
   )
 }
