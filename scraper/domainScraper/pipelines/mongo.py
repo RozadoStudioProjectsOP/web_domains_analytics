@@ -12,6 +12,7 @@ class MongoDBPipeline:
         'domain': '',
         'bigrams': {},
         'trigrams': {},
+        'classification': {},
         'sentiment': {},
         'AI_Sentiment': {}
     }
@@ -81,15 +82,26 @@ class MongoDBPipeline:
             for sentiment in sentimentArray:
                 for key, value in sentiment.items():
                     if key in self.payload[target]:
-                        print(self.payload[target][key])
                         self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + sentiment[key]['accuracy']) / 2
                         self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + sentiment[key]['Total']
-                        print(self.payload[target][key])
                     else:
                         self.payload[target][key] = value   
                     
            # print("Payload: ", self.payload[target])
 
         buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
-
+        
+        def buildWebClassificationPayload(classification, target):
+            # print(classification)
+            for key, value in classification.items():
+                if key in self.payload[target]:
+                    self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + sentiment[key]['accuracy']) / 2
+                    self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + classification[key]['Total']
+                else:
+                    self.payload[target][key] = value  
+            
+            print("Payload: ", self.payload[target])
+         
+        buildWebClassificationPayload(item['classification'], 'classification') 
+           
         return item

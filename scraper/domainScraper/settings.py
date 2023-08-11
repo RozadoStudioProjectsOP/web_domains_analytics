@@ -82,6 +82,7 @@ ITEM_PIPELINES = {
    'domainScraper.pipelines.ngrams.NGramPipeline': 290,
    'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,
    'domainScraper.pipelines.count.CountPipeline': 310,
+   'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
    'domainScraper.pipelines.sentiment.SentimentPipeline': 395,
    'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
    'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
