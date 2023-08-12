@@ -92,15 +92,17 @@ class MongoDBPipeline:
         buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
         
         def buildWebClassificationPayload(classification, target):
-            # print(classification)
+
             for key, value in classification.items():
                 if key in self.payload[target]:
-                    self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + sentiment[key]['accuracy']) / 2
+                    # Calculate accuracy average
+                    self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + classification[key]['accuracy']) / 2
+                    # Calculate total hits 
                     self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + classification[key]['Total']
                 else:
                     self.payload[target][key] = value  
             
-            print("Payload: ", self.payload[target])
+            # print("Payload: ", self.payload[target])
          
         buildWebClassificationPayload(item['classification'], 'classification') 
            
