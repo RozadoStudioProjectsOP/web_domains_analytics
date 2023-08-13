@@ -23,9 +23,9 @@ class NamedEntityRecognitionPipeline:
         # Take the words from the NER tokens and populates a list with them, join
         # multi-word names where possible.
         for result in ner_results:                            
-            # Before checking labels, sometimes NER results have split up words
-            # like Geralt = G, ##eralt, I don't think this is intended behaviour
-            # and might be limitations on the training data, I am not sure.
+            # Sometimes the results have split up words like Geralt = G, ##eralt,
+            # I don't think this is intended behaviour and might be limitations on 
+            # the dataset, I am not sure.
             
             # If the token word starts with ## concatinate it on to the previous word.
             if result['word'][0:2] == '##':
