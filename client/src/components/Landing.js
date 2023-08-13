@@ -6,7 +6,7 @@ import axios from 'axios';
 import Histogram from './Histogram';
 //import Wordcloud from './WordCloud';
 import Sentiment from './Sentiment';
-import Classification from './Classification';
+import Classification from './classification';
 import { ProgressBar } from 'react-loader-spinner';
 
 const useStyles = createUseStyles({

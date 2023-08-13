@@ -1,16 +1,15 @@
 import React from 'react'
-import { createUseStyles } from "react-jss";
+// import { createUseStyles } from "react-jss";
 import { useState, useEffect } from 'react';
-import { PieChart, Pie, Legend, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import baseClassificationData from '../utils/classificationBaseData';
 
-const useStyles = createUseStyles({
+// const useStyles = createUseStyles({
 
-})
+// })
 
 const Classification = (props) => {
-
-  const classes = useStyles();
+  // const classes = useStyles();
   const [data, setData] = useState(baseClassificationData)
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#9C27B0', '#E91E63', '#673AB7', '#4CAF50'];
