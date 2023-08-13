@@ -13,6 +13,7 @@ class CountPipeline:
         item['counts']['words'] = len(item['words'])
         item['counts']['bigrams'] = len(item['bigrams'])
         item['counts']['trigrams'] = len(item['trigrams'])
+        item['counts']['ner'] = len(item['ner'])
         
         def countWords(wordList):
             # Count the occurance of each word, or word phrase (bigrams, etc.).
@@ -27,5 +28,6 @@ class CountPipeline:
         item['words'] = countWords(item['words'])
         item['bigrams'] = countWords(item['bigrams'])
         item['trigrams'] = countWords(item['trigrams'])
+        item['ner'] = countWords(item['ner'])
 
         return item
