@@ -10,3 +10,4 @@ class DomainAnalyitcs(Item):
     trigrams = Field()
     sentiment = Field()
     AI_Sentiment = Field()
+    ner = Field()
