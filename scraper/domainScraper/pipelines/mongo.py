@@ -94,12 +94,8 @@ class MongoDBPipeline:
         
         def buildAI_SentimentPayload(sentimentArray, target):
             for sentiment in sentimentArray:
-                for key, value in sentiment.items():
-                    if key in self.payload[target]:
-                        self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + sentiment[key]['accuracy']) / 2
-                        self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + sentiment[key]['Total']
-                    else:
-                        self.payload[target][key] = value   
+                buildPayload(sentiment, target)
+                buildPayloadAccuracy(sentiment, target)
                     
            # print("Payload: ", self.payload[target])
 
