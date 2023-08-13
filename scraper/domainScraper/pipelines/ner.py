@@ -14,10 +14,11 @@ class NamedEntityRecognitionPipeline:
 
         ner_results = nlp(item['raw'])
         item['ner'] = []
-        for result in ner_results:
-            if result['entity'][0] == 'B':
+        for result in ner_results:                            
+            if result['word'][0:2] == '##':
+                item['ner'][len(item['ner']) - 1] = item['ner'][len(item['ner']) - 1] + result['word'][2:]
+            elif result['entity'][0] == 'B':
                 item['ner'].append(result['word'])
             elif result['entity'][0] == 'I':
                 item['ner'][len(item['ner']) - 1] = item['ner'][len(item['ner']) - 1] + " " + result['word']
-                
         return item
