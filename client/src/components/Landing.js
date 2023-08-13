@@ -142,6 +142,7 @@ const Landing = (props) => {
           setOutputMode('words');
         } else {
           // Make a 'POST' request to scrape the website
+          setIsLoading(false);
           setIsScraping(true);
           await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput });
         }
