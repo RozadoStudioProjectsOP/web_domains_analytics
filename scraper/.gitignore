@@ -5,3 +5,6 @@ __pycache__
 project.egg*
 setup.py
 scrapinghub.yml
+/logs
+/eggs
+/dbs
