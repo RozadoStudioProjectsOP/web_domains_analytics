@@ -43,7 +43,7 @@ const Classification = (props) => {
             cy="55%"
             outerRadius={180}
             fill="#8884d8"
-            label="name"
+            label
           >{data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
