@@ -77,6 +77,20 @@ class MongoDBPipeline:
         buildPayload(item['bigrams'], 'bigrams')
         buildPayload(item['trigrams'], 'trigrams')
         buildPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['classification'], 'classification') 
+        
+        def buildPayloadAccuracy(itemType, target):
+
+            for key, value in itemType.items():
+                if key in self.payload[target]:
+                    # Calculate accuracy average
+                    self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + itemType[key]['accuracy']) / 2
+                else:
+                    self.payload[target][key] = value  
+            
+            # print("Payload: ", self.payload[target])
+         
+        buildPayloadAccuracy(item['classification'], 'classification') 
         
         def buildAI_SentimentPayload(sentimentArray, target):
             for sentiment in sentimentArray:
@@ -90,20 +104,5 @@ class MongoDBPipeline:
            # print("Payload: ", self.payload[target])
 
         buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
-        
-        def buildWebClassificationPayload(classification, target):
-
-            for key, value in classification.items():
-                if key in self.payload[target]:
-                    # Calculate accuracy average
-                    self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + classification[key]['accuracy']) / 2
-                    # Calculate total hits 
-                    self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + classification[key]['Total']
-                else:
-                    self.payload[target][key] = value  
-            
-            # print("Payload: ", self.payload[target])
-         
-        buildWebClassificationPayload(item['classification'], 'classification') 
-           
+                  
         return item
