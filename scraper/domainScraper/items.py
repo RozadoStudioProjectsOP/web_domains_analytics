@@ -11,3 +11,4 @@ class DomainAnalyitcs(Item):
     classification = Field()
     sentiment = Field()
     AI_Sentiment = Field()
+    ner = Field()

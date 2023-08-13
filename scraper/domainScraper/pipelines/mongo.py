@@ -14,12 +14,14 @@ class MongoDBPipeline:
         'trigrams': {},
         'classification': {},
         'sentiment': {},
-        'AI_Sentiment': {}
+        'AI_Sentiment': {},
+        'ner': {}
     }
     counts = {
         'words': 0,
         'bigrams': 0,
-        'trigrams': 0
+        'trigrams': 0,
+        'ner': 0
     }
 
     def open_spider(self, spider):
@@ -47,6 +49,7 @@ class MongoDBPipeline:
         calculateFrequency('words')
         calculateFrequency('bigrams')
         calculateFrequency('trigrams')
+        calculateFrequency('ner')
 
         query = { 'domain': self.payload['domain'] }
         data = dict(self.payload)        
@@ -62,6 +65,7 @@ class MongoDBPipeline:
         self.counts['words'] += item['counts']['words']
         self.counts['bigrams'] += item['counts']['bigrams']
         self.counts['trigrams'] += item['counts']['trigrams']
+        self.counts['ner'] += item['counts']['ner']
 
         def buildPayload(wordList, target):
             for key, value in wordList.items():                
@@ -77,27 +81,23 @@ class MongoDBPipeline:
         buildPayload(item['bigrams'], 'bigrams')
         buildPayload(item['trigrams'], 'trigrams')
         buildPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['ner'], 'ner')
         buildPayload(item['classification'], 'classification') 
         
         def buildPayloadAccuracy(itemType, target):
-
             for key, value in itemType.items():
                 if key in self.payload[target]:
                     # Calculate accuracy average
                     self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + itemType[key]['accuracy']) / 2
                 else:
-                    self.payload[target][key] = value  
-            
-            # print("Payload: ", self.payload[target])
-         
+                    self.payload[target][key] = value              
+
         buildPayloadAccuracy(item['classification'], 'classification') 
         
         def buildAI_SentimentPayload(sentimentArray, target):
             for sentiment in sentimentArray:
                 buildPayload(sentiment, target)
-                buildPayloadAccuracy(sentiment, target)
-                    
-           # print("Payload: ", self.payload[target])
+                buildPayloadAccuracy(sentiment, target)                    
 
         buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
                   
