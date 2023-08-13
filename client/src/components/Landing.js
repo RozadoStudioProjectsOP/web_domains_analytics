@@ -6,6 +6,7 @@ import axios from 'axios';
 import Histogram from './Histogram';
 //import Wordcloud from './WordCloud';
 import Sentiment from './Sentiment';
+import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
 
 const useStyles = createUseStyles({
@@ -133,6 +134,7 @@ const Landing = (props) => {
         // changed request to get only a list of domains from db
         // instead of requesting all data for every scraped site
         const res = await axios.get(`${BASE_URL}/scrapy/domains`)
+        console.log(res)
         const urlArray = res.data.data
         // changed urlArray.ForEach to .find
         const foundUrl = urlArray.find((u) => u === urlInput)
@@ -264,6 +266,7 @@ const Landing = (props) => {
         <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
+        <Classification data={url.classification}></Classification>
       </div>
     </div>
   )
