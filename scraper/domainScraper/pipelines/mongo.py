@@ -12,6 +12,7 @@ class MongoDBPipeline:
         'domain': '',
         'bigrams': {},
         'trigrams': {},
+        'classification': {},
         'sentiment': {},
         'AI_Sentiment': {}
     }
@@ -76,20 +77,28 @@ class MongoDBPipeline:
         buildPayload(item['bigrams'], 'bigrams')
         buildPayload(item['trigrams'], 'trigrams')
         buildPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['classification'], 'classification') 
+        
+        def buildPayloadAccuracy(itemType, target):
+
+            for key, value in itemType.items():
+                if key in self.payload[target]:
+                    # Calculate accuracy average
+                    self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + itemType[key]['accuracy']) / 2
+                else:
+                    self.payload[target][key] = value  
+            
+            # print("Payload: ", self.payload[target])
+         
+        buildPayloadAccuracy(item['classification'], 'classification') 
         
         def buildAI_SentimentPayload(sentimentArray, target):
             for sentiment in sentimentArray:
-                for key, value in sentiment.items():
-                    if key in self.payload[target]:
-                        print(self.payload[target][key])
-                        self.payload[target][key]['accuracy'] = (self.payload[target][key]['accuracy'] + sentiment[key]['accuracy']) / 2
-                        self.payload[target][key]['Total'] = self.payload[target][key]['Total'] + sentiment[key]['Total']
-                        print(self.payload[target][key])
-                    else:
-                        self.payload[target][key] = value   
+                buildPayload(sentiment, target)
+                buildPayloadAccuracy(sentiment, target)
                     
            # print("Payload: ", self.payload[target])
 
         buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
-
+                  
         return item
