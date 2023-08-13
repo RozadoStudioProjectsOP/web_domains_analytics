@@ -66,7 +66,7 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
-    marginLeft: 20,
+    marginLeft: 5,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
     '&:hover': {
@@ -228,6 +228,7 @@ const Landing = (props) => {
         <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
         <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
         <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
+        <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
       </div>
     ) : (
       <></>
@@ -261,7 +262,7 @@ const Landing = (props) => {
           </div>
           {result}   
         </div>
-        <Histogram data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
+        <Histogram data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
       </div>
