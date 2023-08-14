@@ -12,7 +12,7 @@ class MongoDBPipeline:
         'domain': '',
         'bigrams': {},
         'trigrams': {},
-        'classification': {},
+        # 'classification': {},
         'sentiment': {},
         'AI_Sentiment': {},
         'ner': {}
@@ -82,7 +82,7 @@ class MongoDBPipeline:
         buildPayload(item['trigrams'], 'trigrams')
         buildPayload(item['sentiment'], 'sentiment')
         buildPayload(item['ner'], 'ner')
-        buildPayload(item['classification'], 'classification') 
+        # buildPayload(item['classification'], 'classification') 
         
         def buildPayloadAccuracy(itemType, target):
             for key, value in itemType.items():
@@ -92,7 +92,7 @@ class MongoDBPipeline:
                 else:
                     self.payload[target][key] = value              
 
-        buildPayloadAccuracy(item['classification'], 'classification') 
+        # buildPayloadAccuracy(item['classification'], 'classification') 
         
         def buildAI_SentimentPayload(sentimentArray, target):
             for sentiment in sentimentArray:
