@@ -10,7 +10,7 @@ class WebClassificationPipeline:
         item = DomainAnalyitcs(item)
 
         # Get classification for the scraped page
-        rawText = item['raw']
+        rawText = (item['raw'])[:500]
 
         # Run model 
         pipe = pipeline("text-classification", model=model, tokenizer=tokenizer)
