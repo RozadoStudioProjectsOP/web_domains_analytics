@@ -3,7 +3,7 @@ from transformers import pipeline
 import spacy 
 
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
-spacy.cli.download("en_core_web_sm")
+spacy.cli.download("en_core_web_sm") # Can be commented out for local scraping
 nlp = spacy.load('en_core_web_sm') 
 
 class AISentimentPipeline:
