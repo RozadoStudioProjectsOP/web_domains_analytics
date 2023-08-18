@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from "react-jss";
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
@@ -8,6 +8,7 @@ import Histogram from './Histogram';
 import Sentiment from './Sentiment';
 import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
+import { DomainContext } from '../contexts/domains';
 
 const useStyles = createUseStyles({
   page: {
@@ -100,6 +101,7 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
+    const { domain } = useContext(DomainContext)
     const [url, setUrl] = useState({ words: "" })
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
@@ -243,6 +245,7 @@ const Landing = (props) => {
                 type='text'
                 ref={urlRef}
                 placeholder='https://'
+                value={domain}
                 required>
             </input>
             {loading}

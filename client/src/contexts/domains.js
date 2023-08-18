@@ -6,7 +6,8 @@ const DomainContext = createContext();
 
 // Provides components with login state
 const DomainsProvider = (props) => {
-    const [urlList, setUrlList] = useState([])
+    const [urlList, setUrlList] = useState([]);
+    const [domain, setDomain] = useState();
 
     useEffect(() => {
         axios.get(`${BASE_URL}/scrapy/domains`).then((res) => {
@@ -15,9 +16,13 @@ const DomainsProvider = (props) => {
             setUrlList(urlArray)
         })
     }, [])
-    console.log(urlList)
+    
+    const changeDomain = (dom) => {
+        setDomain(dom);
+    }
+
     return (
-        <DomainContext.Provider value={{ urlList }}>
+        <DomainContext.Provider value={{ urlList, domain, changeDomain }}>
             {props.children}
         </DomainContext.Provider>
     )  
