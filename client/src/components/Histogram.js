@@ -38,7 +38,7 @@ const Histogram = (props) => {
     name: ''
   }]);
   const [histoText, setHistoText] = useState()
-  const [outputMode, setOutputMode] = useState('words')
+  const [outputMode, setOutputMode] = useState()
 
   // Modify data to have a numeric index. The index of the words array from the DB is the word itself.
   // The chart needs a numeric index to work.
@@ -80,10 +80,12 @@ const Histogram = (props) => {
 
   }
 
+  // Handle mode selected with buttons
   const handleModeSelection = (mode) => {
     setOutputMode(mode)
   }
 
+  // Ngrams buttons. If data not loaded the are disabled
   const ngrams = props.isLoaded ? (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
@@ -92,7 +94,7 @@ const Histogram = (props) => {
       <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
     </div>
   ) : (
-<div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
       <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words" disabled></input>
       <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams" disabled></input>
       <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams" disabled></input>
@@ -112,11 +114,15 @@ const Histogram = (props) => {
       processData(props.ner)
     } else {
       // If no data 
-      setData([{
-        Total: 0,
-        Frequency: 0,
-        name: ''
-      }])
+      if(!props.data){
+        setData([{
+          Total: 0,
+          Frequency: 0,
+          name: ''
+        }])
+      } else{
+        setOutputMode('words')
+      }
     }
   }, [props, outputMode]);
 
