@@ -27,6 +27,16 @@ const useStyles = createUseStyles({
         boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
     }
   },
+  buttonDis: {
+    width: '7vw',
+    padding: '12px 20px',
+    marginBottom: 20,
+    border: 'none',
+    borderRadius: 5,
+    background: '#D9E4EC',
+    fontWeight: 'bold',
+    marginLeft: 20,
+  }
   })
 
 const Histogram = (props) => {
@@ -87,7 +97,7 @@ const Histogram = (props) => {
 
   // Ngrams buttons. If data not loaded the are disabled
   const ngrams = props.isLoaded ? (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{display: 'flex', flexDirection: 'column', alignContent: 'end'}}>
       <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
       <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
       <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
@@ -95,10 +105,10 @@ const Histogram = (props) => {
     </div>
   ) : (
     <div style={{display: 'flex', flexDirection: 'column'}}>
-      <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words" disabled></input>
-      <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams" disabled></input>
-      <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams" disabled></input>
-      <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
+      <input className={classes.buttonDis} onClick={() => handleModeSelection('words')} type="submit" value="Words" disabled></input>
+      <input className={classes.buttonDis} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams" disabled></input>
+      <input className={classes.buttonDis} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams" disabled></input>
+      <input className={classes.buttonDis} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
     </div>
   )
 

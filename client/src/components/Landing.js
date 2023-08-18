@@ -80,6 +80,16 @@ const useStyles = createUseStyles({
         boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
     }
   },
+  buttonDis: {
+    width: '6vw',
+    padding: '12px 20px',
+    border: 'none',
+    borderRadius: 5,
+    background: '#D9E4EC',
+    fontWeight: 'bold',
+    fontSize: "1rem",
+    marginLeft: 40,
+  },
   results: {
     color: '#191970',
     fontSize: "1.2rem"
@@ -238,17 +248,16 @@ const Landing = (props) => {
           </div>
           <h3>Choose a word: </h3>
           <div className={classes.inputs}>  
-            <input
-                className={classes.wordInput}
-                type='text'
-                ref={wordRef}
-                required>
-            </input>
             {!isLoaded ? (
-                <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check" disabled></input>
+              <>
+                <input className={classes.wordInput} type='text' ref={wordRef} required disabled></input>
+                <input className={classes.buttonDis} onClick={handleSubmitWord} type="submit" value="Check" disabled></input>
+              </>
               ) : (
+              <>
+                <input className={classes.wordInput} type='text' ref={wordRef} required></input>
                 <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
-              )
+              </>              )
             }
           </div>
           {result}   
