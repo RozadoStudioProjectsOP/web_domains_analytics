@@ -7,7 +7,12 @@ import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
     menu: {
-        width: '100%'
+        width: '70%',
+        fontSize: '1.2em',
+        padding: 5
+    },
+    option: {
+        fontSize: '1rem'
     }
 })
 
@@ -21,15 +26,15 @@ const DropdownMenu = () => {
 
     const options = urlList.map((d) => {
         return (
-          <option className="option" value={d}>
+          <option className={classes.option} value={d}>
             {d}
           </option>
         )
       })
 
     return (
-        <FormGroup>
-        <Label for="domain">Scraped Domains</Label>
+        <FormGroup style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: 200}}>
+        <Label for="domain" style={{fontSize: '1.2em'}}>Scraped Domains:</Label>
           <select
             className={classes.menu}
             type="text"

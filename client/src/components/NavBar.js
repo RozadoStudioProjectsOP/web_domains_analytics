@@ -29,9 +29,9 @@ const useStyles = createUseStyles({
             }
         },
         '& > div': {
-            width: "20%",
+            width: "35%",
             display: 'flex',
-            justifyContent: 'space-around',
+            justifyContent: 'flex-end',
             marginRight: 15,
             '& > h2': {
                 color: '#191970',
@@ -100,7 +100,7 @@ const NavBar = () => {
   ) : (
     <div className={classes.bar}>
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
-        <DropdownMenu className={classes.dropMenu}></DropdownMenu>
+        <DropdownMenu></DropdownMenu>
         <div>
             <h2 onClick={logout} type='button'>Log out</h2>
         </div>
