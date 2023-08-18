@@ -4,6 +4,7 @@ import { createUseStyles } from "react-jss";
 import { useContext, useState } from 'react';
 import { LoginContext } from '../contexts/login';
 import { BASE_URL } from '../utils/base_url';
+import DropdownMenu from './DropMenu';
 import axios from 'axios';
 
 const useStyles = createUseStyles({
@@ -62,8 +63,7 @@ const useStyles = createUseStyles({
 const NavBar = () => {
   const classes = useStyles();  
   const [isHome, setIsHome] = useState(false)
-  const { changeLogin, isLoggedIn } = useContext(LoginContext);
-  
+  const { changeLogin, isLoggedIn } = useContext(LoginContext);  
   const logout = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/auth/logout`, {
@@ -88,7 +88,7 @@ const NavBar = () => {
   if (isHome === true) {
     return <Navigate to="/" />
   }
-
+  
   return !isLoggedIn ? (
     <div className={classes.bar}>
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
@@ -100,6 +100,7 @@ const NavBar = () => {
   ) : (
     <div className={classes.bar}>
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
+        <DropdownMenu></DropdownMenu>
         <div>
             <h2 onClick={logout} type='button'>Log out</h2>
         </div>

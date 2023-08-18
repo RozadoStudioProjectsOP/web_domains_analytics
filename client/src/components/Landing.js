@@ -242,6 +242,7 @@ const Landing = (props) => {
                 className={classes.wordInput}
                 type='text'
                 ref={urlRef}
+                placeholder='https://'
                 required>
             </input>
             {loading}
