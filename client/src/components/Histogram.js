@@ -2,15 +2,43 @@
 import React from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from 'react';
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  button: {
+    width: '7vw',
+    padding: '12px 20px',
+    marginBottom: 20,
+    border: 'none',
+    borderRadius: 5,
+    cursor: 'pointer',
+    background: '#D9E4EC',
+    fontWeight: 'bold',
+    fontSize: "1rem",
+    marginLeft: 20,
+    boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
+    transition: "transform 50ms",
+    '&:hover': {
+        background: '#385E72',
+        color: 'white'
+    },
+    "&:active": {
+        transform: "translateY(4px)",
+        boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
+    }
+  },
+  })
 
 const Histogram = (props) => {
 
+  const classes = useStyles();
   const [data, setData] = useState([{
     Total: 0,
     Frequency: 0,
     name: ''
   }]);
   const [histoText, setHistoText] = useState()
+  const [outputMode, setOutputMode] = useState('words')
 
   // Modify data to have a numeric index. The index of the words array from the DB is the word itself.
   // The chart needs a numeric index to work.
@@ -44,7 +72,7 @@ const Histogram = (props) => {
     })
 
     //Convert to upper case histogram's title
-    const toUpper = (props.mode).charAt(0).toUpperCase() + (props.mode).slice(1)
+    const toUpper = (outputMode).charAt(0).toUpperCase() + (outputMode).slice(1)
     setHistoText(toUpper)
 
     //Take top 10 words for the histogram
@@ -52,15 +80,35 @@ const Histogram = (props) => {
 
   }
 
+  const handleModeSelection = (mode) => {
+    setOutputMode(mode)
+  }
+
+  const ngrams = props.isLoaded ? (
+    <div style={{display: 'flex', flexDirection: 'column'}}>
+      <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
+      <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
+      <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
+      <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
+    </div>
+  ) : (
+<div style={{display: 'flex', flexDirection: 'column'}}>
+      <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words" disabled></input>
+      <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams" disabled></input>
+      <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams" disabled></input>
+      <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
+    </div>
+  )
+
   //Histogram output changes depending on the mode 
   useEffect(() => {
-    if (props.mode === 'words') {
+    if (outputMode === 'words') {
       processData(props.data)
-    } else if (props.mode === 'bigrams') {
+    } else if (outputMode === 'bigrams') {
       processData(props.bigrams)
-    } else if (props.mode === 'trigrams') {
+    } else if (outputMode === 'trigrams') {
       processData(props.trigrams)
-    } else if (props.mode === 'ner') {
+    } else if (outputMode === 'ner') {
       processData(props.ner)
     } else {
       // If no data 
@@ -70,10 +118,11 @@ const Histogram = (props) => {
         name: ''
       }])
     }
-  }, [props]);
+  }, [props, outputMode]);
 
-  return (
-    <div style={{ minWidth: '60vw' }}>
+return (
+  <div style={{ minWidth: '70vw', display: 'flex', flexDirection: 'row' }}>
+      {ngrams}
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
@@ -82,7 +131,7 @@ const Histogram = (props) => {
             bottom: 5,
             right: 30
           }}
-        >
+          >
           <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Top 10 {histoText}</text>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />

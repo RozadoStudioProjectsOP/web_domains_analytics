@@ -11,6 +11,7 @@ import baseClassificationData from '../utils/classificationBaseData';
 const Classification = (props) => {
   // const classes = useStyles();
   const [data, setData] = useState(baseClassificationData)
+  const [title, setTitle] = useState('Web Classification')
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#9C27B0', '#E91E63', '#673AB7', '#4CAF50'];
   
@@ -22,7 +23,8 @@ const Classification = (props) => {
   
   useEffect(() => {
     if(props.data){
-        processData(props.data)
+      processData(props.data)
+      setTitle('Web Classification (DistilBERT)')
     } else {
       // If no data
       setData(baseClassificationData)
@@ -33,7 +35,7 @@ const Classification = (props) => {
       <div style={{minWidth: '47.5vw', height: '60vh'}}> 
         <ResponsiveContainer width="100%" height="100%">
         <PieChart width={400} height={400}>
-        <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{'Web Classification (DistilBERT)'}</text>
+        <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{title}</text>
           <Pie
             dataKey="Total"
             isAnimationActive={false}
