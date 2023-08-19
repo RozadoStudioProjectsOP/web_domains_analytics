@@ -222,7 +222,7 @@ const Landing = (props) => {
       </div>
     ) : wordFound === false ? (
       <div className={classes.results}>
-        <h4>Sorry, word not found</h4>
+        <h4>No matches</h4>
         <h4 style={{color: 'white'}}>Total:</h4>
       </div>
     ) : (
@@ -285,7 +285,8 @@ const Landing = (props) => {
               <>
                 <input className={classes.wordInput} type='text' ref={wordRef} required></input>
                 <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
-              </>              )
+              </>
+              )
             }
           </div>
           {result}   
