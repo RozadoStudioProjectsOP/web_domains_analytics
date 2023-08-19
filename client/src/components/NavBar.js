@@ -42,6 +42,7 @@ const useStyles = createUseStyles({
                     textDecorationThickness: '0.1rem',
                     textUnderlineOffset: "2px",
                     cursor: 'pointer',
+                    color: 'red'
                 }
             },
             "& > a": {
@@ -52,7 +53,7 @@ const useStyles = createUseStyles({
                     '&:hover': {
                         textDecoration: 'underline',
                         textDecorationThickness: '0.1rem',
-                        textUnderlineOffset: "2px"
+                        textUnderlineOffset: "2px",
                     }
                 }
             }

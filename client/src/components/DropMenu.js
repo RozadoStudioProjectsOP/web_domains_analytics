@@ -9,10 +9,18 @@ const useStyles = createUseStyles({
     menu: {
         width: '70%',
         fontSize: '1.2em',
-        padding: 5
+        padding: 5,
+        borderRadius: 5,
+        border: 0,
+        cursor: 'pointer',
+        '&:hover': {
+            border: "2px solid #191970"
+        },
+
     },
     option: {
-        fontSize: '1rem'
+        fontSize: '1rem',
+        fontWeight: 'bold',
     }
 })
 
@@ -33,8 +41,8 @@ const DropdownMenu = () => {
       })
 
     return (
-        <FormGroup style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: 200}}>
-        <Label for="domain" style={{fontSize: '1.2em'}}>Scraped Domains:</Label>
+        <FormGroup style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+        <Label for="domain" style={{fontSize: '1.2em', color: '#191970', fontFamily: 'Gill Sans', fontWeight: 'bold'}}>Scraped Domains:</Label>
           <select
             className={classes.menu}
             type="text"

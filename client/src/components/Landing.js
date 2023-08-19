@@ -168,10 +168,33 @@ const Landing = (props) => {
       }
     }
 
-    // Take list of words out of the fetched data
+    // Take list of ngrams out of the fetched data
     const getWords = async (word) => {
+
+      //Count the number of spaces (' ') to know if it is word, bigram or trigram
+      let spaceCount = 0;
+
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === ' ') {
+          spaceCount++;
+        }
+      }
+
+      let wordObject;
+
       try {
-        const wordObject = url.words
+        if(spaceCount === 0){
+          wordObject = url.words
+        }
+        else if(spaceCount === 1){
+          wordObject = url.bigrams
+        }
+        else if(spaceCount === 2){
+          wordObject = url.trigrams
+        }
+        else{
+          setWordFound(false)
+        }
 
         for (const w in wordObject) {
           if (w === word) {
@@ -250,7 +273,7 @@ const Landing = (props) => {
             </input>
             {loading}
           </div>
-          <h3>Choose a word: </h3>
+          <h3>Find n-gram: </h3>
           <div className={classes.inputs}>  
             {!isLoaded ? (
               <>
