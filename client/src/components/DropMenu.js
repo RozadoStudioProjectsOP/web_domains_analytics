@@ -1,8 +1,8 @@
 // DropdownMenu.js
 import React from 'react';
 import { DomainContext } from '../contexts/domains';
-import { useContext, useState } from 'react';
-import { Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { useContext } from 'react';
+import { FormGroup, Label } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
