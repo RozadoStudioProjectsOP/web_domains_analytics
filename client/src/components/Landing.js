@@ -101,7 +101,7 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
-    const { domain } = useContext(DomainContext)
+    const { domain, changeDomain } = useContext(DomainContext)
     const [url, setUrl] = useState({ words: "" })
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
@@ -268,7 +268,8 @@ const Landing = (props) => {
                 type='text'
                 ref={urlRef}
                 placeholder='https://'
-                value={domain}
+                value={domain ? domain :  null}
+                onClick={() => {changeDomain(false)}} //Set domain to false to be able to write on input.  
                 required>
             </input>
             {loading}
