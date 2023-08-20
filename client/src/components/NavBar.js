@@ -4,6 +4,7 @@ import { createUseStyles } from "react-jss";
 import { useContext, useState } from 'react';
 import { LoginContext } from '../contexts/login';
 import { BASE_URL } from '../utils/base_url';
+import DropdownMenu from './DropMenu';
 import axios from 'axios';
 
 const useStyles = createUseStyles({
@@ -28,9 +29,9 @@ const useStyles = createUseStyles({
             }
         },
         '& > div': {
-            width: "20%",
+            width: "35%",
             display: 'flex',
-            justifyContent: 'space-around',
+            justifyContent: 'flex-end',
             marginRight: 15,
             '& > h2': {
                 color: '#191970',
@@ -41,6 +42,7 @@ const useStyles = createUseStyles({
                     textDecorationThickness: '0.1rem',
                     textUnderlineOffset: "2px",
                     cursor: 'pointer',
+                    color: 'red'
                 }
             },
             "& > a": {
@@ -51,19 +53,18 @@ const useStyles = createUseStyles({
                     '&:hover': {
                         textDecoration: 'underline',
                         textDecorationThickness: '0.1rem',
-                        textUnderlineOffset: "2px"
+                        textUnderlineOffset: "2px",
                     }
                 }
             }
         }
-    }
+    },
 })
 
 const NavBar = () => {
   const classes = useStyles();  
   const [isHome, setIsHome] = useState(false)
-  const { changeLogin, isLoggedIn } = useContext(LoginContext);
-  
+  const { changeLogin, isLoggedIn } = useContext(LoginContext);  
   const logout = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/auth/logout`, {
@@ -88,7 +89,7 @@ const NavBar = () => {
   if (isHome === true) {
     return <Navigate to="/" />
   }
-
+  
   return !isLoggedIn ? (
     <div className={classes.bar}>
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
@@ -100,6 +101,7 @@ const NavBar = () => {
   ) : (
     <div className={classes.bar}>
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
+        <DropdownMenu></DropdownMenu>
         <div>
             <h2 onClick={logout} type='button'>Log out</h2>
         </div>

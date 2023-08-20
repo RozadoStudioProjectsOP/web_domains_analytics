@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from "react-jss";
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
@@ -8,6 +8,7 @@ import Histogram from './Histogram';
 import Sentiment from './Sentiment';
 import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
+import { DomainContext } from '../contexts/domains';
 
 const useStyles = createUseStyles({
   page: {
@@ -20,14 +21,14 @@ const useStyles = createUseStyles({
     '& > div': {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'space-around',
       alignItems: 'center',
       background: 'white',
       marginBottom: 10,
       marginLeft: 20,
       border: "2px solid #385E72",
       borderRadius: 5,
-      width: '35vw',
+      width: '25vw',
       height: '70vh',
       // '&:nth-child(3)': { //Word cloud
       //   minWidth: '60vw',
@@ -36,7 +37,7 @@ const useStyles = createUseStyles({
       // },
       '& > h3': {
         fontFamily: 'Gill Sans',
-        fontSize: '2rem',
+        fontSize: '1.5rem',
         letterSpacing: '0.3rem',
         color: '#191970'
       }
@@ -57,9 +58,10 @@ const useStyles = createUseStyles({
     padding: 15,
     fontSize: "1rem",
     fontWeight: "bold",
+    width: "50%"
   },
   button: {
-    width: '10vw',
+    width: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -67,7 +69,7 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
-    marginLeft: 5,
+    marginLeft: 40,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
     '&:hover': {
@@ -79,6 +81,16 @@ const useStyles = createUseStyles({
         boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
     }
   },
+  buttonDis: {
+    width: '6vw',
+    padding: '12px 20px',
+    border: 'none',
+    borderRadius: 5,
+    background: '#D9E4EC',
+    fontWeight: 'bold',
+    fontSize: "1rem",
+    marginLeft: 40,
+  },
   results: {
     color: '#191970',
     fontSize: "1.2rem"
@@ -89,12 +101,13 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
-    const [outputMode, setOutputMode] = useState()
+    const { domain, changeDomain } = useContext(DomainContext)
     const [url, setUrl] = useState({ words: "" })
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
     const [isLoading, setIsLoading] = useState(false); 
     const [isScraping, setIsScraping] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
       // while data is being scraped
@@ -109,8 +122,8 @@ const Landing = (props) => {
             if (foundUrl) {
               const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
               setUrl(res.data.data);
-              setOutputMode('words');
               setIsScraping(false);
+              setIsLoaded(true);
             }
           } catch (error) {
             console.error(error.response.data);
@@ -134,7 +147,6 @@ const Landing = (props) => {
         // changed request to get only a list of domains from db
         // instead of requesting all data for every scraped site
         const res = await axios.get(`${BASE_URL}/scrapy/domains`)
-        console.log(res)
         const urlArray = res.data.data
         // changed urlArray.ForEach to .find
         const foundUrl = urlArray.find((u) => u === urlInput)
@@ -142,7 +154,6 @@ const Landing = (props) => {
         if (foundUrl) {
           const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
           setUrl(res.data.data);
-          setOutputMode('words');
         } else {
           // Make a 'POST' request to scrape the website
           setIsLoading(false);
@@ -153,13 +164,37 @@ const Landing = (props) => {
         console.error(error.response.data)
       } finally {
         setIsLoading(false)
+        setIsLoaded(true)
       }
     }
 
-    // Take list of words out of the fetched data
+    // Take list of ngrams out of the fetched data
     const getWords = async (word) => {
+
+      //Count the number of spaces (' ') to know if it is word, bigram or trigram
+      let spaceCount = 0;
+
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === ' ') {
+          spaceCount++;
+        }
+      }
+
+      let wordObject;
+
       try {
-        const wordObject = url.words
+        if(spaceCount === 0){
+          wordObject = url.words
+        }
+        else if(spaceCount === 1){
+          wordObject = url.bigrams
+        }
+        else if(spaceCount === 2){
+          wordObject = url.trigrams
+        }
+        else{
+          setWordFound(false)
+        }
 
         for (const w in wordObject) {
           if (w === word) {
@@ -187,7 +222,7 @@ const Landing = (props) => {
       </div>
     ) : wordFound === false ? (
       <div className={classes.results}>
-        <h4>Sorry, word not found</h4>
+        <h4>No matches</h4>
         <h4 style={{color: 'white'}}>Total:</h4>
       </div>
     ) : (
@@ -206,10 +241,6 @@ const Landing = (props) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
-
-    const handleModeSelection = (mode) => {
-      setOutputMode(mode)
-    }
     
     // refactored conditional rendering checks for loading and scraping
     const loading = isLoading ? 
@@ -226,46 +257,41 @@ const Landing = (props) => {
       </div>
     ) : ( <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input> )
 
-    const ngrams = !isLoading && !isScraping ? (
-      <div>
-        <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
-        <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
-        <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
-        <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
-      </div>
-    ) : (
-      <></>
-    )
-    console.log(url)
   return (
     <div>
       <div className={classes.page}>
         <div>
           <h3>Choose a URL</h3>
-          {/* <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p> */}
           <div className={classes.inputs}>  
             <input
                 className={classes.wordInput}
                 type='text'
                 ref={urlRef}
+                placeholder='https://'
+                value={domain ? domain :  null}
+                onClick={() => {changeDomain(false)}} //Set domain to false to be able to write on input.  
                 required>
             </input>
             {loading}
-            {ngrams}
           </div>
-          <h3>Choose a word: </h3>
+          <h3>Find n-gram: </h3>
           <div className={classes.inputs}>  
-            <input
-                className={classes.wordInput}
-                type='text'
-                ref={wordRef}
-                required>
-            </input>
-            <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
+            {!isLoaded ? (
+              <>
+                <input className={classes.wordInput} type='text' ref={wordRef} required disabled></input>
+                <input className={classes.buttonDis} onClick={handleSubmitWord} type="submit" value="Check" disabled></input>
+              </>
+              ) : (
+              <>
+                <input className={classes.wordInput} type='text' ref={wordRef} required></input>
+                <input className={classes.button} onClick={handleSubmitWord} type="submit" value="Check"></input>
+              </>
+              )
+            }
           </div>
           {result}   
         </div>
-        <Histogram data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Histogram>
+        <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
         <Classification data={url.classification}></Classification>
