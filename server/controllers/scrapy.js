@@ -11,7 +11,8 @@ import { MONGO_URI, DB, PROJECT, SCRAPYD_URL } from "../utils/envSetup.js";
  * @param {*} res
  */
 const scrape = async (req, res) => {
-  const { url } = req.body;
+  const { url, LIMIT } = req.body;
+  console.log(LIMIT)
   try {
     const response = await axios.post(`${SCRAPYD_URL}/schedule.json`,
       // arguments for scheduling a scraping job
@@ -22,6 +23,7 @@ const scrape = async (req, res) => {
         MONGO_DB: DB,
         MONGO_URI: MONGO_URI,
         MONGO_COLLECTION: Data.collection.name,
+        setting: `CLOSESPIDER_PAGECOUNT=${LIMIT}`
       })
     );
     return res.status(200).json({ success: true, data: response.data });

@@ -121,7 +121,7 @@ const Landing = (props) => {
       }
     }, [isScraping])
 
-    const getURL = async (urlInput) => {
+    const getURL = async (urlInput, LIMIT) => {
 
       setIsLoading(true)
       if (urlInput === "") {
@@ -147,7 +147,7 @@ const Landing = (props) => {
           // Make a 'POST' request to scrape the website
           setIsLoading(false);
           setIsScraping(true);
-          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput });
+          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: LIMIT });
         }
       } catch (error) {
         console.error(error.response.data)
@@ -197,9 +197,9 @@ const Landing = (props) => {
       </div>
     )
 
-    const handleSubmitURL = (e) => {
+    const handleSubmitURL = (e, LIMIT) => {
       e.preventDefault()
-      getURL(urlRef.current.value)
+      getURL(urlRef.current.value, LIMIT)
     }  
 
     const handleSubmitWord = (e) => {
@@ -224,7 +224,12 @@ const Landing = (props) => {
         <ProgressBar height={50} width={180}/>
         <h4>Scraping...this may take a while</h4>
       </div>
-    ) : ( <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input> )
+    ) : ( 
+    <>
+      <input className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
+      <input className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
+    </>
+    )
 
     const ngrams = !isLoading && !isScraping ? (
       <div>
