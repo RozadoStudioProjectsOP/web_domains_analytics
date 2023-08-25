@@ -6,7 +6,7 @@ import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
   button: {
-    width: '7vw',
+    minWidth: '7vw',
     padding: '12px 20px',
     marginBottom: 20,
     border: 'none',

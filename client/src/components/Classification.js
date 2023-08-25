@@ -42,7 +42,7 @@ const Classification = (props) => {
             data={data}
             cx="50%"
             cy="55%"
-            outerRadius={180}
+            outerRadius={"80%"}
             fill="#8884d8"
             label
           >{data.map((entry, index) => (

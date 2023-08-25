@@ -30,11 +30,10 @@ const useStyles = createUseStyles({
       borderRadius: 5,
       width: '25vw',
       height: '70vh',
-      // '&:nth-child(3)': { //Word cloud
-      //   minWidth: '60vw',
-      //   height: 'auto',
-      //   minHeight: '60vh'
-      // },
+      '@media (max-width: 700px)': {
+        width: 'auto',
+        marginLeft: 12
+      },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '1.5rem',
@@ -45,7 +44,7 @@ const useStyles = createUseStyles({
   },
   inputs: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
@@ -61,7 +60,7 @@ const useStyles = createUseStyles({
     width: "50%"
   },
   button: {
-    width: '6vw',
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -69,7 +68,6 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
-    marginLeft: 40,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
     '&:hover': {
@@ -82,14 +80,13 @@ const useStyles = createUseStyles({
     }
   },
   buttonDis: {
-    width: '6vw',
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
-    marginLeft: 40,
   },
   results: {
     color: '#191970',

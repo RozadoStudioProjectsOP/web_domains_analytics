@@ -6,7 +6,7 @@ import baseSentimentData from '../utils/sentimentBaseData';
 
 const useStyles = createUseStyles({
   button: {
-    width: '6vw',
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
