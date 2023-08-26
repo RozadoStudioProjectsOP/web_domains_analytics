@@ -30,8 +30,8 @@ const useStyles = createUseStyles({
       borderRadius: 5,
       width: '25vw',
       height: '70vh',
-      '@media (max-width: 700px)': {
-        width: 'auto',
+      '@media (max-width: 926px)': {
+        width: '93%',
         marginLeft: 12
       },
       '& > h3': {
