@@ -65,7 +65,6 @@ const useStyles = createUseStyles({
     width: "50%"
   },
   button: {
-    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -275,7 +274,7 @@ const Landing = (props) => {
       </div>
     ) : ( 
     <div>
-      <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
+      <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 50)} type="submit" value="Deep Scrape"></input> 
       <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
     </div>
     )
