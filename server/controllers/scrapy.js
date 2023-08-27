@@ -46,9 +46,9 @@ const getDomains = async (req, res) => {
 };
 
 const getData = async (req, res) => {
-  const { domain } = req.query;
+  const { domain, limit } = req.query;
   try {
-    const data = domain ? await Data.findOne({ domain }) : await Data.find();
+    const data = domain ? await Data.findOne({ domain, singlePage: limit == 1 ? true : false }) : await Data.find();
     return res.status(200).json({ success: true, data: data });
   } catch (err) {
     return res.status(500).json({

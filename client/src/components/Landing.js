@@ -89,8 +89,10 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
+    const [limit, setLimit] = useState()
     const [outputMode, setOutputMode] = useState()
     const [url, setUrl] = useState({ words: "" })
+    const [singlePage, setSinglePage] = useState(undefined)
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
     const [isLoading, setIsLoading] = useState(false); 
@@ -103,12 +105,15 @@ const Landing = (props) => {
           try {
             // requests to backend are made every 5 seconds
             // to check if the scraping is complete
-            const res = await axios.get(`${BASE_URL}/scrapy/domains`);
-            const foundUrl = res.data.data.find((u) => u === urlRef.current.value);
-            // when it is complete, the data is fetched
-            if (foundUrl) {
-              const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+            const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
+              { 
+                domain: urlRef.current.value, 
+                limit: limit
+              }
+            });
+            if (res.data.data) {
               setUrl(res.data.data);
+              setSinglePage(res.data.data.singlePage)
               setOutputMode('words');
               setIsScraping(false);
             }
@@ -130,22 +135,20 @@ const Landing = (props) => {
         return;
       };
       try {
-        // refactor:
-        // changed request to get only a list of domains from db
-        // instead of requesting all data for every scraped site
-        const res = await axios.get(`${BASE_URL}/scrapy/domains`)
-        console.log(res)
-        const urlArray = res.data.data
-        // changed urlArray.ForEach to .find
-        const foundUrl = urlArray.find((u) => u === urlInput)
-        // request data for the url if found, otherwise scrape the url
-        if (foundUrl) {
-          const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+        const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
+          { 
+            domain: urlInput, 
+            limit: LIMIT
+          }
+        });
+        if (res.data.data) {       
+          setSinglePage(res.data.data.singlePage)
           setUrl(res.data.data);
           setOutputMode('words');
         } else {
           // Make a 'POST' request to scrape the website
           setIsLoading(false);
+          setLimit(LIMIT)
           setIsScraping(true);
           await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: LIMIT });
         }
@@ -226,8 +229,8 @@ const Landing = (props) => {
       </div>
     ) : ( 
     <>
-      <input className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
-      <input className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
+      <input disabled={singlePage == undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
+      <input disabled={singlePage == undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
     </>
     )
 
@@ -241,7 +244,6 @@ const Landing = (props) => {
     ) : (
       <></>
     )
-    console.log(url)
   return (
     <div>
       <div className={classes.page}>
@@ -250,6 +252,7 @@ const Landing = (props) => {
           {/* <p>books.toscrape.com | quotes.toscrape.com | scrapethissite.com/</p> */}
           <div className={classes.inputs}>  
             <input
+                disabled={isScraping}
                 className={classes.wordInput}
                 type='text'
                 ref={urlRef}
