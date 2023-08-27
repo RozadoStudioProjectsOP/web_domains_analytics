@@ -20,7 +20,6 @@ const useStyles = createUseStyles({
     flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
-      flexDirection: 'column',
       justifyContent: 'space-around',
       alignItems: 'center',
       background: 'white',
@@ -30,22 +29,27 @@ const useStyles = createUseStyles({
       borderRadius: 5,
       width: '25vw',
       height: '70vh',
-      // '&:nth-child(3)': { //Word cloud
-      //   minWidth: '60vw',
-      //   height: 'auto',
-      //   minHeight: '60vh'
-      // },
+      minHeight: '70vh',
+      '@media (max-width: 960px)': {
+        width: '99%',
+        marginLeft: 0,
+        height: '80vh',
+      },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '1.5rem',
         letterSpacing: '0.3rem',
-        color: '#191970'
-      }
+        color: '#191970',
+        whiteSpace: 'nowrap',
+      },
+      '&:nth-child(1)': {
+        flexDirection: 'column',
+      },
     },
   },
   inputs: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
@@ -61,7 +65,7 @@ const useStyles = createUseStyles({
     width: "50%"
   },
   button: {
-    
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -69,7 +73,6 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
-    marginLeft: 40,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
     '&:hover': {
@@ -82,14 +85,13 @@ const useStyles = createUseStyles({
     }
   },
   buttonDis: {
-    width: '6vw',
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
-    marginLeft: 40,
   },
   results: {
     color: '#191970',
@@ -109,7 +111,8 @@ const Landing = (props) => {
     const [wordFound, setWordFound] = useState();
     const [isLoading, setIsLoading] = useState(false); 
     const [isScraping, setIsScraping] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     useEffect(() => {
       // while data is being scraped
@@ -245,6 +248,17 @@ const Landing = (props) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
+
+    useEffect(() => {
+      // Function to handle screen size changes
+      function handleResize() {
+        setScreenWidth(window.innerWidth)
+      }
+      // Attach the handleResize function to the window's resize event
+      window.addEventListener('resize', handleResize);
+      // Call handleResize initially to apply styles based on the initial screen size
+      handleResize();
+    }, [])
     
     // refactored conditional rendering checks for loading and scraping
     const loading = isLoading ? 
@@ -300,10 +314,10 @@ const Landing = (props) => {
           </div>
           {result}   
         </div>
-        <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams}></Histogram>
+        <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} screen={screenWidth}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
-        <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
-        <Classification data={url.classification}></Classification>
+        <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment} screen={screenWidth}></Sentiment>
+        <Classification data={url.classification} screen={screenWidth}></Classification>
       </div>
     </div>
   )

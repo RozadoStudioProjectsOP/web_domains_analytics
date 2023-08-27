@@ -11,32 +11,43 @@ const useStyles = createUseStyles({
     bar: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%',
-        height: '10%',
         background: '#E9EAEC',
         '& > a': {
-            marginLeft: 15,
-            color: '#191970',
-            fontFamily: 'Gill Sans',
-            letterSpacing: 1,
+          marginLeft: 20,
+          color: '#191970',
+          fontFamily: 'Gill Sans',
+          whiteSpace: 'nowrap',
+          letterSpacing: 1,
+          '@media (max-width: 700px)': {
+            // fontSize: '0.8rem',
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 0
+          },
             '& > h2': {
-                '&:hover': {
-                    textDecoration: 'underline',
-                    textDecorationThickness: '0.1rem',
-                    textUnderlineOffset: "2px"
+              '&:hover': {
+                textDecoration: 'underline',
+                textDecorationThickness: '0.1rem',
+                textUnderlineOffset: "2px",
                 }
             }
         },
         '& > div': {
-            width: "35%",
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginRight: 15,
+          display: 'flex',
+          width: '20%',
+          justifyContent: 'flex-end',
+          marginRight: 10,
+          '@media (max-width: 700px)': {
+            display: 'none'
+          },
             '& > h2': {
                 color: '#191970',
                 fontFamily: 'Gill Sans',
+                whiteSpace: 'nowrap',
                 letterSpacing: 1,
+                '@media (max-width: 700px)': {
+                  fontSize: '1.2rem'
+                },
                 '&:hover': {
                     textDecoration: 'underline',
                     textDecorationThickness: '0.1rem',
@@ -46,6 +57,7 @@ const useStyles = createUseStyles({
                 }
             },
             "& > a": {
+                marginRight: 10,
                 color: '#191970',
                 fontFamily: 'Gill Sans',
                 letterSpacing: 1,
@@ -55,6 +67,9 @@ const useStyles = createUseStyles({
                         textDecorationThickness: '0.1rem',
                         textUnderlineOffset: "2px",
                     }
+                },
+                '&:nth-child(1)': {
+                  marginRight: 30,
                 }
             }
         }

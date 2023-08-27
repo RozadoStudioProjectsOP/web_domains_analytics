@@ -19,6 +19,7 @@ body {
 
 body > div {
   flex: 1;
+  width: -webkit-fill-available;
 }
 
 /* body > div > div {

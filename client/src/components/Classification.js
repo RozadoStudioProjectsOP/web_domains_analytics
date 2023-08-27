@@ -35,14 +35,14 @@ const Classification = (props) => {
       <div style={{minWidth: '47.5vw', height: '60vh'}}> 
         <ResponsiveContainer width="100%" height="100%">
         <PieChart width={400} height={400}>
-        <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{title}</text>
+        <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{props.screen>550 ? `${title}` : 'Web Classification'}</text>
           <Pie
             dataKey="Total"
             isAnimationActive={false}
             data={data}
             cx="50%"
             cy="55%"
-            outerRadius={180}
+            outerRadius={"80%"}
             fill="#8884d8"
             label
           >{data.map((entry, index) => (

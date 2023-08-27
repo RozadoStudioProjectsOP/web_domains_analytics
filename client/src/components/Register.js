@@ -29,6 +29,9 @@ const useStyles = createUseStyles({
             borderRadius: 5,
             width: '20vw',
             background: 'white',
+            '@media (max-width: 1600px)': {
+                width: '60%'
+              },
             '& > h1': {
                 fontFamily: 'Gill Sans',
                 fontSize: '2rem',
