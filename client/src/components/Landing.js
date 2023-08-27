@@ -61,7 +61,7 @@ const useStyles = createUseStyles({
     width: "50%"
   },
   button: {
-    width: '6vw',
+    
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -262,21 +262,10 @@ const Landing = (props) => {
         <h4>Scraping...this may take a while</h4>
       </div>
     ) : ( 
-    <>
+    <div>
       <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
       <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
-    </>
-    )
-
-    const ngrams = !isLoading && !isScraping ? (
-      <div>
-        <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
-        <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
-        <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
-        <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
-      </div>
-    ) : (
-      <></>
+    </div>
     )
   return (
     <div>
