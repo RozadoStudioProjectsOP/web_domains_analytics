@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 const wordCloudSchema = new mongoose.Schema({
     domain: {
         type: String,
-        unique: true,
         required: true,
     },
     words: {

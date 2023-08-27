@@ -65,7 +65,6 @@ const useStyles = createUseStyles({
     width: "50%"
   },
   button: {
-    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -103,8 +102,10 @@ const Landing = (props) => {
     const classes = useStyles();
     const wordRef = useRef(); 
     const urlRef = useRef(); 
+    const [limit, setLimit] = useState()
     const { domain, changeDomain } = useContext(DomainContext)
     const [url, setUrl] = useState({ words: "" })
+    const [singlePage, setSinglePage] = useState(undefined)
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
     const [isLoading, setIsLoading] = useState(false); 
@@ -119,12 +120,15 @@ const Landing = (props) => {
           try {
             // requests to backend are made every 5 seconds
             // to check if the scraping is complete
-            const res = await axios.get(`${BASE_URL}/scrapy/domains`);
-            const foundUrl = res.data.data.find((u) => u === urlRef.current.value);
-            // when it is complete, the data is fetched
-            if (foundUrl) {
-              const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+            const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
+              { 
+                domain: urlRef.current.value, 
+                limit: limit
+              }
+            });
+            if (res.data.data) {
               setUrl(res.data.data);
+              setSinglePage(res.data.data.singlePage)
               setIsScraping(false);
               setIsLoaded(true);
             }
@@ -135,9 +139,9 @@ const Landing = (props) => {
         }, 5000);
         return () => clearInterval(interval);
       }
-    }, [isScraping])
+    }, [isScraping, limit])
 
-    const getURL = async (urlInput) => {
+    const getURL = async (urlInput, LIMIT) => {
 
       setIsLoading(true)
       if (urlInput === "") {
@@ -146,22 +150,21 @@ const Landing = (props) => {
         return;
       };
       try {
-        // refactor:
-        // changed request to get only a list of domains from db
-        // instead of requesting all data for every scraped site
-        const res = await axios.get(`${BASE_URL}/scrapy/domains`)
-        const urlArray = res.data.data
-        // changed urlArray.ForEach to .find
-        const foundUrl = urlArray.find((u) => u === urlInput)
-        // request data for the url if found, otherwise scrape the url
-        if (foundUrl) {
-          const res = await axios.get(`${BASE_URL}/scrapy`, { params: { domain: foundUrl }});
+        const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
+          { 
+            domain: urlInput, 
+            limit: LIMIT
+          }
+        });
+        if (res.data.data) {       
+          setSinglePage(res.data.data.singlePage)
           setUrl(res.data.data);
         } else {
           // Make a 'POST' request to scrape the website
           setIsLoading(false);
+          setLimit(LIMIT)
           setIsScraping(true);
-          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput });
+          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: LIMIT });
         }
       } catch (error) {
         console.error(error.response.data)
@@ -235,9 +238,9 @@ const Landing = (props) => {
       </div>
     )
 
-    const handleSubmitURL = (e) => {
+    const handleSubmitURL = (e, LIMIT) => {
       e.preventDefault()
-      getURL(urlRef.current.value)
+      getURL(urlRef.current.value, LIMIT)
     }  
 
     const handleSubmitWord = (e) => {
@@ -269,8 +272,12 @@ const Landing = (props) => {
         <ProgressBar height={50} width={180}/>
         <h4>Scraping...this may take a while</h4>
       </div>
-    ) : ( <input className={classes.button} onClick={handleSubmitURL} type="submit" value="Select"></input> )
-
+    ) : ( 
+    <div>
+      <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 50)} type="submit" value="Deep Scrape"></input> 
+      <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
+    </div>
+    )
   return (
     <div>
       <div className={classes.page}>
@@ -278,6 +285,7 @@ const Landing = (props) => {
           <h3>Choose a URL</h3>
           <div className={classes.inputs}>  
             <input
+                disabled={isScraping}
                 className={classes.wordInput}
                 type='text'
                 ref={urlRef}

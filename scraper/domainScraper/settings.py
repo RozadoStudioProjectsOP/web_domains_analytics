@@ -19,7 +19,7 @@ DEPTH_PRIOPRITY = 1
 # Stops spider when items return meets set amount.
 CLOSESPIDER_ITEMCOUNT=50
 # Stops spider after making set amount of requests.
-CLOSESPIDER_PAGECOUNT=200
+CLOSESPIDER_PAGECOUNT=1
 # Uses fifo method (default lifo) for breadth first crawls.
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'

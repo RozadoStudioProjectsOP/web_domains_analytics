@@ -6,10 +6,6 @@ from ..items import DomainAnalyitcs
 
 class NGramPipeline: 
 
-    def open_spider(self, spider):     
-        download('punkt')
-        download('stopwords')
-
     def process_item(self, item, spider):
         item = DomainAnalyitcs(item)
         punctuation = ['\'', '\"', ',', '.', ':', ';']
