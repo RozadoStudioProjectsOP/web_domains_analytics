@@ -116,7 +116,7 @@ const Sentiment = (props) => {
       <div className={classes.window}> 
         <ResponsiveContainer width={props.screen<960 ? "90%" : "100%"} height={props.screen<960 ? "90%" : "100%"}>
           <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
-            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{title}</text>
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{props.screen>550 ? `${title}` : 'Sentiment Analysis'}</text>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />

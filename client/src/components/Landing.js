@@ -31,15 +31,16 @@ const useStyles = createUseStyles({
       height: '70vh',
       minHeight: '70vh',
       '@media (max-width: 960px)': {
-        width: '93%',
+        width: '99%',
+        marginLeft: 0,
         height: '80vh',
-        marginLeft: 12
       },
       '& > h3': {
         fontFamily: 'Gill Sans',
         fontSize: '1.5rem',
         letterSpacing: '0.3rem',
-        color: '#191970'
+        color: '#191970',
+        whiteSpace: 'nowrap',
       },
       '&:nth-child(1)': {
         flexDirection: 'column',
@@ -307,7 +308,7 @@ const Landing = (props) => {
         <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} screen={screenWidth}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment} screen={screenWidth}></Sentiment>
-        <Classification data={url.classification}></Classification>
+        <Classification data={url.classification} screen={screenWidth}></Classification>
       </div>
     </div>
   )
