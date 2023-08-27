@@ -20,7 +20,6 @@ const useStyles = createUseStyles({
     flexWrap: 'wrap',
     '& > div': {
       display: 'flex',
-      flexDirection: 'column',
       justifyContent: 'space-around',
       alignItems: 'center',
       background: 'white',
@@ -29,8 +28,8 @@ const useStyles = createUseStyles({
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '25vw',
-      height: '70vh',
-      '@media (max-width: 926px)': {
+      minHeight: '70vh',
+      '@media (max-width: 960px)': {
         width: '93%',
         marginLeft: 12
       },
@@ -39,6 +38,9 @@ const useStyles = createUseStyles({
         fontSize: '1.5rem',
         letterSpacing: '0.3rem',
         color: '#191970'
+      },
+      '&:nth-child(1)': {
+        flexDirection: 'column',
       }
     },
   },
@@ -104,7 +106,8 @@ const Landing = (props) => {
     const [wordFound, setWordFound] = useState();
     const [isLoading, setIsLoading] = useState(false); 
     const [isScraping, setIsScraping] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     useEffect(() => {
       // while data is being scraped
@@ -238,6 +241,17 @@ const Landing = (props) => {
       e.preventDefault()
       getWords(wordRef.current.value)
     }
+
+    useEffect(() => {
+      // Function to handle screen size changes
+      function handleResize() {
+        setScreenWidth(window.innerWidth)
+      }
+      // Attach the handleResize function to the window's resize event
+      window.addEventListener('resize', handleResize);
+      // Call handleResize initially to apply styles based on the initial screen size
+      handleResize();
+    }, [window.innerWidth])
     
     // refactored conditional rendering checks for loading and scraping
     const loading = isLoading ? 
@@ -288,7 +302,7 @@ const Landing = (props) => {
           </div>
           {result}   
         </div>
-        <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams}></Histogram>
+        <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} screen={screenWidth}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
         <Classification data={url.classification}></Classification>

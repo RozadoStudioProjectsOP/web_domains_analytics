@@ -28,6 +28,9 @@ const useStyles = createUseStyles({
             width: '20vw',
             background: 'white',
             maxHeight: '70vh',
+            '@media (max-width: 1600px)': {
+                width: '60%'
+              },
             '& > h1': {
                 fontFamily: 'Gill Sans',
                 fontSize: '2rem',

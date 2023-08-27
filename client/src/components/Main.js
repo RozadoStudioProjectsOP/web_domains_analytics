@@ -25,9 +25,12 @@ const useStyles = createUseStyles({
       alignItems: 'center',
       border: "2px solid #385E72",
       borderRadius: 5,
-      width: '50vw',
-      padding: 90,
+      width: '95vw',
+      height: '80%',
       background: 'white',
+      '@media (min-width: 926px)': {
+        width: '70%',
+      },
       "& > h1": {
         letterSpacing: 10,
         fontSize: 50,
@@ -35,17 +38,21 @@ const useStyles = createUseStyles({
         fontFamily: 'Gill Sans',
         textDecoration: 'underline',
         textDecorationThickness: '0.1rem',
-        textUnderlineOffset: "10px"
+        textUnderlineOffset: "10px",
+        textAlign: 'center'
       },
     },
     buttons: {
       display: 'flex',
       alignContent: 'space-around',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
         "& > a": {
             "& > button": {
               width: "20vw",
+              minWidth: 180,
               height: "8vh",
-              margin: 50,
+              margin: 30,
               cursor: 'pointer',
               fontSize: "1.5rem",
               letterSpacing: "0.5rem",
@@ -76,16 +83,16 @@ const Main = (props) => {
 
   return isLoggedIn === false ? (
     <div className={classes.page}>
-    <NavBar></NavBar>
-    <div className={classes.main}>
-      <div className={classes.menu}>
-          <h1>Web Domains Analytics</h1>
-          <div className={classes.buttons}>
-              <Link to="/login" style={{ textDecoration: 'none' }}><Button>Login</Button></Link>
-              <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
-          </div>
+      <NavBar></NavBar>
+      <div className={classes.main}>
+        <div className={classes.menu}>
+            <h1>Web Domains Analytics</h1>
+            <div className={classes.buttons}>
+                <Link to="/login" style={{ textDecoration: 'none' }}><Button>Login</Button></Link>
+                <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
+            </div>
+        </div>
       </div>
-    </div>
     </div>
   ) : (
     <>

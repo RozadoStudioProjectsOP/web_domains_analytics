@@ -5,6 +5,14 @@ import { useState, useEffect } from 'react';
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
+  window: {
+    minWidth: '70vw', 
+    display: 'flex', 
+    flexDirection: 'row',
+    '@media (max-width: 960px)': {
+      flexDirection: 'column-reverse',
+    },
+  },
   button: {
     minWidth: '7vw',
     padding: '12px 20px',
@@ -18,6 +26,13 @@ const useStyles = createUseStyles({
     marginLeft: 20,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
+    '@media (max-width: 960px)': {
+      maxWidth: '16vw',
+      marginLeft: 5,
+      marginRight: 5,
+      fontSize: "0.8rem",
+      display: 'flex',
+    },
     '&:hover': {
         background: '#385E72',
         color: 'white'
@@ -28,7 +43,7 @@ const useStyles = createUseStyles({
     }
   },
   buttonDis: {
-    width: '7vw',
+    minWidth: '7vw',
     padding: '12px 20px',
     marginBottom: 20,
     border: 'none',
@@ -36,6 +51,19 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     marginLeft: 20,
+  },
+  ngrams: {
+    display: 'flex', 
+    flexDirection: 'column', 
+    alignContent: 'end',
+    '@media (max-width: 960px)': {
+      display: 'none'
+    },
+  },
+  ngramsSmall: {
+    display: 'flex', 
+    flexDirection: 'row', 
+    alignContent: 'end',
   }
   })
 
@@ -97,21 +125,21 @@ const Histogram = (props) => {
 
   // Ngrams buttons. If data not loaded the are disabled
   const ngrams = props.isLoaded ? (
-    <div style={{display: 'flex', flexDirection: 'column', alignContent: 'end'}}>
+    <div className={props.screen > 960 ? classes.ngrams : classes.ngramsSmall}>
       <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
       <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
       <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
       <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
     </div>
   ) : (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div className={props.screen > 960 ? classes.ngrams : classes.ngramsSmall}>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('words')} type="submit" value="Words" disabled></input>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams" disabled></input>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams" disabled></input>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
     </div>
   )
-
+    console.log(props)
   //Histogram output changes depending on the mode 
   useEffect(() => {
     if (outputMode === 'words') {
@@ -137,7 +165,7 @@ const Histogram = (props) => {
   }, [props, outputMode]);
 
 return (
-  <div style={{ minWidth: '70vw', display: 'flex', flexDirection: 'row' }}>
+  <div className={classes.window}>
       {ngrams}
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
