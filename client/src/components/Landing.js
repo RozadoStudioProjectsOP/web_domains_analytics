@@ -43,7 +43,7 @@ const useStyles = createUseStyles({
       },
       '&:nth-child(1)': {
         flexDirection: 'column',
-      }
+      },
     },
   },
   inputs: {
@@ -306,7 +306,7 @@ const Landing = (props) => {
         </div>
         <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} screen={screenWidth}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
-        <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment}></Sentiment>
+        <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment} screen={screenWidth}></Sentiment>
         <Classification data={url.classification}></Classification>
       </div>
     </div>
