@@ -102,7 +102,6 @@ const Landing = (props) => {
     const wordRef = useRef(); 
     const urlRef = useRef(); 
     const [limit, setLimit] = useState()
-    const [outputMode, setOutputMode] = useState()
     const { domain, changeDomain } = useContext(DomainContext)
     const [url, setUrl] = useState({ words: "" })
     const [singlePage, setSinglePage] = useState(undefined)
@@ -128,7 +127,6 @@ const Landing = (props) => {
             if (res.data.data) {
               setUrl(res.data.data);
               setSinglePage(res.data.data.singlePage)
-              setOutputMode('words');
               setIsScraping(false);
               setIsLoaded(true);
             }
