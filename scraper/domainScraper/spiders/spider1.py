@@ -3,6 +3,7 @@
 
 from trafilatura import extract
 import scrapy
+import tldextract
 from scrapy.linkextractors import LinkExtractor
 from ..items import DomainAnalyitcs
 
@@ -28,9 +29,11 @@ class AuthorSpider(scrapy.Spider):
             item['singlePage'] = True
         else:
             item['singlePage'] = False
-            # Extracts links found in the downloaded HTML, accepts only links that use
-            # the inputted URL as a base, to attempt to get related material.   
-            link_extractor = LinkExtractor(allow=self.url, unique=True)
+            # Extracts the domain from a URL
+            extractDomainResult = tldextract.extract(self.url)
+            domain = '.'.join([extractDomainResult.domain, extractDomainResult.suffix])
+            # Extracts links from current page that are in the same domain.
+            link_extractor = LinkExtractor(allow_domains=domain, unique=True)
             # Calls parse method for each link extracted.        
             for link in link_extractor.extract_links(response):
                 yield scrapy.Request(link.url, callback=self.parse)
