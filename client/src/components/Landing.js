@@ -28,9 +28,11 @@ const useStyles = createUseStyles({
       border: "2px solid #385E72",
       borderRadius: 5,
       width: '25vw',
+      height: '70vh',
       minHeight: '70vh',
       '@media (max-width: 960px)': {
         width: '93%',
+        height: '80vh',
         marginLeft: 12
       },
       '& > h3': {

@@ -11,6 +11,7 @@ const useStyles = createUseStyles({
     flexDirection: 'row',
     '@media (max-width: 960px)': {
       flexDirection: 'column-reverse',
+      height: '100%'
     },
   },
   button: {
@@ -32,6 +33,8 @@ const useStyles = createUseStyles({
       marginRight: 5,
       fontSize: "0.8rem",
       display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     '&:hover': {
         background: '#385E72',
@@ -51,6 +54,15 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     marginLeft: 20,
+    '@media (max-width: 960px)': {
+      maxWidth: '16vw',
+      marginLeft: 5,
+      marginRight: 5,
+      fontSize: "0.8rem",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
   },
   ngrams: {
     display: 'flex', 
@@ -139,7 +151,7 @@ const Histogram = (props) => {
       <input className={classes.buttonDis} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
     </div>
   )
-    console.log(props)
+
   //Histogram output changes depending on the mode 
   useEffect(() => {
     if (outputMode === 'words') {
