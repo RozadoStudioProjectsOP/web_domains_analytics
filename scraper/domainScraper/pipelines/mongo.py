@@ -51,7 +51,10 @@ class MongoDBPipeline:
         calculateFrequency('trigrams')
         calculateFrequency('ner')
 
-        query = { 'domain': self.payload['domain'] }
+        query = { '$and': [
+            {'domain': self.payload['domain']},
+            {'singlePage': self.payload['singlePage']}
+        ]}
         data = dict(self.payload)        
         self.col.update_one(query, { '$set': data }, upsert=True)
         self.jobs.update_one({ '_id': self.job.inserted_id}, { '$set': { 'pending': False } }, upsert=True)
@@ -66,6 +69,8 @@ class MongoDBPipeline:
         self.counts['bigrams'] += item['counts']['bigrams']
         self.counts['trigrams'] += item['counts']['trigrams']
         self.counts['ner'] += item['counts']['ner']
+
+        self.payload['singlePage'] = item['singlePage']
 
         def buildPayload(wordList, target):
             for key, value in wordList.items():                

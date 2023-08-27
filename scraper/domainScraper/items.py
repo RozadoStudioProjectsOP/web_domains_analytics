@@ -12,3 +12,4 @@ class DomainAnalyitcs(Item):
     sentiment = Field()
     AI_Sentiment = Field()
     ner = Field()
+    singlePage = Field()
