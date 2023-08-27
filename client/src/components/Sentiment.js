@@ -5,8 +5,18 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 import baseSentimentData from '../utils/sentimentBaseData';
 
 const useStyles = createUseStyles({
+  window: {
+    minWidth: '47.5vw',
+    minHeight: '60vh', 
+    height: '80vh',
+    display: 'flex', 
+    flexDirection: 'row',
+    '@media (max-width: 960px)': {
+      flexDirection: 'column'
+    },
+  },
   button: {
-    width: '6vw',
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
@@ -16,6 +26,10 @@ const useStyles = createUseStyles({
     marginRight: 15,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
+    '@media (max-width: 960px)': {
+      margin: 0,
+      marginBottom: 20
+    },
     '&:hover': {
         background: '#385E72',
         color: 'white'
@@ -26,13 +40,17 @@ const useStyles = createUseStyles({
     }
   },
   buttonDis: {
-    width: '6vw',
+    minWidth: '6vw',
     padding: '12px 20px',
     border: 'none',
     borderRadius: 5,
     background: '#D9E4EC',
     fontWeight: 'bold',
     marginRight: 15,
+    '@media (max-width: 960px)': {
+      margin: 0,
+      marginBottom: 20
+    },
   }
 })
 
@@ -95,10 +113,10 @@ const Sentiment = (props) => {
   }, [props.data])
 
     return (
-      <div style={{minWidth: '47.5vw', height: '60vh', display: 'flex', flexDirection: 'row'}}> 
-        <ResponsiveContainer width="100%" height="100%">
+      <div className={classes.window}> 
+        <ResponsiveContainer width={props.screen<960 ? "90%" : "100%"} height={props.screen<960 ? "90%" : "100%"}>
           <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
-            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{title}</text>
+            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{props.screen>550 ? `${title}` : 'Sentiment Analysis'}</text>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" />
             <PolarRadiusAxis />
