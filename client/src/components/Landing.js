@@ -124,7 +124,7 @@ const Landing = (props) => {
         }, 5000);
         return () => clearInterval(interval);
       }
-    }, [isScraping])
+    }, [isScraping, limit])
 
     const getURL = async (urlInput, LIMIT) => {
 
@@ -229,8 +229,8 @@ const Landing = (props) => {
       </div>
     ) : ( 
     <>
-      <input disabled={singlePage == undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
-      <input disabled={singlePage == undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
+      <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 4)} type="submit" value="Deep Scrape"></input> 
+      <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
     </>
     )
 
