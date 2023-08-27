@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
 import { LoginProvider } from './contexts/login';
+import { DomainsProvider } from './contexts/domains';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
       <LoginProvider>
+      <DomainsProvider>
         <App />
+      </DomainsProvider>
       </LoginProvider>  
     </Router>  
   </React.StrictMode>
