@@ -254,7 +254,7 @@ const Landing = (props) => {
       window.addEventListener('resize', handleResize);
       // Call handleResize initially to apply styles based on the initial screen size
       handleResize();
-    }, [window.innerWidth])
+    }, [])
     
     // refactored conditional rendering checks for loading and scraping
     const loading = isLoading ? 
