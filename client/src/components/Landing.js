@@ -9,6 +9,7 @@ import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
 import { DomainContext } from '../contexts/domains';
 import '../styles/Landing.css'
+import { checkUrl } from '../utils/checkUrl.js';
 
 
 const Landing = (props) => {
@@ -54,34 +55,37 @@ const Landing = (props) => {
     }
   }, [isScraping, limit])
 
-  const getURL = async (urlInput) => {
+  const getURL = async (urlInput, LIMIT) => {
+      setIsLoading(true)
+      setIsLoaded(false)
+      setUrl({ words: "" })
+      if (urlInput === "") {
+        alert("Enter a Valid URL");
+        setIsLoading(false)
+        return;
+      };
 
-    setIsLoading(true)
-    setIsLoaded(false)
-    setUrl({ words: "" })
-    if (urlInput === "") {
-      alert("Enter a Valid URL");
-      setIsLoading(false)
-      return;
-    };
-    try {
-      const res = await axios.get(`${BASE_URL}/scrapy`, {
-        params:
-        {
-          domain: urlInput,
-          limit: limit
+      const validatedURL = checkUrl(urlInput);
+
+      try {
+        const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
+          { 
+            domain: validatedURL, 
+            limit: LIMIT
+          }
+        });
+        if (res.data.data) {       
+          setCollectionFound(true);
+          setUrl(res.data.data);
+          setIsLoaded(true)
+        } else {
+          // Make a 'POST' request to scrape the website
+          setCollectionFound(false);
+          setIsLoading(false);
+          setLimit(LIMIT)
+          setIsScraping(true);
+          await scrapeRequest(urlInput);
         }
-      });
-      if (res.data.data) {
-        setCollectionFound(true);
-        setUrl(res.data.data);
-        setIsLoaded(true)
-      } else {
-        // Make a 'POST' request to scrape the website
-        setCollectionFound(false);
-        setIsLoading(false);
-        // await scrapeRequest(urlInput);
-      }
     } catch (error) {
       console.error(error.response.data)
     } finally {
