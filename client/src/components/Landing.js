@@ -109,6 +109,7 @@ const Landing = (props) => {
     const [singlePage, setSinglePage] = useState(undefined)
     const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
     const [wordFound, setWordFound] = useState();
+    const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false); 
     const [isScraping, setIsScraping] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -224,6 +225,15 @@ const Landing = (props) => {
   
     }
 
+    const getDomains = async (domain) => {
+      try {
+        const res = await axios.get(`${BASE_URL}/scrapy/domains`, { params: { domain: domain } });
+        setSearchResults(res.data.data)
+      } catch (error) {
+        console.error(error.response.data)
+      }
+    }
+
     // Word count conditional output
     const result = wordFound === true ? (
       <div className={classes.results}>
@@ -241,6 +251,11 @@ const Landing = (props) => {
         <h4 style={{color: 'white'}}>Frequency:</h4>
       </div>
     )
+
+    const handleSearch = (value) => {
+      changeDomain(value)
+      getDomains(value)
+    }
 
     const handleSubmitURL = (e, LIMIT) => {
       e.preventDefault()
@@ -295,7 +310,8 @@ const Landing = (props) => {
                 ref={urlRef}
                 placeholder='https://'
                 value={domain ? domain :  null}
-                onClick={() => {changeDomain(false)}} //Set domain to false to be able to write on input.  
+                onChange={(e) => handleSearch(e.target.value)}
+                onClick={() => {changeDomain(false)}} //Set domain to false to be able to write on input.
                 required>
             </input>
             {loading}
