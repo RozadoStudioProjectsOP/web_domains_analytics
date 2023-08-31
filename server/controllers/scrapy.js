@@ -35,8 +35,13 @@ const scrape = async (req, res) => {
 };
 
 const getDomains = async (req, res) => {
+  const { domain } = req.query;
+  console.log(domain);
   try {
-    const data = await Data.find().distinct("domain");
+    const data = domain ? 
+      await Data.find({domain: { $regex: domain, $options: "i" }}).distinct("domain") : 
+      await Data.find().distinct("domain");
+
     return res.status(200).json({ success: true, data: data });
   } catch (err) {
     return res.status(500).json({
