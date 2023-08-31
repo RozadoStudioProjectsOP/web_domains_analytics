@@ -9,6 +9,7 @@ import Sentiment from './Sentiment';
 import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
 import { DomainContext } from '../contexts/domains';
+import { checkUrl } from '../utils/checkUrl.js';
 
 const useStyles = createUseStyles({
   page: {
@@ -149,10 +150,13 @@ const Landing = (props) => {
         setIsLoading(false)
         return;
       };
+
+      const validatedURL = checkUrl(urlInput);
+
       try {
         const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
           { 
-            domain: urlInput, 
+            domain: validatedURL, 
             limit: LIMIT
           }
         });
@@ -164,7 +168,7 @@ const Landing = (props) => {
           setIsLoading(false);
           setLimit(LIMIT)
           setIsScraping(true);
-          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: LIMIT });
+          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: validatedURL, LIMIT: LIMIT });
         }
       } catch (error) {
         console.error(error.response.data)

@@ -12,7 +12,7 @@ import { MONGO_URI, DB, PROJECT, SCRAPYD_URL } from "../utils/envSetup.js";
  */
 const scrape = async (req, res) => {
   const { url, LIMIT } = req.body;
-  console.log(LIMIT)
+  
   try {
     const response = await axios.post(`${SCRAPYD_URL}/schedule.json`,
       // arguments for scheduling a scraping job
