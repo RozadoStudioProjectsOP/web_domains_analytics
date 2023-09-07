@@ -274,8 +274,13 @@ const Landing = (props) => {
       </div>
     ) : ( 
     <div>
-      <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 50)} type="submit" value="Deep Scrape"></input> 
-      <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
+      <div>
+        <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 50)} type="submit" value="Deep Scrape"></input> 
+        <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
+      </div>
+      <div>
+        <input disabled={singlePage === undefined ? false : true} className={classes.button} type='submit' value='Re-Scrape'></input>
+      </div>
     </div>
     )
   return (
