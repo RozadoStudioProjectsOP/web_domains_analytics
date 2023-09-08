@@ -9,6 +9,8 @@ import Sentiment from './Sentiment';
 import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
 import { DomainContext } from '../contexts/domains';
+import { LoginContext } from '../contexts/login';
+import { Navigate } from "react-router-dom";
 
 const useStyles = createUseStyles({
   page: {
@@ -64,6 +66,12 @@ const useStyles = createUseStyles({
     fontWeight: "bold",
     width: "50%"
   },
+  buttonsDiv: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '100%',
+    flexWrap: 'wrap'
+  },
   button: {
     padding: '12px 20px',
     border: 'none',
@@ -72,6 +80,7 @@ const useStyles = createUseStyles({
     background: '#D9E4EC',
     fontWeight: 'bold',
     fontSize: "1rem",
+    marginBottom: 5,
     boxShadow: "4px 4px 5px 1px rgba(0, 0, 0, 0.25)",
     transition: "transform 50ms",
     '&:hover': {
@@ -112,6 +121,8 @@ const Landing = (props) => {
     const [isScraping, setIsScraping] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [isHome, setIsHome] = useState(false)
+    const { changeLogin } = useContext(LoginContext); 
 
     useEffect(() => {
       // while data is being scraped
@@ -258,6 +269,31 @@ const Landing = (props) => {
       // Call handleResize initially to apply styles based on the initial screen size
       handleResize();
     }, [])
+
+    const logout = async () => {
+      try {
+        const res = await axios.post(`${BASE_URL}/auth/logout`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        })
+        
+        if (res.status === 200) {
+          changeLogin(false, null)
+          sessionStorage.clear();       
+          alert("Logout successful");  
+          setIsHome(true);
+        }
+      } catch (error) {
+        console.log(error)
+      }
+  
+    }
+
+    // If isHome is true, go to main page.
+  if (isHome === true) {
+    return <Navigate to="/" />
+  }
     
     // refactored conditional rendering checks for loading and scraping
     const loading = isLoading ? 
@@ -273,7 +309,7 @@ const Landing = (props) => {
         <h4>Scraping...this may take a while</h4>
       </div>
     ) : ( 
-    <div>
+    <div className={classes.buttonsDiv}>
       <input disabled={singlePage === undefined ? false : !singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 50)} type="submit" value="Deep Scrape"></input> 
       <input disabled={singlePage === undefined ? false : singlePage} className={classes.button} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
     </div>
@@ -317,6 +353,11 @@ const Landing = (props) => {
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment data={url.sentiment} ai_data={url.AI_Sentiment} screen={screenWidth}></Sentiment>
         <Classification data={url.classification} screen={screenWidth}></Classification>
+        {screenWidth <= 700 ? 
+          (
+            <h2 style={{textAlign: 'center', width: '100%'}} onClick={logout} type='button'>Log out</h2>
+          ) : null
+        }
       </div>
     </div>
   )

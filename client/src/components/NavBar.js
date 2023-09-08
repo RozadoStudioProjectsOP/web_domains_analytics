@@ -118,7 +118,7 @@ const NavBar = () => {
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
         <DropdownMenu></DropdownMenu>
         <div>
-            <h2 onClick={logout} type='button'>Log out</h2>
+          <h2 onClick={logout} type='button'>Log out</h2>
         </div>
     </div>
   )
