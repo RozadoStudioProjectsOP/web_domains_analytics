@@ -22,6 +22,7 @@ const Landing = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isScraping, setIsScraping] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [collectionFound, setCollectionFound] = useState(undefined);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const Landing = (props) => {
           if (res.data.data) {
             setUrl(res.data.data);
             setIsScraping(false);
+            setCollectionFound(true);
             setIsLoaded(true);
           }
         } catch (error) {
@@ -55,6 +57,8 @@ const Landing = (props) => {
   const getURL = async (urlInput) => {
 
     setIsLoading(true)
+    setIsLoaded(false)
+    setUrl({ words: "" })
     if (urlInput === "") {
       alert("Enter a Valid URL");
       setIsLoading(false)
@@ -69,19 +73,25 @@ const Landing = (props) => {
         }
       });
       if (res.data.data) {
+        setCollectionFound(true);
         setUrl(res.data.data);
+        setIsLoaded(true)
       } else {
         // Make a 'POST' request to scrape the website
+        setCollectionFound(false);
         setIsLoading(false);
-        setIsScraping(true);
-        await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit });
+        // await scrapeRequest(urlInput);
       }
     } catch (error) {
       console.error(error.response.data)
     } finally {
       setIsLoading(false)
-      setIsLoaded(true)
     }
+  }
+
+  const scrapeRequest = async (urlInput) => {
+    setIsScraping(true);
+    await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit });
   }
 
   // Take list of ngrams out of the fetched data
@@ -195,16 +205,18 @@ const Landing = (props) => {
         ref={urlRef}
         placeholder='https://'
         value={domain ? domain : null}
+        onChange={() => setCollectionFound(undefined)}
         onClick={() => { changeDomain(false) }} //Set domain to false to be able to write on input.  
         required
       />
       <div>
         <h4>Crawl Length</h4>
-        <input disabled={isScraping} onClick={() => setLimit(1)} checked={limit === 1 ? true : false} type='radio' id="singlePage" name="crawlLength" />
+        <input disabled={isScraping} onChange={() => setCollectionFound(undefined)} onClick={() => setLimit(1)} checked={limit === 1 ? true : false} type='radio' id="singlePage" name="crawlLength" />
         <label for="singlePage" >Single Page</label>
-        <input disabled={isScraping} onClick={() => setLimit(50)} type='radio' id="manyPages" name="crawlLength" />
+        <input disabled={isScraping} onChange={() => setCollectionFound(undefined)} onClick={() => setLimit(50)} type='radio' id="manyPages" name="crawlLength" />
         <label for="manyPages" >Deep Search</label>
       </div>
+      <input disabled={collectionFound === undefined || isScraping === true} className={"button"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
       <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
       {loading}
     </>
