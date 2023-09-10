@@ -19,7 +19,6 @@ const Landing = (props) => {
   const [limit, setLimit] = useState()
   const { domain, changeDomain } = useContext(DomainContext)
   const [url, setUrl] = useState({ words: "" })
-  const [singlePage, setSinglePage] = useState(undefined)
   const [wordNum, setWordNumb] = useState({ total: 0, frequency: 0 })
   const [wordFound, setWordFound] = useState();
   const [searchResults, setSearchResults] = useState([]);
@@ -45,7 +44,6 @@ const Landing = (props) => {
           });
           if (res.data.data) {
             setUrl(res.data.data);
-            setSinglePage(res.data.data.singlePage)
             setIsScraping(false);
             setCollectionFound(true);
             setIsLoaded(true);
@@ -87,7 +85,6 @@ const Landing = (props) => {
           setCollectionFound(false);
           setIsLoading(false);
           setLimit(LIMIT)
-          setIsScraping(true);
           await scrapeRequest(urlInput);
         }
     } catch (error) {
@@ -158,17 +155,17 @@ const Landing = (props) => {
 
     // Word count conditional output
     const result = wordFound === true ? (
-      <div className={classes.results}>
+      <div className={"results"}>
         <h4>Total: {wordNum.total}</h4>
         <h4>Frequency: {wordNum.frequency}</h4>
       </div>
     ) : wordFound === false ? (
-      <div className={classes.results}>
+      <div className={"results"}>
         <h4>No matches</h4>
         <h4 style={{color: 'white'}}>Total:</h4>
       </div>
     ) : (
-      <div className={classes.results}>
+      <div className={"results"}>
         <h4 style={{color: 'white'}}>Total:</h4>
         <h4 style={{color: 'white'}}>Frequency:</h4>
       </div>
@@ -217,24 +214,38 @@ const Landing = (props) => {
         <></>
       )
 
+  const form = (
+    <>
+      <input
+        disabled={isScraping}
+        className={"wordInput"}
+        type='text'
+        ref={urlRef}
+        placeholder='https://'
+        value={domain ? domain : null}
+        onChange={() => setCollectionFound(undefined)}
+        onClick={() => { changeDomain(false) }} //Set domain to false to be able to write on input.  
+        required
+      />
+      <div>
+        <h4>Crawl Length</h4>
+        <input disabled={isScraping} onChange={() => setCollectionFound(undefined)} onClick={() => setLimit(1)} checked={limit === 1 ? true : false} type='radio' id="singlePage" name="crawlLength" />
+        <label for="singlePage" >Single Page</label>
+        <input disabled={isScraping} onChange={() => setCollectionFound(undefined)} onClick={() => setLimit(50)} type='radio' id="manyPages" name="crawlLength" />
+        <label for="manyPages" >Deep Search</label>
+      </div>
+      <input disabled={collectionFound === undefined || isScraping === true} className={"button"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
+      <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+      {loading}
+    </>
+  )
   return (
     <div>
       <div className={"page"}>
         <div>
           <h3>Choose a URL</h3>
-          <div className={classes.inputs}>  
-            <input
-                disabled={isScraping}
-                className={classes.wordInput}
-                type='text'
-                ref={urlRef}
-                placeholder='https://'
-                value={domain ? domain :  null}
-                onChange={(e) => handleSearch(e.target.value)}
-                onClick={() => {changeDomain(false)}} //Set domain to false to be able to write on input.
-                required>
-            </input>
-            {loading}
+          <div className={"inputs"}>  
+            {form}
           </div>
           <Search results={searchResults}></Search>
           <h3>Find n-gram: </h3>
