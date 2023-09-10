@@ -12,223 +12,217 @@ import '../styles/Landing.css'
 
 
 const Landing = (props) => {
-    const wordRef = useRef(); 
-    const urlRef = useRef(); 
-    const [limit, setLimit] = useState()
-    const { domain, changeDomain } = useContext(DomainContext)
-    const [url, setUrl] = useState({ words: "" })
-    const [singlePage, setSinglePage] = useState(undefined)
-    const [wordNum, setWordNumb] = useState({total: 0, frequency: 0})
-    const [wordFound, setWordFound] = useState();
-    const [isLoading, setIsLoading] = useState(false); 
-    const [isScraping, setIsScraping] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const wordRef = useRef();
+  const urlRef = useRef();
+  const [limit, setLimit] = useState(1)
+  const { domain, changeDomain } = useContext(DomainContext)
+  const [url, setUrl] = useState({ words: "" })
+  const [wordNum, setWordNumb] = useState({ total: 0, frequency: 0 })
+  const [wordFound, setWordFound] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isScraping, setIsScraping] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-    useEffect(() => {
-      // while data is being scraped
-      if (isScraping) {
-        const interval = setInterval(async () => {
-          try {
-            // requests to backend are made every 5 seconds
-            // to check if the scraping is complete
-            const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
-              { 
-                domain: urlRef.current.value, 
-                limit: limit
-              }
-            });
-            if (res.data.data) {
-              setUrl(res.data.data);
-              setSinglePage(res.data.data.singlePage)
-              setIsScraping(false);
-              setIsLoaded(true);
+  useEffect(() => {
+    // while data is being scraped
+    if (isScraping) {
+      const interval = setInterval(async () => {
+        try {
+          // requests to backend are made every 5 seconds
+          // to check if the scraping is complete
+          const res = await axios.get(`${BASE_URL}/scrapy`, {
+            params:
+            {
+              domain: urlRef.current.value,
+              limit: limit
             }
-          } catch (error) {
-            console.error(error.response.data);
+          });
+          if (res.data.data) {
+            setUrl(res.data.data);
             setIsScraping(false);
+            setIsLoaded(true);
           }
-        }, 5000);
-        return () => clearInterval(interval);
-      }
-    }, [isScraping, limit])
-
-    const getURL = async (urlInput, LIMIT) => {
-
-      setIsLoading(true)
-      if (urlInput === "") {
-        alert("Enter a Valid URL");
-        setIsLoading(false)
-        return;
-      };
-      try {
-        const res = await axios.get(`${BASE_URL}/scrapy`, { params: 
-          { 
-            domain: urlInput, 
-            limit: LIMIT
-          }
-        });
-        if (res.data.data) {       
-          setSinglePage(res.data.data.singlePage)
-          setUrl(res.data.data);
-        } else {
-          // Make a 'POST' request to scrape the website
-          setIsLoading(false);
-          setLimit(LIMIT)
-          setIsScraping(true);
-          await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: LIMIT });
+        } catch (error) {
+          console.error(error.response.data);
+          setIsScraping(false);
         }
-      } catch (error) {
-        console.error(error.response.data)
-      } finally {
-        setIsLoading(false)
-        setIsLoaded(true)
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [isScraping, limit])
+
+  const getURL = async (urlInput) => {
+
+    setIsLoading(true)
+    if (urlInput === "") {
+      alert("Enter a Valid URL");
+      setIsLoading(false)
+      return;
+    };
+    try {
+      const res = await axios.get(`${BASE_URL}/scrapy`, {
+        params:
+        {
+          domain: urlInput,
+          limit: limit
+        }
+      });
+      if (res.data.data) {
+        setUrl(res.data.data);
+      } else {
+        // Make a 'POST' request to scrape the website
+        setIsLoading(false);
+        setIsScraping(true);
+        await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit });
+      }
+    } catch (error) {
+      console.error(error.response.data)
+    } finally {
+      setIsLoading(false)
+      setIsLoaded(true)
+    }
+  }
+
+  // Take list of ngrams out of the fetched data
+  const getWords = async (word) => {
+
+    //Count the number of spaces (' ') to know if it is word, bigram or trigram
+    let spaceCount = 0;
+
+    for (let i = 0; i < word.length; i++) {
+      if (word[i] === ' ') {
+        spaceCount++;
       }
     }
 
-    // Take list of ngrams out of the fetched data
-    const getWords = async (word) => {
+    let wordObject;
 
-      //Count the number of spaces (' ') to know if it is word, bigram or trigram
-      let spaceCount = 0;
-
-      for (let i = 0; i < word.length; i++) {
-        if (word[i] === ' ') {
-          spaceCount++;
-        }
+    try {
+      if (spaceCount === 0) {
+        wordObject = url.words
+      }
+      else if (spaceCount === 1) {
+        wordObject = url.bigrams
+      }
+      else if (spaceCount === 2) {
+        wordObject = url.trigrams
+      }
+      else {
+        setWordFound(false)
       }
 
-      let wordObject;
-
-      try {
-        if(spaceCount === 0){
-          wordObject = url.words
+      for (const w in wordObject) {
+        if (w === word) {
+          setWordNumb({
+            total: wordObject[w].Total,
+            frequency: wordObject[w].Frequency
+          })
+          setWordFound(true)
+          return
         }
-        else if(spaceCount === 1){
-          wordObject = url.bigrams
-        }
-        else if(spaceCount === 2){
-          wordObject = url.trigrams
-        }
-        else{
-          setWordFound(false)
-        }
-
-        for (const w in wordObject) {
-          if (w === word) {
-              setWordNumb({
-                total: wordObject[w].Total,
-                frequency: wordObject[w].Frequency
-              })
-              setWordFound(true)
-              return
-            }
-            setWordFound(false)
-          }
-          
-      } catch (error) {
-        console.error(error.response.data)
+        setWordFound(false)
       }
-  
+
+    } catch (error) {
+      console.error(error.response.data)
     }
 
-    // Word count conditional output
-    const result = wordFound === true ? (
-      <div className={"results"}>
-        <h4>Total: {wordNum.total}</h4>
-        <h4>Frequency: {wordNum.frequency}</h4>
-      </div>
-    ) : wordFound === false ? (
-      <div className={"results"}>
-        <h4>No matches</h4>
-        <h4 style={{color: 'white'}}>Total:</h4>
-      </div>
-    ) : (
-      <div className={"results"}>
-        <h4 style={{color: 'white'}}>Total:</h4>
-        <h4 style={{color: 'white'}}>Frequency:</h4>
-      </div>
-    )
+  }
 
-    const handleSubmitURL = (e, LIMIT) => {
-      e.preventDefault()
-      getURL(urlRef.current.value, LIMIT)
-    }  
+  // Word count conditional output
+  const result = wordFound === true ? (
+    <div className={"results"}>
+      <h4>Total: {wordNum.total}</h4>
+      <h4>Frequency: {wordNum.frequency}</h4>
+    </div>
+  ) : wordFound === false ? (
+    <div className={"results"}>
+      <h4>No matches</h4>
+      <h4 style={{ color: 'white' }}>Total:</h4>
+    </div>
+  ) : (
+    <div className={"results"}>
+      <h4 style={{ color: 'white' }}>Total:</h4>
+      <h4 style={{ color: 'white' }}>Frequency:</h4>
+    </div>
+  )
 
-    const handleSubmitWord = (e) => {
-      e.preventDefault()
-      getWords(wordRef.current.value)
+  const handleSubmitURL = (e, LIMIT) => {
+    e.preventDefault()
+    getURL(urlRef.current.value, LIMIT)
+  }
+
+  const handleSubmitWord = (e) => {
+    e.preventDefault()
+    getWords(wordRef.current.value)
+  }
+
+  useEffect(() => {
+    // Function to handle screen size changes
+    function handleResize() {
+      setScreenWidth(window.innerWidth)
     }
+    // Attach the handleResize function to the window's resize event
+    window.addEventListener('resize', handleResize);
+    // Call handleResize initially to apply styles based on the initial screen size
+    handleResize();
+  }, [])
 
-    useEffect(() => {
-      // Function to handle screen size changes
-      function handleResize() {
-        setScreenWidth(window.innerWidth)
-      }
-      // Attach the handleResize function to the window's resize event
-      window.addEventListener('resize', handleResize);
-      // Call handleResize initially to apply styles based on the initial screen size
-      handleResize();
-    }, [])
-    
-    // refactored conditional rendering checks for loading and scraping
-    const loading = isLoading ? 
-    ( 
+  // refactored conditional rendering checks for loading and scraping
+  const loading = isLoading ?
+    (
       <div>
-        <ProgressBar height={50} width={180}/>
+        <ProgressBar height={50} width={180} />
         <h4>Loading...</h4>
       </div>
-    ) : isScraping ? 
-    ( 
+    ) : isScraping ?
+      (
+        <div>
+          <ProgressBar height={50} width={180} />
+          <h4>Scraping...this may take a while</h4>
+        </div>
+      ) : (
+        <></>
+      )
+
+  const form = (
+    <>
+      <input
+        disabled={isScraping}
+        className={"wordInput"}
+        type='text'
+        ref={urlRef}
+        placeholder='https://'
+        value={domain ? domain : null}
+        onClick={() => { changeDomain(false) }} //Set domain to false to be able to write on input.  
+        required
+      />
       <div>
-        <ProgressBar height={50} width={180}/>
-        <h4>Scraping...this may take a while</h4>
+        <h4>Crawl Length</h4>
+        <input disabled={isScraping} onClick={() => setLimit(1)} checked={limit === 1 ? true : false} type='radio' id="singlePage" name="crawlLength" />
+        <label for="singlePage" >Single Page</label>
+        <input disabled={isScraping} onClick={() => setLimit(50)} type='radio' id="manyPages" name="crawlLength" />
+        <label for="manyPages" >Deep Search</label>
       </div>
-    ) : ( 
-    <div>
-      <div>
-        <input disabled={singlePage === undefined ? false : !singlePage} className={"button"} onClick={(e)=> handleSubmitURL(e, 50)} type="submit" value="Deep Scrape"></input> 
-        <input disabled={singlePage === undefined ? false : singlePage} className={"button"} onClick={(e)=> handleSubmitURL(e, 1)} type="submit" value="Quick Scrape"></input>
-      </div>
-      <div>
-        <input disabled={singlePage === undefined ? false : true} className={"button"} type='submit' value='Re-Scrape'></input>
-      </div>
-    </div>
-    )
+      <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+      {loading}
+    </>
+  )
   return (
     <div>
       <div className={"page"}>
         <div>
           <h3>Choose a URL</h3>
-          <div className={"inputs"}>  
-            <input
-                disabled={isScraping}
-                className={"wordInput"}
-                type='text'
-                ref={urlRef}
-                placeholder='https://'
-                value={domain ? domain :  null}
-                onClick={() => {changeDomain(false)}} //Set domain to false to be able to write on input.  
-                required>
-            </input>
-            {loading}
+          <div className={"inputs"}>
+            {form}
           </div>
           <h3>Find n-gram: </h3>
-          <div className={"inputs"}>  
-            {!isLoaded ? (
-              <>
-                <input className={"wordInput"} type='text' ref={wordRef} required disabled></input>
-                <input className={"buttonDis"} onClick={handleSubmitWord} type="submit" value="Check" disabled></input>
-              </>
-              ) : (
-              <>
-                <input className={"wordInput"} type='text' ref={wordRef} required></input>
-                <input className={"button"} onClick={handleSubmitWord} type="submit" value="Check"></input>
-              </>
-              )
-            }
+          <div className={"inputs"}>
+            <input disabled={!isLoaded} className={"wordInput"} type='text' ref={wordRef} required></input>
+            <input disabled={!isLoaded} className={"button"} onClick={handleSubmitWord} type="submit" value="Check"></input>
           </div>
-          {result}   
+          {result}
         </div>
         <Histogram isLoaded={isLoaded} data={url.words} ner={url.ner} bigrams={url.bigrams} trigrams={url.trigrams} screen={screenWidth}></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
