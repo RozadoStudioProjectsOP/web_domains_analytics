@@ -27,11 +27,12 @@ const useStyles = createUseStyles({
       background: 'white',
       marginBottom: 10,
       marginLeft: 20,
-      border: "2px solid #385E72",
+      // border: "2px solid #385E72",
       borderRadius: 5,
       width: '25vw',
       height: '70vh',
       minHeight: '70vh',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
       '@media (max-width: 960px)': {
         width: '99%',
         marginLeft: 0,
