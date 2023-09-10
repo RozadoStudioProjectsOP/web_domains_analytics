@@ -27,7 +27,6 @@ const useStyles = createUseStyles({
       background: 'white',
       marginBottom: 10,
       marginLeft: 20,
-      // border: "2px solid #385E72",
       borderRadius: 5,
       width: '25vw',
       height: '70vh',

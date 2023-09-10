@@ -24,22 +24,24 @@ const useStyles = createUseStyles({
       flexDirection: 'column',
       justifyContent: 'space-around',
       alignItems: 'center',
-      // border: "2px solid #385E72",
+      background: 'white',
       borderRadius: 5,
-      width: '95vw',
-      height: '80%',
+      width: '98vw',
+      height: '90vh',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
       '@media (min-width: 926px)': {
         width: '70%',
+        height: 'auto'
       },
       "& > h1": {
         letterSpacing: 10,
         fontSize: 70,
         color: '#385E72',
         fontFamily: 'DO Futuristic',
-        borderStyle: 'double hidden double',
         borderWidth: 5,
         padding: 50,
         textAlign: 'center',
+        lineHeight: 1.5,
         '@media (max-width: 500px)': {
           fontSize: 50
         },
