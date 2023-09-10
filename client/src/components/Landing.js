@@ -158,16 +158,6 @@ const Landing = (props) => {
     </div>
   )
 
-  const handleSubmitURL = (e, LIMIT) => {
-    e.preventDefault()
-    getURL(urlRef.current.value, LIMIT)
-  }
-
-  const handleSubmitWord = (e) => {
-    e.preventDefault()
-    getWords(wordRef.current.value)
-  }
-
   useEffect(() => {
     // Function to handle screen size changes
     function handleResize() {
@@ -232,7 +222,7 @@ const Landing = (props) => {
           <h3>Find n-gram: </h3>
           <div className={"inputs"}>
             <input disabled={!isLoaded} className={"wordInput"} type='text' ref={wordRef} required></input>
-            <input disabled={!isLoaded} className={"button"} onClick={handleSubmitWord} type="submit" value="Check"></input>
+            <input disabled={!isLoaded} className={"button"} onClick={() => getWords(wordRef.current.value)} type="submit" value="Check"></input>
           </div>
           {result}
         </div>
