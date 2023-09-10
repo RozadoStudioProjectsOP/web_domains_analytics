@@ -4,6 +4,7 @@ import { BASE_URL } from '../utils/base_url';
 import axios from 'axios';
 import Histogram from './Histogram';
 //import Wordcloud from './WordCloud';
+import Search from './Search';
 import Sentiment from './Sentiment';
 import Classification from './Classification';
 import { ProgressBar } from 'react-loader-spinner';
@@ -230,6 +231,7 @@ const Landing = (props) => {
             </input>
             {loading}
           </div>
+          <Search results={searchResults}></Search>
           <h3>Find n-gram: </h3>
           <div className={"inputs"}>
             <input disabled={!isLoaded} className={"wordInput"} type='text' ref={wordRef} required></input>
