@@ -175,9 +175,14 @@ const Landing = (props) => {
     )
 
     const handleSearch = (value) => {
-      changeDomain(value)
-      getDomains(value)
-    }
+      if (value === "") {
+        setSearchResults([]);
+        changeDomain(false);
+        return;
+      }
+      changeDomain(value);
+      getDomains(value);
+    };
 
     const handleSubmitURL = (e, LIMIT) => {
       e.preventDefault()
