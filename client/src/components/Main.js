@@ -4,6 +4,7 @@ import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
 import { useContext } from 'react';
 import { LoginContext } from '../contexts/login';
+import { WidthContext } from '../contexts/screenWidth';
 import Landing from './Landing';
 import NavBar from './NavBar';
 
@@ -21,25 +22,27 @@ const useStyles = createUseStyles({
     menu: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'space-around',
       alignItems: 'center',
-      border: "2px solid #385E72",
+      // border: "2px solid #385E72",
       borderRadius: 5,
       width: '95vw',
       height: '80%',
-      background: 'white',
       '@media (min-width: 926px)': {
         width: '70%',
       },
       "& > h1": {
         letterSpacing: 10,
-        fontSize: 50,
+        fontSize: 70,
         color: '#385E72',
-        fontFamily: 'Gill Sans',
-        textDecoration: 'underline',
-        textDecorationThickness: '0.1rem',
-        textUnderlineOffset: "10px",
-        textAlign: 'center'
+        fontFamily: 'DO Futuristic',
+        borderStyle: 'double hidden double',
+        borderWidth: 5,
+        padding: 50,
+        textAlign: 'center',
+        '@media (max-width: 500px)': {
+          fontSize: 50
+        },
       },
     },
     buttons: {
@@ -55,7 +58,7 @@ const useStyles = createUseStyles({
               margin: 30,
               cursor: 'pointer',
               fontSize: "1.5rem",
-              letterSpacing: "0.5rem",
+              letterSpacing: "0.3rem",
               background: '#D9E4EC',
               border: 'none',
               borderRadius: 5,
@@ -78,8 +81,9 @@ const useStyles = createUseStyles({
 //Initial page 
 
 const Main = (props) => {
-    const classes = useStyles();
-    const { isLoggedIn } = useContext(LoginContext);
+  const classes = useStyles();
+  const { isLoggedIn } = useContext(LoginContext);
+  const { screenWidth } = useContext(WidthContext);
 
   return isLoggedIn === false ? (
     <div className={classes.page}>
@@ -87,10 +91,12 @@ const Main = (props) => {
       <div className={classes.main}>
         <div className={classes.menu}>
             <h1>Web Domains Analytics</h1>
+            {screenWidth <= 700 ? ( // Show login register buttons if screen < 700px
             <div className={classes.buttons}>
                 <Link to="/login" style={{ textDecoration: 'none' }}><Button>Login</Button></Link>
                 <Link to="/register" style={{ textDecoration: 'none' }}><Button>Register</Button></Link>
-            </div>
+            </div>         
+            ) : null}
         </div>
       </div>
     </div>

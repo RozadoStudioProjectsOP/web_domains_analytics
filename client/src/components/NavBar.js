@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
         '& > a': {
           marginLeft: 20,
           color: '#191970',
-          fontFamily: 'Gill Sans',
+          fontFamily: 'DO Futuristic',
           whiteSpace: 'nowrap',
           letterSpacing: 1,
           '@media (max-width: 700px)': {
