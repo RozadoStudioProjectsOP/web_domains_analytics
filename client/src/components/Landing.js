@@ -56,6 +56,7 @@ const useStyles = createUseStyles({
     '& > div': {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       marginTop: 20,
       width: '80%',
     },
