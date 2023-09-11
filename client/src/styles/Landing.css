@@ -1,0 +1,98 @@
+.page {
+  height: auto;
+  background: #E9EAEC;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.page > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: white;
+  margin-bottom: 10px;
+  margin-left: 20px;  
+  border: 2px solid #385E72;
+  border-radius: 5;
+  width: 25vw;
+  height: 70vh;
+  min-height: 70vh;
+}
+
+@media (max-width: 960px) {
+  .page > div {
+    width: 99%;
+    margin-left: 0;
+    height: 80vh;
+  }
+}
+
+.page > div > h3 {
+  font-family: Gill Sans;
+  font-size: 1.5rem;
+  letter-spacing: 0.3rem;
+  color: #191970;
+  white-space: nowrap;
+}
+
+.page > div:nth-child(1) {
+  flex-direction: column;
+}
+
+.inputs {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.inputs > div {
+  display: flex;
+  align-items: center;
+  margin-top: 20;
+  width: 80%;
+}
+
+.wordInput {
+  padding: 15;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 50%
+}
+
+.button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5;
+  cursor: pointer;
+  background: #D9E4EC;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, 0.25);
+  transition: transform 50ms;
+}
+
+.button:hover {
+  background: #385E72;
+  color: white;
+}
+
+.button:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.buttonDis {
+  min-width: 6vw;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5;
+  background: #D9E4EC;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.results {
+  color: #191970;
+  font-size: 1.2rem;
+}
