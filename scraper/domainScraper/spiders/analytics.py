@@ -7,9 +7,9 @@ import tldextract
 from scrapy.linkextractors import LinkExtractor
 from ..items import DomainAnalyitcs
 
-class AuthorSpider(scrapy.Spider):
+class AnalyticSpider(scrapy.Spider):
     # Name used to call spider.
-    name = 'spider'    
+    name = 'analytics'    
 
     def start_requests(self):
         # Starts making requests to targeted website from inputted URL, and downloads

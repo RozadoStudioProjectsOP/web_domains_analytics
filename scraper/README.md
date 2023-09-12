@@ -12,7 +12,7 @@ Install the following packages in your python enviroment.
 
 # Usage
 
-Run locally: `scrapy crawl spider -a url=<url> -a MONGO_URI=<uri> -a MONGO_DB=<db> -a MONGO_COLLECTION=<col>`
+Run locally: `scrapy crawl analytics -a url=<url> -a MONGO_URI=<uri> -a MONGO_DB=<db> -a MONGO_COLLECTION=<col>`
 
 # Useful:
 To use scrapy in git bash (this is assuming your use Anaconda):
