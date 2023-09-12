@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
         '& > a': {
           marginLeft: 20,
           color: '#191970',
-          fontFamily: 'Gill Sans',
+          fontFamily: 'DO Futuristic',
           whiteSpace: 'nowrap',
           letterSpacing: 1,
           '@media (max-width: 700px)': {
@@ -118,7 +118,7 @@ const NavBar = () => {
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
         <DropdownMenu></DropdownMenu>
         <div>
-            <h2 onClick={logout} type='button'>Log out</h2>
+          <h2 onClick={logout} type='button'>Log out</h2>
         </div>
     </div>
   )
