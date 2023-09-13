@@ -18,7 +18,7 @@ const scrape = async (req, res) => {
       // arguments for scheduling a scraping job
       new URLSearchParams({
         project: PROJECT,
-        spider: "spider",
+        spider: "analytics",
         url: url,
         MONGO_DB: DB,
         MONGO_URI: MONGO_URI,
