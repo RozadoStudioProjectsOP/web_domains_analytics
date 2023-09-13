@@ -31,6 +31,7 @@ const useStyles = createUseStyles({
       background: 'white',
       '@media (min-width: 926px)': {
         width: '70%',
+        maxWidth: '1100px',
         height: 'auto'
       },
       "& > h1": {
