@@ -210,8 +210,10 @@ const Landing = (props) => {
         <input disabled={isScraping} onChange={() => setCollectionFound(undefined)} onClick={() => setLimit(50)} type='radio' id="manyPages" name="crawlLength" />
         <label for="manyPages" >Deep Search</label>
       </div>
-      <input disabled={collectionFound === undefined || isScraping === true} className={"button"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
-      <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+      <div className={'buttonsDiv'}> 
+        <input disabled={collectionFound === undefined || isScraping === true} className={ isLoaded ? "button" : "buttonDis"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
+        <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+      </div>
       {loading}
     </>
   )
@@ -251,7 +253,7 @@ if (isHome === true) {
           <h3>Find n-gram: </h3>
           <div className={"inputs"}>
             <input disabled={!isLoaded} className={"wordInput"} type='text' ref={wordRef} required></input>
-            <input disabled={!isLoaded} className={"button"} onClick={() => getWords(wordRef.current.value)} type="submit" value="Check"></input>
+            <input disabled={!isLoaded} className={isLoaded ? "button" : "buttonDis"} onClick={() => getWords(wordRef.current.value)} type="submit" value="Check"></input>
           </div>
           {result}
         </div>
