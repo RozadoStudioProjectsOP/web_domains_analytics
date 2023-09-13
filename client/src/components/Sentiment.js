@@ -18,11 +18,12 @@ const useStyles = createUseStyles({
   neutral: {
     display: 'flex',
     flexDirection: 'column',
+    width: '30%',
     '@media (max-width: 960px)': {
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'baseline',
-      width: '40%',
+      width: '50%',
     },
   },
   button: {
