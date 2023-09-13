@@ -38,12 +38,10 @@ const useStyles = createUseStyles({
         letterSpacing: 10,
         fontSize: 70,
         color: '#385E72',
-        fontFamily: 'Gill Sans',
         textAlign: 'center',
         fontFamily: 'DO Futuristic',
         borderWidth: 5,
         padding: 50,
-        textAlign: 'center',
         lineHeight: 1.5,
         '@media (max-width: 500px)': {
           fontSize: 50
