@@ -50,7 +50,8 @@
 .inputs > div {
   display: flex;
   align-items: center;
-  margin-top: 20;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
   width: 80%;
 }
 

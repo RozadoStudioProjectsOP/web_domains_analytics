@@ -244,20 +244,22 @@ const Landing = (props) => {
         />
         <label for="manyPages">Deep Search</label>
       </div>
-      <input
-        disabled={collectionFound === undefined || isScraping === true}
-        className={"button"}
-        onClick={() => scrapeRequest(urlRef.current.value)}
-        type="submit"
-        value={!collectionFound ? "Scrape" : "Re-Scrape"}
-      ></input>
-      <input
-        disabled={isScraping}
-        className={"button"}
-        onClick={() => getURL(urlRef.current.value)}
-        type="submit"
-        value="Check"
-      ></input>
+      <div>
+        <input
+          disabled={collectionFound === undefined || isScraping === true}
+          className={"button"}
+          onClick={() => scrapeRequest(urlRef.current.value)}
+          type="submit"
+          value={!collectionFound ? "Scrape" : "Re-Scrape"}
+        ></input>
+        <input
+          disabled={isScraping}
+          className={"button"}
+          onClick={() => getURL(urlRef.current.value)}
+          type="submit"
+          value="Check"
+        ></input>
+      </div>
       {loading}
     </>
   );
