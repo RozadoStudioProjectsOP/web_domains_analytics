@@ -1,7 +1,7 @@
 import React from "react";
 
 import SearchResults from "./SearchResults.js";
-import "./Search.css";
+import "../styles/Search.css";
 
 const Search = ({ results }) => {
   return (
