@@ -15,7 +15,7 @@ import { checkUrl } from "../utils/checkUrl.js";
 const Landing = (props) => {
   const wordRef = useRef();
   const urlRef = useRef();
-  const [limit, setLimit] = useState();
+  const [limit, setLimit] = useState(1);
   const { domain, changeDomain } = useContext(DomainContext);
   const [url, setUrl] = useState({ words: "" });
   const [wordNum, setWordNumb] = useState({ total: 0, frequency: 0 });
