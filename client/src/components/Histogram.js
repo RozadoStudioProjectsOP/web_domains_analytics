@@ -135,20 +135,26 @@ const Histogram = (props) => {
     setOutputMode(mode)
   }
 
+  const nerButton = props.ner ? (
+    <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
+  ) : (
+    <input className={classes.buttonDis} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
+  )
+  
   // Ngrams buttons. If data not loaded the are disabled
   const ngrams = props.isLoaded ? (
     <div className={props.screen > 960 ? classes.ngrams : classes.ngramsSmall}>
       <input className={classes.button} onClick={() => handleModeSelection('words')} type="submit" value="Words"></input>
       <input className={classes.button} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams"></input>
       <input className={classes.button} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams"></input>
-      <input className={classes.button} onClick={() => handleModeSelection('ner')} type="submit" value="NER"></input>
+      {nerButton}
     </div>
   ) : (
     <div className={props.screen > 960 ? classes.ngrams : classes.ngramsSmall}>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('words')} type="submit" value="Words" disabled></input>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('bigrams')} type="submit" value="Bigrams" disabled></input>
       <input className={classes.buttonDis} onClick={() => handleModeSelection('trigrams')} type="submit" value="Trigrams" disabled></input>
-      <input className={classes.buttonDis} onClick={() => handleModeSelection('ner')} type="submit" value="NER" disabled></input>
+      {nerButton}
     </div>
   )
 
