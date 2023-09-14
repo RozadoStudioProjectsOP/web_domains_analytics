@@ -4,7 +4,7 @@ import { createUseStyles } from "react-jss";
 import { useContext, useState } from 'react';
 import { LoginContext } from '../contexts/login';
 import { BASE_URL } from '../utils/base_url';
-import DropdownMenu from './DropMenu';
+// import DropdownMenu from './DropMenu';
 import axios from 'axios';
 
 const useStyles = createUseStyles({
@@ -116,7 +116,7 @@ const NavBar = () => {
   ) : (
     <div className={classes.bar}>
         <Link to="/" style={{ textDecoration: 'none' }}><h2>Web Domains Analytics</h2></Link>
-        <DropdownMenu></DropdownMenu>
+        {/* <DropdownMenu></DropdownMenu> */}
         <div>
             <h2 onClick={logout} type='button'>Log out</h2>
         </div>
