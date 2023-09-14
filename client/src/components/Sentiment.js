@@ -15,6 +15,17 @@ const useStyles = createUseStyles({
       flexDirection: 'column'
     },
   },
+  neutral: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '30%',
+    '@media (max-width: 960px)': {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'baseline',
+      width: '50%',
+    },
+  },
   button: {
     minWidth: '6vw',
     padding: '12px 20px',
@@ -123,7 +134,7 @@ const Sentiment = (props) => {
             <Radar name="Mike" dataKey="Total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
           </RadarChart>
         </ResponsiveContainer>
-        <div>
+        <div className={classes.neutral}>
           {buttonDisabled ? (
             <button className={classes.buttonDis} onClick={toggleChart} disabled>Change</button>
           ) : (

@@ -9,8 +9,10 @@ import Sentiment from "./Sentiment";
 import Classification from "./Classification";
 import { ProgressBar } from "react-loader-spinner";
 import { DomainContext } from "../contexts/domains";
-import "../styles/Landing.css";
+import { LoginContext } from '../contexts/login';
+import { Navigate } from "react-router-dom";
 import { checkUrl } from "../utils/checkUrl.js";
+import "../styles/Landing.css";
 
 const Landing = (props) => {
   const wordRef = useRef();
@@ -26,6 +28,8 @@ const Landing = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [collectionFound, setCollectionFound] = useState(undefined);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isHome, setIsHome] = useState(false)
+  const { changeLogin } = useContext(LoginContext); 
 
   useEffect(() => {
     // while data is being scraped
@@ -260,9 +264,40 @@ const Landing = (props) => {
           value="Check"
         ></input>
       </div>
+
+      <div className={'buttonsDiv'}> 
+        <input disabled={collectionFound === undefined || isScraping === true} className={ isLoaded ? "button" : "buttonDis"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
+        <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+      </div>
       {loading}
     </>
-  );
+  )
+
+  const logout = async () => {
+    try {
+      const res = await axios.post(`${BASE_URL}/auth/logout`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      })
+
+      if (res.status === 200) {
+        changeLogin(false, null)
+        sessionStorage.clear();       
+        alert("Logout successful");  
+        setIsHome(true);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  // If isHome is true, go to main page.
+if (isHome === true) {
+  return <Navigate to="/" />
+}
+
   return (
     <div>
       <div className={"page"}>
@@ -272,18 +307,18 @@ const Landing = (props) => {
           <Search results={searchResults}></Search>
           <h3>Find n-gram: </h3>
           <div className={"inputs"}>
-            <input
-              disabled={!isLoaded}
-              className={"wordInput"}
-              type="text"
-              ref={wordRef}
+            <input 
+              disabled={!isLoaded} 
+              className={"wordInput"} 
+              type='text'     
+              ref={wordRef} 
               required
             ></input>
-            <input
+            <input 
               disabled={!isLoaded}
-              className={"button"}
-              onClick={() => getWords(wordRef.current.value)}
-              type="submit"
+              className={isLoaded ? "button" : "buttonDis"} 
+              onClick={() => getWords(wordRef.current.value)} 
+              type="submit" 
               value="Check"
             ></input>
           </div>
@@ -298,15 +333,21 @@ const Landing = (props) => {
           screen={screenWidth}
         ></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
-        <Sentiment
-          data={url.sentiment}
-          ai_data={url.AI_Sentiment}
+        <Sentiment 
+          data={url.sentiment} 
+          ai_data={url.AI_Sentiment} 
           screen={screenWidth}
         ></Sentiment>
-        <Classification
-          data={url.classification}
+        <Classification   
+          data={url.classification} 
           screen={screenWidth}
         ></Classification>
+        {screenWidth <= 700 ? 
+          (
+            <h2 style={{textAlign: 'center', width: '100%'}} onClick={logout} type='button'>Log out</h2>
+          ) : null
+        }
+
       </div>
     </div>
   );
