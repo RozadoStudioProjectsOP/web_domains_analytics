@@ -22,7 +22,7 @@ const useStyles = createUseStyles({
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            border: "2px solid #385E72",
+            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
             padding: 40,
             borderRadius: 5,
             width: '20vw',
