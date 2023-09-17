@@ -36,6 +36,8 @@ class AnalyticSpider(scrapy.Spider):
         # Use Trafilatura extraction method to pull text out of the HTML that was
         # downloaded from scrapy into a string.
         item['raw'] = extract(response.body)
+        
+        item['headers'] = response.headers
 
         if (self.settings.attributes['CLOSESPIDER_PAGECOUNT'].value == "1"):
             item['singlePage'] = True
