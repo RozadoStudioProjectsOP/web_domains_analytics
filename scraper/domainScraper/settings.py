@@ -24,6 +24,7 @@ CLOSESPIDER_PAGECOUNT=1
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
+CLOSESPIDER_TIMEOUT = 300
 
 COOKIES_ENABLED = False
 
