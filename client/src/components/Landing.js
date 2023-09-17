@@ -91,7 +91,7 @@ const Landing = (props) => {
 
   const scrapeRequest = async (urlInput) => {
     setIsScraping(true);
-    await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit });
+    await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit, spider: 'analytics' });
   }
 
   // Take list of ngrams out of the fetched data
