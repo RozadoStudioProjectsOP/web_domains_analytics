@@ -78,16 +78,7 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 # Format: Directory, pipeline order.
-ITEM_PIPELINES = {
-   'domainScraper.pipelines.ngrams.NGramPipeline': 290,
-   'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,
-   'domainScraper.pipelines.ner.NamedEntityRecognitionPipeline': 301,
-   'domainScraper.pipelines.count.CountPipeline': 310,
-   'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
-   'domainScraper.pipelines.sentiment.SentimentPipeline': 395,
-   'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
-   'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
-}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -10,7 +10,19 @@ from ..items import DomainAnalyitcs
 class AnalyticSpider(scrapy.Spider):
     # Name used to call spider.
     name = 'analytics'    
-
+    custom_settings = {
+        "ITEM_PIPELINES": {
+            'domainScraper.pipelines.ngrams.NGramPipeline': 290,
+            'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,
+            'domainScraper.pipelines.ner.NamedEntityRecognitionPipeline': 301,
+            'domainScraper.pipelines.count.CountPipeline': 310,
+            'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
+            'domainScraper.pipelines.sentiment.SentimentPipeline': 395,
+            'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
+            'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
+        }
+    }
+    
     def start_requests(self):
         # Starts making requests to targeted website from inputted URL, and downloads
         # the HTML and returns it into the response argument in the parse method.
