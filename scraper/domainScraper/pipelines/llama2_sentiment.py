@@ -61,7 +61,7 @@ class Llama2SentimentPipeline:
                 Text: {text}
                 Sentiment:"""
 
-        item['AI_Sentiment'] = []
+        item['llama2_sentiment'] = []
 
         def getTotals(sentiment):
                        
@@ -78,17 +78,10 @@ class Llama2SentimentPipeline:
 
                 emotion = classify(text)
 
-                if not sentiment:
-                    sentiment.append(emotion)
+                emotionObject = {emotion: {'name': emotion.capitalize(), 'Total': 0}} 
 
-                else:
-                    for element in sentiment:
-                        # If sentiment already exists, add the scores and divide by 2 to get the average
-                        if 'name' in element and element['name'] == emotionL:
-                            element[emotionL]['accuracy'] = (element[emotionL]['accuracy'] + score) / 2
-                            break
-                    else:  # If the loop didn't break, the emotionL was not found in any element
-                        sentiment.append(emotionObject)
+                if not sentiment:
+                    sentiment.append(emotionObject)
         
             return sentiment
         
@@ -114,6 +107,6 @@ class Llama2SentimentPipeline:
                 value['Total'] = key_counts[key]
             return sentiment
         
-        item['AI_Sentiment'] = getCounts(item['AI_Sentiment'])                
-
+        item['Llama2_Sentiment'] = getCounts(item['Llama2_Sentiment'])                
+        print(item['Llama2_Sentiment'])
         return item
