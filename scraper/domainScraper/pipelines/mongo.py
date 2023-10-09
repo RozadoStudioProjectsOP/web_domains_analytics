@@ -86,6 +86,7 @@ class MongoDBPipeline:
         buildPayload(item['bigrams'], 'bigrams')
         buildPayload(item['trigrams'], 'trigrams')
         buildPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['llama2_sentiment'], 'llama2_sentiment')
         buildPayload(item['ner'], 'ner')
         buildPayload(item['classification'], 'classification') 
         

@@ -5,7 +5,7 @@ from transformers import AutoTokenizer
 from langchain import PromptTemplate,  LLMChain
 import transformers
 import torch
-import spacy 
+import spacy
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
@@ -21,7 +21,7 @@ model = "meta-llama/Llama-2-7b-chat-hf"
 
 tokenizer = AutoTokenizer.from_pretrained(model)
 
-nlp = spacy.load('en_core_web_sm') 
+nlp = spacy.load('en_core_web_sm')
 
 pipeline = transformers.pipeline(
     "text-generation",
@@ -29,7 +29,7 @@ pipeline = transformers.pipeline(
     model=model,
     tokenizer=tokenizer,
     torch_dtype=torch.bfloat16,
-    max_length=200,
+    max_length=300,
     do_sample=True,
     top_k=10,
     num_return_sequences=1,
@@ -39,17 +39,17 @@ pipeline = transformers.pipeline(
 llm = HuggingFacePipeline(pipeline = pipeline, model_kwargs = {'temperature':0})
 
 class Llama2SentimentPipeline:
-    
-    def process_item(self, item, spider):        
+
+    def process_item(self, item, spider):
         item = DomainAnalyitcs(item)
 
         # Get sentiment scores for the scraped page
         raw_text = item['raw']
-        doc = nlp(raw_text) 
+        doc = nlp(raw_text)
 
-        phrasesArray = [sent.text.strip() for sent in doc.sents] 
+        phrasesArray = [sent.text.strip() for sent in doc.sents]
 
-        template = """Classify the text into joy, anger, disgust, fear, sadness, surprise, trust anticipation. Reply with only one word and nothing else: Joy, Anger, Disgust, Fear, Sadness, Surprise, Trust.
+        template = """Classify the text into joy, anger, disgust, fear, sadness, surprise, trust or neutral. Reply with only one word and nothing else: Joy, Anger, Disgust, Fear, Sadness, Surprise, Trust, Neutral.
 
                 Examples:
                 Text: I can't believe you would betray my trust like this, after everything we've been through. Your actions have left me seething with anger and disappointment.
@@ -64,49 +64,44 @@ class Llama2SentimentPipeline:
         item['llama2_sentiment'] = []
 
         def getTotals(sentiment):
-                       
+
             for text in phrasesArray:
 
                 prompt = PromptTemplate(template=template, input_variables=["text"])
-               
+
                 llm_chain = LLMChain(prompt=prompt, llm=llm)
 
                 def classify(text):
                     raw_llm_answer = llm_chain.run(text)
                     answer = raw_llm_answer.split('.')[0]
-                    return answer
+                    return answer.lstrip()
 
                 emotion = classify(text)
 
-                emotionObject = {emotion: {'name': emotion.capitalize(), 'Total': 0}} 
+                emotionObject = {emotion: {'name': emotion.capitalize(), 'Total': 1}}
 
-                if not sentiment:
-                    sentiment.append(emotionObject)
-        
+                sentiment.append(emotionObject)
+
             return sentiment
-        
-        counts = []  
-           
-        item['Llama2_Sentiment'] = getTotals(item['Llama2_Sentiment']) 
-        
-        def getCounts(sentiment):
-            # Create a dictionary to keep track of the counts for each key
-            key_counts = {}
 
-            for item in sentiment: 
+        item['llama2_sentiment'] = getTotals(item['llama2_sentiment'])
+
+        def getCounts(sentiments):
+            # Create a dictionary to keep track of the counts for each key
+            summed_sentiments = {}
+
+            for item in sentiments:
                 key = list(item.keys())[0]
                 value = item[key]
-
-                # Check if the key already exists in the key_counts dictionary
-                if key in key_counts:
-                    key_counts[key] = 1  # Increment the count if the key is repeated
+                if key in summed_sentiments:
+                    summed_sentiments[key]['Total'] += value['Total']
                 else:
-                    key_counts[key] = 1   # Initialize the count if the key is encountered for the first time
+                    summed_sentiments[key] = value
 
-                # Add the 'count' key to each dictionary and update its value
-                value['Total'] = key_counts[key]
-            return sentiment
-        
-        item['Llama2_Sentiment'] = getCounts(item['Llama2_Sentiment'])                
-        print(item['Llama2_Sentiment'])
+            result_sentiments = [{key: value} for key, value in summed_sentiments.items()]
+
+            return result_sentiments
+
+        item['llama2_sentiment'] = getCounts(item['llama2_sentiment'])
+        print(item['llama2_sentiment'])
         return item
