@@ -33,6 +33,7 @@ pipeline = transformers.pipeline(
     do_sample=True,
     top_k=10,
     num_return_sequences=1,
+    batch_size=64,
     eos_token_id=tokenizer.eos_token_id
 )
 
@@ -98,10 +99,12 @@ class Llama2SentimentPipeline:
                 else:
                     summed_sentiments[key] = value
 
-            result_sentiments = [{key: value} for key, value in summed_sentiments.items()]
+            #result_sentiments = [{key: value} for key, value in summed_sentiments.items()]
 
-            return result_sentiments
+            return summed_sentiments
 
         item['llama2_sentiment'] = getCounts(item['llama2_sentiment'])
         print(item['llama2_sentiment'])
         return item
+
+                                           

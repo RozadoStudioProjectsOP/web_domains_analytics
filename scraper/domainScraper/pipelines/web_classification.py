@@ -13,7 +13,7 @@ class WebClassificationPipeline:
         rawText = (item['raw'])[:500]
 
         # Run model 
-        pipe = pipeline("text-classification", model=model, tokenizer=tokenizer)
+        pipe = pipeline("text-classification", model=model, tokenizer=tokenizer, device=0)
         classification = pipe(rawText)
         
         # Modify result to get the necessary parameters needed for front end 
