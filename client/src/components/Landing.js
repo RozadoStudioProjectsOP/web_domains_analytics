@@ -251,7 +251,7 @@ const Landing = (props) => {
 
       <div className={'buttonsDiv'}> 
         <input disabled={collectionFound === undefined || isScraping === true} className={ isLoaded ? "button" : "buttonDis"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
-        <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+        <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value, limit)} type='submit' value='Check'></input>
       </div>
       {loading}
     </>
