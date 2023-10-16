@@ -5,7 +5,8 @@ import axios from "axios";
 import Histogram from "./Histogram";
 //import Wordcloud from './WordCloud';
 import Search from "./Search";
-import Sentiment from "./Sentiment";
+//import Sentiment from "./Sentiment";
+import Llama2 from "./LLama2";
 import Classification from "./Classification";
 import { ProgressBar } from "react-loader-spinner";
 import { DomainContext } from "../contexts/domains";
@@ -317,11 +318,10 @@ if (isHome === true) {
           screen={screenWidth}
         ></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
-        <Sentiment 
-          data={url.sentiment} 
-          ai_data={url.AI_Sentiment} 
+        <Llama2
+          data={url.llama2_sentiment} 
           screen={screenWidth}
-        ></Sentiment>
+        ></Llama2>
         <Classification   
           data={url.classification} 
           screen={screenWidth}
