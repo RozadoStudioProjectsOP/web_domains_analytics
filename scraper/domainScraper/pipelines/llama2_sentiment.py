@@ -8,19 +8,20 @@ import torch
 import spacy
 
 if torch.cuda.is_available():
-    device = torch.device("cuda")  # Check if a GPU is available, if yes, use it
+    device = torch.device("cuda")
     print("GPU is available and being used")
 else:
-    device = torch.device("cpu")  # If no GPU is available, use CPU
+    device = torch.device("cpu")
     print("GPU is not available, using CPU instead")
 
-HfFolder.save_token('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')  # Save a token to HfFolder
 
-model = "meta-llama/Llama-2-7b-chat-hf"  # Define the model you want to use
+HfFolder.save_token('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')
 
-tokenizer = AutoTokenizer.from_pretrained(model)  # Load the tokenizer for the specified model
+model = "meta-llama/Llama-2-7b-chat-hf"
 
-nlp = spacy.load('en_core_web_sm')  # Load the spaCy English language model
+tokenizer = AutoTokenizer.from_pretrained(model)
+
+#nlp = spacy.load('en_core_web_sm')
 
 pipeline = transformers.pipeline(
     "text-generation",
@@ -28,71 +29,87 @@ pipeline = transformers.pipeline(
     model=model,
     tokenizer=tokenizer,
     torch_dtype=torch.bfloat16,
-    max_length=300,
+    max_length=512,
     do_sample=True,
     top_k=10,
     num_return_sequences=1,
-    batch_size=64,
-    eos_token_id=tokenizer.eos_token_id
-)  # Configure a text generation pipeline using the specified model and settings
+    batch_size=32,
+    eos_token_id=tokenizer.eos_token_id,
+)
 
-llm = HuggingFacePipeline(pipeline=pipeline, model_kwargs={'temperature': 0})  # Create a HuggingFacePipeline
+llm = HuggingFacePipeline(pipeline = pipeline, model_kwargs = {'temperature':0, 'truncation':True})
 
 class Llama2SentimentPipeline:
 
     def process_item(self, item, spider):
-        item = DomainAnalyitcs(item)  # Create a DomainAnalytics item from the input item
+        item = DomainAnalyitcs(item)
 
         # Get sentiment scores for the scraped page
-        raw_text = item['raw']  # Extract the 'raw' text from the item
-        doc = nlp(raw_text)  # Process the text with spaCy
+        def split_text_into_parts(text, num_parts):
+            
+            # Calculate the approximate size of each part
+            part_size = len(text) // num_parts
 
-        phrasesArray = [sent.text.strip() for sent in doc.sents]  # Split the processed text into sentences
+            # Split the text into equal parts
+            text_parts = [text[i:i + part_size] for i in range(0, len(text), part_size)]
 
-        template = """Classify the text into joy, anger, disgust, fear, sadness, surprise, trust or neutral. 
-        Reply with only one word and nothing else: Joy, Anger, Disgust, Fear, Sadness, Surprise, Trust, Neutral.
-        Examples:
-        Text: I can't believe you would betray my trust like this, after everything we've been through. Your actions have left me seething with anger and disappointment.
-        Sentiment: Anger.
-        Text: Winning the championship was an absolute thrill, and I'm overflowing with happiness and excitement!
-        Sentiment: Joy.
-        Text: {text}
-        Sentiment:"""  # Define a template for sentiment classification
+            return text_parts
 
-        item['llama2_sentiment'] = []  # Initialize an empty list to store sentiment results
+        # Split the text into four equal parts
+        raw_text = item['raw']
+        phrasesArray = split_text_into_parts(raw_text, 6)
+
+        template = """Classify the text into joy, anger, disgust, fear, sadness, surprise, trust or neutral. Reply with only one word and nothing else: Joy, Anger, Disgust, Fear, Sadness, Surprise, Trust, Neutral.
+
+                Examples:
+                Text: I can't believe you would betray my trust like this, after everything we've been through. Your actions have left me seething with anger and disappointment.
+                Sentiment: Anger.
+
+                Text: Winning the championship was an absolute thrill, and I'm overflowing with happiness and excitement!
+                Sentiment: Joy.
+
+                Text: {text}
+                Sentiment:"""
+
+        item['llama2_sentiment'] = []
 
         def getTotals(sentiment):
+
             for text in phrasesArray:
-                prompt = PromptTemplate(template=template, input_variables=["text"])  # Create a prompt template
-                llm_chain = LLMChain(prompt=prompt, llm=llm)  # Create an LLMChain
+
+                prompt = PromptTemplate(template=template, input_variables=["text"])
+
+                llm_chain = LLMChain(prompt=prompt, llm=llm)
 
                 def classify(text):
-                    raw_llm_answer = llm_chain.run(text)  # Run the LLMChain with the text
+                    raw_llm_answer = llm_chain.run(text)
                     answer = raw_llm_answer.split('.')[0]
                     return answer.lstrip()
 
-                emotion = classify(text)  # Classify the sentiment of the text
-                emotionObject = {emotion: {'name': emotion.capitalize(), 'Total': 1}}  # Create a sentiment object
+                emotion = classify(text)
 
-                sentiment.append(emotionObject)  # Append the sentiment object to the results
+                emotionObject = {emotion: {'name': emotion.capitalize(), 'Total': 1}}
+
+
+                sentiment.append(emotionObject)
 
             return sentiment
-
-        item['llama2_sentiment'] = getTotals(item['llama2_sentiment'])  # Get sentiment totals
+        item['llama2_sentiment'] = getTotals(item['llama2_sentiment'])
 
         def getCounts(sentiments):
-            summed_sentiments = {}  # Create a dictionary to store summed sentiment counts
+            # Create a dictionary to keep track of the counts for each key
+            summed_sentiments = {}
 
             for item in sentiments:
                 key = list(item.keys())[0]
                 value = item[key]
                 if key in summed_sentiments:
-                    summed_sentiments[key]['Total'] += value['Total']  # Update sentiment counts
+                    summed_sentiments[key]['Total'] += value['Total']
                 else:
-                    summed_sentiments[key] = value  # Add a new sentiment count
+                    summed_sentiments[key] = value
 
             return summed_sentiments
 
-        item['llama2_sentiment'] = getCounts(item['llama2_sentiment'])  # Summarize sentiment counts
-        print(item['llama2_sentiment'])  # Print the sentiment results
-        return item 
+        item['llama2_sentiment'] = getCounts(item['llama2_sentiment'])
+
+        return item
