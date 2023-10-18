@@ -226,7 +226,7 @@ const Landing = (props) => {
         }} //Set domain to false to be able to write on input.
         required
       />
-      <div>
+      <div className="searchSettings">
         <h4>Crawl Length</h4>
         <input
           disabled={isScraping}
