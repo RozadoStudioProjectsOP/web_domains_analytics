@@ -3,14 +3,13 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { BASE_URL } from "../utils/base_url";
 import axios from "axios";
 import Histogram from "./Histogram";
-//import Wordcloud from './WordCloud';
 import Search from "./Search";
-//import Sentiment from "./Sentiment";
-import Llama2 from "./LLama2";
+import Sentiment from "./Sentiment";
 import Classification from "./Classification";
 import { ProgressBar } from "react-loader-spinner";
 import { DomainContext } from "../contexts/domains";
 import { LoginContext } from '../contexts/login';
+import { WidthContext } from "../contexts/screenWidth";
 import { Navigate } from "react-router-dom";
 import { checkUrl } from "../utils/checkUrl.js";
 import "../styles/Landing.css";
@@ -18,8 +17,10 @@ import "../styles/Landing.css";
 const Landing = (props) => {
   const wordRef = useRef();
   const urlRef = useRef();
-  const [limit, setLimit] = useState(1);
   const { domain, changeDomain } = useContext(DomainContext);
+  const { changeLogin } = useContext(LoginContext);
+  const { screenWidth } = useContext(WidthContext);
+  const [limit, setLimit] = useState(1);
   const [url, setUrl] = useState({ words: "" });
   const [wordNum, setWordNumb] = useState({ total: 0, frequency: 0 });
   const [wordFound, setWordFound] = useState();
@@ -28,9 +29,7 @@ const Landing = (props) => {
   const [isScraping, setIsScraping] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [collectionFound, setCollectionFound] = useState(undefined);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isHome, setIsHome] = useState(false)
-  const { changeLogin } = useContext(LoginContext); 
 
   useEffect(() => {
     // while data is being scraped
@@ -186,17 +185,6 @@ const Landing = (props) => {
     getDomains(value);
   };
 
-  useEffect(() => {
-    // Function to handle screen size changes
-    function handleResize() {
-      setScreenWidth(window.innerWidth);
-    }
-    // Attach the handleResize function to the window's resize event
-    window.addEventListener("resize", handleResize);
-    // Call handleResize initially to apply styles based on the initial screen size
-    handleResize();
-  }, []);
-
   // refactored conditional rendering checks for loading and scraping
   const loading = isLoading ? (
     <div>
@@ -318,10 +306,10 @@ console.log(url)
           screen={screenWidth}
         ></Histogram>
         {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
-        <Llama2
-          data={url.llama2_sentiment} 
-          screen={screenWidth}
-        ></Llama2>
+        <Sentiment
+          llamaSent={url.llama2_sentiment}
+          llamaPosNeg={url.llama2_posNeg}
+        ></Sentiment>
         <Classification   
           data={url.classification} 
           screen={screenWidth}

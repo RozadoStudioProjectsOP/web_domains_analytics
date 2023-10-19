@@ -1,8 +1,9 @@
 import React from 'react'
 import { createUseStyles } from "react-jss";
-import { useState, useEffect } from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { useState, useEffect, useContext } from 'react';
 import baseSentimentData from '../utils/sentimentBaseData';
+import Llama2 from './LLama2';
+import Llama2PosNeg from './llama2posNeg';
 
 const useStyles = createUseStyles({
   window: {
@@ -125,15 +126,8 @@ const Sentiment = (props) => {
 
     return (
       <div className={classes.window}> 
-        <ResponsiveContainer width={props.screen<960 ? "90%" : "100%"} height={props.screen<960 ? "90%" : "100%"}>
-          <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
-            <text x="50%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{props.screen>550 ? `${title}` : 'Sentiment Analysis'}</text>
-            <PolarGrid />
-            <PolarAngleAxis dataKey="name" />
-            <PolarRadiusAxis />
-            <Radar name="Mike" dataKey="Total" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-          </RadarChart>
-        </ResponsiveContainer>
+        {/* <Llama2 data={props.llamaSent}></Llama2> */}
+        <Llama2PosNeg data={props.llamaPosNeg}></Llama2PosNeg>
         <div className={classes.neutral}>
           {buttonDisabled ? (
             <button className={classes.buttonDis} onClick={toggleChart} disabled>Change</button>

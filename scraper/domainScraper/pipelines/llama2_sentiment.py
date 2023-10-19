@@ -59,7 +59,7 @@ class Llama2SentimentPipeline:
         raw_text = item['raw']
         phrasesArray = split_text_into_parts(raw_text, 6)
 
-        template = """Classify the text into joy, anger, disgust, fear, sadness, surprise, trust or neutral. Reply with only one word and nothing else: Joy, Anger, Disgust, Fear, Sadness, Surprise, Trust, Neutral.
+        template = """Classify the text into joy, anger, criticism, fear, sadness, surprise, trust or neutral. Reply with only one word and nothing else: Joy, Anger, Criticism, Fear, Sadness, Surprise, Trust, Neutral.
 
                 Examples:
                 Text: I can't believe you would betray my trust like this, after everything we've been through. Your actions have left me seething with anger and disappointment.

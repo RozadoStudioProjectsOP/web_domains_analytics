@@ -2,12 +2,12 @@ import React from 'react'
 import { useState, useEffect, useContext } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import { WidthContext } from '../contexts/screenWidth';
-import baseSentimentData from '../utils/sentimentBaseData';
+import basePosNeg from '../utils/basePosNedData';
 
-const Llama2 = (props) => {
+const Llama2PosNeg = (props) => {
 
   const { screenWidth } = useContext(WidthContext);
-  const [data, setData] = useState(baseSentimentData);
+  const [data, setData] = useState(basePosNeg);
   const [title, setTitle] = useState("Sentiment Data (Llama2)")
 
   const processData = (datas) => {
@@ -41,7 +41,7 @@ const Llama2 = (props) => {
       modData(props.data)
     } else {
       // If no data
-      setData(baseSentimentData)
+      setData(basePosNeg)
       setTitle("Sentiment Data")
     }
   }, [props.data])
@@ -61,4 +61,4 @@ const Llama2 = (props) => {
   );
 }
 
-export default Llama2
+export default Llama2PosNeg
