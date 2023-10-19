@@ -62,7 +62,7 @@ const Landing = (props) => {
   const getURL = async (urlInput, LIMIT) => {
     setIsLoading(true);
     setIsLoaded(false);
-    setUrl({ words: "" });
+    setUrl({ words: "", bigrams: "", trigrams: "", ner: "" });
     if (urlInput === "") {
       alert("Enter a Valid URL");
       setIsLoading(false);
