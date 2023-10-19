@@ -70,14 +70,30 @@ class Llama2SentimentPipeline:
 
                 Text: {text}
                 Sentiment:"""
+        
+        template2 = """Classify the text into positive, negative or neutral. Reply with only one word and nothing else: Positive, Negative, Neutral.
+
+                Examples:
+                Text: Embrace each day with a smile, for your potential is boundless, and the world is full of opportunities waiting for you.
+                Sentiment: Positive.
+
+                Text: Life's challenges can be tough, but they also offer opportunities for growth and resilience.
+                Sentiment: Negative.
+
+                Text: {text}
+                Sentiment:"""
 
         item['llama2_sentiment'] = []
+        item['llama2_posNeg'] = []
 
-        def getTotals(sentiment):
+        def getTotals(sentiment, posNeg):
 
             for text in phrasesArray:
 
-                prompt = PromptTemplate(template=template, input_variables=["text"])
+                if posNeg == False:
+                    prompt = PromptTemplate(template=template, input_variables=["text"])
+                else:
+                    prompt = PromptTemplate(template=template2, input_variables=["text"])    
 
                 llm_chain = LLMChain(prompt=prompt, llm=llm)
 
@@ -90,11 +106,11 @@ class Llama2SentimentPipeline:
 
                 emotionObject = {emotion: {'name': emotion.capitalize(), 'Total': 1}}
 
-
                 sentiment.append(emotionObject)
 
             return sentiment
-        item['llama2_sentiment'] = getTotals(item['llama2_sentiment'])
+        item['llama2_sentiment'] = getTotals(item['llama2_sentiment'], False)
+        item['llama2_posNeg'] = getTotals(item['llama2_posNeg'], True)
 
         def getCounts(sentiments):
             # Create a dictionary to keep track of the counts for each key
@@ -111,5 +127,6 @@ class Llama2SentimentPipeline:
             return summed_sentiments
 
         item['llama2_sentiment'] = getCounts(item['llama2_sentiment'])
+        item['llama2_posNeg'] = getCounts(item['llama2_posNeg'])
 
         return item

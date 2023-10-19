@@ -10,6 +10,7 @@ class DomainAnalyitcs(Item):
     trigrams = Field()
     classification = Field()
     llama2_sentiment = Field()
+    llama2_posNeg = Field()
     sentiment = Field()
     AI_Sentiment = Field()
     ner = Field()

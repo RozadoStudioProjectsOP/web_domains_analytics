@@ -282,7 +282,7 @@ const Landing = (props) => {
 if (isHome === true) {
   return <Navigate to="/" />
 }
-
+console.log(url)
   return (
     <div>
       <div className={"page"}>
