@@ -20,11 +20,12 @@ const Llama2 = (props) => {
     const aiSentimentArray = Object.values(data);
   
     // Filter out the element with name 'Neutral'
-    const validEmotions = ["Joy", "Anger", "Criticism", "Fear", "Sadness", "Surprise", "Trust"];
+    const validEmotions = ["Joy", "Anger", "Criticism", "Fear", "Sadness", "Surprise", "Trust", "Enthusiasm", "Confusion",
+    "Jealousy", "Calm", "Anxiety", "Pride", "Shame", "Guilt", "Hope", "Excitement", "Gratitude", "Regret", "Compassion", "Grief"];
     const filteredData = aiSentimentArray.filter(item => validEmotions.includes(item.name));
   
     // Get the first 10 elements from the sorted array
-    const top6Sentiments = filteredData.slice(0, 10);
+    const top6Sentiments = filteredData.slice(0, 6);
     processData(top6Sentiments)
   }
 
