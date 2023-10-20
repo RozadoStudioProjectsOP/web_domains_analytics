@@ -1,7 +1,7 @@
 const baseClassificationData = 
 [
     {
-      Total: 100,
+      Total: 1,
       name: ''
     },
   ]

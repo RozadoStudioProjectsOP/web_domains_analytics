@@ -305,7 +305,6 @@ console.log(url)
           trigrams={url.trigrams}
           screen={screenWidth}
         ></Histogram>
-        {/* <Wordcloud data={url.words} bigrams={url.bigrams} trigrams={url.trigrams} mode={outputMode}></Wordcloud> */}
         <Sentiment
           llamaSent={url.llama2_sentiment}
           llamaPosNeg={url.llama2_posNeg}

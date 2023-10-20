@@ -1,15 +1,15 @@
 const basePosNeg = 
 [
     {
-      Total: 0,
+      Total: 1,
       name: 'Positive'
     },
     {
-      Total: 0,
+      Total: 1,
       name: 'Negative'
     },
     {
-      Total: 0,
+      Total: 1,
       name: 'Neutral'
     },
   ]
