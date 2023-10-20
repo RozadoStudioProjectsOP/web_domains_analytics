@@ -36,7 +36,7 @@ const Classification = (props) => {
         <Sector
           cx={cx}
           cy={cy}
-          outerRadius={outerRadius + 5}
+          outerRadius={outerRadius + 3}
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
