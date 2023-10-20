@@ -7,9 +7,9 @@ import Llama2PosNeg from './llama2posNeg';
 const useStyles = createUseStyles({
   window: {
     minWidth: '47.5vw',
-    minHeight: '60vh', 
+    minHeight: '60vh',
     height: '80vh',
-    display: 'flex', 
+    display: 'flex',
     flexDirection: 'row',
     '@media (max-width: 960px)': {
       flexDirection: 'column'
@@ -42,12 +42,12 @@ const useStyles = createUseStyles({
       marginBottom: 20
     },
     '&:hover': {
-        background: '#385E72',
-        color: 'white'
+      background: '#385E72',
+      color: 'white'
     },
     "&:active": {
-        transform: "translateY(4px)",
-        boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
+      transform: "translateY(4px)",
+      boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.75)",
     }
   },
   buttonDis: {
@@ -70,30 +70,30 @@ const Sentiment = (props) => {
   const classes = useStyles();
   const [toggle, setToggle] = useState(false)
   const [buttonDisabled, setButtonDissabled] = useState(true)
-  
+
   useEffect(() => {
-    if(props){
+    if (props) {
       setButtonDissabled(false)
-    } 
+    }
   }, [props])
 
-    return (
-      <div className={classes.window}> 
-        {!toggle ? (
+  return (
+    <div className={classes.window}>
+      {!toggle ? (
         <Llama2PosNeg data={props.llamaPosNeg}></Llama2PosNeg>
-        ) : (
+      ) : (
         <Llama2 data={props.llamaSent}></Llama2>
+      )}
+
+      <div className={classes.neutral}>
+        {buttonDisabled ? (
+          <button className={classes.buttonDis} onClick={() => setToggle(!toggle)} disabled>Change</button>
+        ) : (
+          <button className={classes.button} onClick={() => setToggle(!toggle)}>Change</button>
         )}
-        
-        <div className={classes.neutral}>
-          {buttonDisabled ? (
-            <button className={classes.buttonDis} onClick={() => setToggle(!toggle)} disabled>Change</button>
-          ) : (
-            <button className={classes.button} onClick={() => setToggle(!toggle)}>Change</button>
-          )}
-        </div>
-      </div>  
-      );
+      </div>
+    </div>
+  );
 }
 
 export default Sentiment
