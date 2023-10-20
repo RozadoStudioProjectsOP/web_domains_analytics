@@ -42,11 +42,12 @@ const Llama2PosNeg = (props) => {
             // If no data
             setData(basePosNeg)
         }
-    }, [props.data])
+       
+    }, [props.data]) // eslint-disable-line
 
     const renderActiveShape = (props) => {
-        let { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
-            fill, payload, percent, value } = props;
+        let { cx, cy, innerRadius, outerRadius, startAngle, endAngle,
+            fill } = props;
             if(fill === '#AFE1AF'){ fill = "#93C572"}
             if(fill === '#ff9c84'){ fill = "#E3735E"}
             if(fill === '#87CEEB'){ fill = "#0096FF"}

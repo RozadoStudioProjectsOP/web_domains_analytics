@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from "react-jss";
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Llama2 from './LLama2';
 import Llama2PosNeg from './llama2posNeg';
 
@@ -70,7 +70,6 @@ const Sentiment = (props) => {
   const classes = useStyles();
   const [toggle, setToggle] = useState(false)
   const [buttonDisabled, setButtonDissabled] = useState(true)
-  const [title, setTitle] = useState("Sentiment")
   
   useEffect(() => {
     if(props){

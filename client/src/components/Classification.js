@@ -33,8 +33,8 @@ const Classification = (props) => {
   }, [props.data])
 
   const renderActiveShape = (props) => {
-    let { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
-        fill, payload, percent, value } = props;
+    let { cx, cy, outerRadius, startAngle, endAngle,
+        fill } = props;
 
     return (
         <g>
