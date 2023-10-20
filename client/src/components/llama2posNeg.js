@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect, useContext } from 'react';
-import { PieChart, Pie, Sector, Tooltip, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
 import { WidthContext } from '../contexts/screenWidth';
 import basePosNeg from '../utils/basePosNedData';
 
@@ -73,9 +73,16 @@ const Llama2PosNeg = (props) => {
         });
     };
 
+    const onPieLeave = (_, index) => {
+        setIndex({
+            activeIndex: null,
+        });
+    };
+
     return (
         <ResponsiveContainer width={screenWidth < 960 ? "90%" : "100%"} height={screenWidth < 960 ? "90%" : "100%"}>
             <PieChart width={400} height={400}>
+            <text x="60%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Web Classification (Llama2)</text>
                 <Pie
                     activeIndex={state.activeIndex}
                     activeShape={renderActiveShape}
@@ -84,15 +91,20 @@ const Llama2PosNeg = (props) => {
                     endAngle={0}
                     data={data}
                     cx="50%"
-                    cy="60%"
+                    cy="65%"
                     outerRadius={"80%"}
                     innerRadius={"40%"}
                     label
                     onMouseEnter={onPieEnter}
+                    onMouseLeave={onPieLeave}
                 >{data.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
                 </Pie>
+                <Legend
+                    verticalAlign="bottom"
+                    align="center"
+                />
                 <Tooltip />
             </PieChart>
         </ResponsiveContainer>

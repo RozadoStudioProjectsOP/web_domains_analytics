@@ -1,7 +1,7 @@
 import React from 'react'
 // import { createUseStyles } from "react-jss";
 import { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector, Legend } from 'recharts';
 import baseClassificationData from '../utils/classificationBaseData';
 
 // const useStyles = createUseStyles({
@@ -58,6 +58,12 @@ const Classification = (props) => {
       });
   };
 
+  const onPieLeave = (_, index) => {
+    setIndex({
+        activeIndex: null,
+    });
+};
+
     return (
       <div style={{minWidth: '47.5vw', height: '60vh'}}> 
         <ResponsiveContainer width="100%" height="100%">
@@ -67,7 +73,6 @@ const Classification = (props) => {
             activeIndex={state.activeIndex}
             activeShape={renderActiveShape}
             dataKey="Total"
-            isAnimationActive={false}
             data={data}
             cx="50%"
             cy="55%"
@@ -75,10 +80,15 @@ const Classification = (props) => {
             fill="#8884d8"
             label
             onMouseEnter={onPieEnter}
+            onMouseLeave={onPieLeave}
           >{data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
           </Pie>
+          <Legend
+            verticalAlign="bottom"
+            align="center"
+          />
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
