@@ -83,7 +83,7 @@ const Llama2PosNeg = (props) => {
     return (
         <ResponsiveContainer width={screenWidth < 960 ? "90%" : "100%"} height={screenWidth < 960 ? "90%" : "100%"}>
             <PieChart width={400} height={400}>
-                <text x="60%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Web Classification (Llama2)</text>
+                <text x="60%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Sentiment Analysis (Llama2)</text>
                 <Pie
                     activeIndex={state.activeIndex}
                     activeShape={renderActiveShape}
