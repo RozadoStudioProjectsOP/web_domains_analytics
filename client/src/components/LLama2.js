@@ -23,9 +23,12 @@ const Llama2 = (props) => {
     const validEmotions = ["Joy", "Anger", "Criticism", "Fear", "Sadness", "Surprise", "Trust", "Enthusiasm", "Confusion",
     "Jealousy", "Calm", "Anxiety", "Pride", "Shame", "Guilt", "Hope", "Excitement", "Gratitude", "Regret", "Compassion", "Grief"];
     const filteredData = aiSentimentArray.filter(item => validEmotions.includes(item.name));
-  
+
+    // Sort the array in descending order based on the 'Total' property
+    const sortedData = filteredData.sort((a, b) => b.Total - a.Total);
+
     // Get the first 10 elements from the sorted array
-    const top6Sentiments = filteredData.slice(0, 6);
+    const top6Sentiments = sortedData.slice(0, 6);
     processData(top6Sentiments)
   }
 
@@ -37,7 +40,7 @@ const Llama2 = (props) => {
       setData(baseSentimentData)
     }
   }, [props.data])  // eslint-disable-line
-  console.log(props.data)
+
   return (
     <>
       <ResponsiveContainer width={screenWidth < 960 ? "90%" : "100%"} height={screenWidth < 960 ? "90%" : "100%"}>
