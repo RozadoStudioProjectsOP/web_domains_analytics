@@ -45,7 +45,7 @@ const Llama2 = (props) => {
     <>
       <ResponsiveContainer width={screenWidth < 960 ? "90%" : "100%"} height={screenWidth < 960 ? "90%" : "100%"}>
         <RadarChart cx="50%" cy="55%" outerRadius="80%" data={data}>
-        <text x="60%" y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>Sentiment Analysis (Llama2)</text>
+        <text x={screenWidth < 960 ? "50%" : "60%"} y="25" textAnchor="middle" fontWeight="bold" fontFamily='Gill Sans' letterSpacing='0.3rem' fill='#191970' fontSize={20}>{screenWidth < 960 ? "Sentiment Analysis" : "Sentiment Analysis (Llama2)"}</text>
           <PolarGrid />
           <PolarAngleAxis dataKey="name" />
           <PolarRadiusAxis />
