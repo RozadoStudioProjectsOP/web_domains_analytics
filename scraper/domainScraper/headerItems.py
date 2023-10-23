@@ -2,7 +2,6 @@
 from scrapy.item import Item, Field
 
 class HeaderItems(Item):
-    etag = Field()
-    lastModified = Field()
+    header = Field()
     url = Field()
     singlePage = Field()

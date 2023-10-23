@@ -39,7 +39,7 @@ class AnalyticSpider(scrapy.Spider):
         
         item['headers'] = response.headers
 
-        if (self.settings.attributes['CLOSESPIDER_PAGECOUNT'].value == "1"):
+        if (self.settings.attributes['CLOSESPIDER_PAGECOUNT'].value in (1, '1')):
             item['singlePage'] = True
         else:
             item['singlePage'] = False
