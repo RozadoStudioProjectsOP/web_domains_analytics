@@ -19,7 +19,7 @@ DEPTH_PRIOPRITY = 1
 # Stops spider when items return meets set amount.
 CLOSESPIDER_ITEMCOUNT=50
 # Stops spider after making set amount of requests.
-CLOSESPIDER_PAGECOUNT=1
+CLOSESPIDER_PAGECOUNT=50
 # Uses fifo method (default lifo) for breadth first crawls.
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
@@ -84,8 +84,9 @@ ITEM_PIPELINES = {
    'domainScraper.pipelines.ner.NamedEntityRecognitionPipeline': 301,
    'domainScraper.pipelines.count.CountPipeline': 310,
    'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
-   'domainScraper.pipelines.sentiment.SentimentPipeline': 395,
-   'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
+   'domainScraper.pipelines.llama2_sentiment.Llama2SentimentPipeline': 394,
+   #'domainScraper.pipelines.sentiment.SentimentPipeline': 396,
+   #'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
    'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
 }
 

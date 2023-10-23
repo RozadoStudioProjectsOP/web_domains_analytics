@@ -13,8 +13,10 @@ class MongoDBPipeline:
         'bigrams': {},
         'trigrams': {},
         'classification': {},
-        'sentiment': {},
-        'AI_Sentiment': {},
+        'llama2_sentiment': {},
+        'llama2_posNeg': {},
+        # 'sentiment': {},
+        # 'AI_Sentiment': {},
         'ner': {}
     }
     counts = {
@@ -85,7 +87,9 @@ class MongoDBPipeline:
         buildPayload(item['words'], 'words')
         buildPayload(item['bigrams'], 'bigrams')
         buildPayload(item['trigrams'], 'trigrams')
-        buildPayload(item['sentiment'], 'sentiment')
+        # buildPayload(item['sentiment'], 'sentiment')
+        buildPayload(item['llama2_sentiment'], 'llama2_sentiment')
+        buildPayload(item['llama2_posNeg'], 'llama2_posNeg')
         buildPayload(item['ner'], 'ner')
         buildPayload(item['classification'], 'classification') 
         
@@ -104,6 +108,6 @@ class MongoDBPipeline:
                 buildPayload(sentiment, target)
                 buildPayloadAccuracy(sentiment, target)                    
 
-        buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
+        # buildAI_SentimentPayload(item['AI_Sentiment'], 'AI_Sentiment')
                   
         return item

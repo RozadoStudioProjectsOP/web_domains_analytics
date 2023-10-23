@@ -55,7 +55,7 @@ class AISentimentPipeline:
 
                 # Check if the key already exists in the key_counts dictionary
                 if key in key_counts:
-                    key_counts[key] = 1  # Increment the count if the key is repeated
+                    key_counts[key] += 1  # Increment the count if the key is repeated
                 else:
                     key_counts[key] = 1   # Initialize the count if the key is encountered for the first time
 
