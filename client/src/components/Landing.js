@@ -62,7 +62,7 @@ const Landing = (props) => {
   const getURL = async (urlInput, LIMIT) => {
     setIsLoading(true);
     setIsLoaded(false);
-    setUrl({ words: "" });
+    setUrl({ words: "", bigrams: "", trigrams: "", ner: "" });
     if (urlInput === "") {
       alert("Enter a Valid URL");
       setIsLoading(false);
@@ -144,10 +144,10 @@ const Landing = (props) => {
     }
   };
 
-  const getDomains = async (domain) => {
+  const getDomains = async (domain, LIMIT) => {
     try {
       const res = await axios.get(`${BASE_URL}/scrapy/domains`, {
-        params: { domain: domain },
+        params: { domain: domain, limit: LIMIT },
       });
       setSearchResults(res.data.data);
     } catch (error) {
@@ -174,7 +174,7 @@ const Landing = (props) => {
       </div>
     );
 
-  const handleSearch = (value) => {
+  const handleSearch = (value, LIMIT) => {
     if (value === "") {
       setCollectionFound(undefined);
       setSearchResults([]);
@@ -182,7 +182,7 @@ const Landing = (props) => {
       return;
     }
     changeDomain(value);
-    getDomains(value);
+    getDomains(value, LIMIT);
   };
 
   // refactored conditional rendering checks for loading and scraping
@@ -209,13 +209,13 @@ const Landing = (props) => {
         ref={urlRef}
         placeholder="https://"
         value={domain ? domain : null}
-        onChange={(e) => handleSearch(e.target.value)}
+        onChange={(e) => handleSearch(e.target.value, limit)}
         onClick={() => {
           changeDomain(false);
         }} //Set domain to false to be able to write on input.
         required
       />
-      <div>
+      <div className="searchSettings">
         <h4>Crawl Length</h4>
         <input
           disabled={isScraping}
@@ -240,7 +240,7 @@ const Landing = (props) => {
 
       <div className={'buttonsDiv'}> 
         <input disabled={collectionFound === undefined || isScraping === true} className={ isLoaded ? "button" : "buttonDis"} onClick={() => scrapeRequest(urlRef.current.value)} type='submit' value={!collectionFound ? 'Scrape' : 'Re-Scrape'}></input>
-        <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value)} type='submit' value='Check'></input>
+        <input disabled={isScraping} className={"button"} onClick={() => getURL(urlRef.current.value, limit)} type='submit' value='Check'></input>
       </div>
       {loading}
     </>

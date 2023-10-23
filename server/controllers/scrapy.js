@@ -35,11 +35,10 @@ const scrape = async (req, res) => {
 };
 
 const getDomains = async (req, res) => {
-  const { domain } = req.query;
-  console.log(domain);
+  const { domain, limit } = req.query;
   try {
     const data = domain ? 
-      await Data.find({domain: { $regex: domain, $options: "i" }}).distinct("domain") : 
+      await Data.find({domain: { $regex: domain, $options: "i" }, singlePage: limit == 1 ? true : false}).distinct("domain") : 
       await Data.find().distinct("domain");
 
     return res.status(200).json({ success: true, data: data });
