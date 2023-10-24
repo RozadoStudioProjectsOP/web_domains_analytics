@@ -12,6 +12,7 @@ import '../styles/Landing.css'
 
 
 const Landing = (props) => {
+  const [changeNotification, setChangeNotification] = useState('')
   const wordRef = useRef();
   const urlRef = useRef();
   const [limit, setLimit] = useState(1)
@@ -54,6 +55,12 @@ const Landing = (props) => {
     }
   }, [isScraping, limit])
 
+  const detectChange = async (urlInput) => {
+    await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit, spider: 'viewHeader' });    
+    const res = await axios.get(`${BASE_URL}/scrapy/expiredStream`, { params: {url: urlInput, LIMIT: limit}});
+    setChangeNotification(res.data.data)
+  }
+
   const getURL = async (urlInput) => {
 
     setIsLoading(true)
@@ -73,6 +80,8 @@ const Landing = (props) => {
         }
       });
       if (res.data.data) {
+        setChangeNotification('')
+        detectChange(urlInput)
         setCollectionFound(true);
         setUrl(res.data.data);
         setIsLoaded(true)
@@ -211,6 +220,7 @@ const Landing = (props) => {
       {loading}
     </>
   )
+
   return (
     <div>
       <div className={"page"}>
@@ -218,7 +228,8 @@ const Landing = (props) => {
           <h3>Choose a URL</h3>
           <div className={"inputs"}>
             {form}
-          </div>
+          </div>          
+          <h4>{changeNotification}</h4>
           <h3>Find n-gram: </h3>
           <div className={"inputs"}>
             <input disabled={!isLoaded} className={"wordInput"} type='text' ref={wordRef} required></input>
