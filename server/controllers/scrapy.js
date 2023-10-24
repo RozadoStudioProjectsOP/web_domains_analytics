@@ -44,6 +44,30 @@ const getDomains = async (req, res) => {
   }
 };
 
+const expiredStream = async (req, res) => {
+  try {
+    const { url, LIMIT } = req.query
+    const singlePage = LIMIT == 1 ? true : false
+    const filter = [
+      { $match: { 'fullDocument.domain': url, 'fullDocument.singlePage': singlePage } },
+      { $project: { 'fullDocument.expired': 1, 'fullDocument.expiredChecked': 1 } }
+    ];
+    const options = { fullDocument: 'updateLookup' };
+    const stream = Data.watch(filter, options)
+    const doc = await stream.next()
+    stream.close()
+    const msg = doc.fullDocument.expired ?
+      'Possible changes in source material detected, data may no longer be accurate. (Re-Scrape to fix)'
+      :
+      `Source checked ${doc.fullDocument.expiredChecked}`
+    return res.status(200).json({ success: true, data: msg });
+  } catch (err) {
+    return res.status(500).json({
+      msg: err.message || "Something went wrong while getting data.",
+    });
+  }
+}
+
 const getData = async (req, res) => {
   const { domain, limit } = req.query;
   try {
@@ -69,4 +93,4 @@ const saveData = async (req, res) => {
   }
 };
 
-export { scrape, getDomains, getData, saveData };
+export { expiredStream, scrape, getDomains, getData, saveData };
