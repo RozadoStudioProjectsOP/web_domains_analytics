@@ -34,8 +34,8 @@ class MongoDBComparePipeline:
             self.col.update_one(query, { '$set': {'expired': True }}, upsert=False)        
         else:
             time = datetime.now(timezone('NZ'))
-            print(time.strftime("%a, %d %b %Y %X %Z"))
-            self.col.update_one(query, { '$set': {'expiredChecked': time }}, upsert=False)        
+            time = time.strftime("%a, %d %b %Y %X %Z")
+            self.col.update_one(query, { '$set': {'expiredChecked': time }}, upsert=True)        
         self.client.close()
     
     def process_item(self, item, spider):        
