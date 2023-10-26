@@ -87,7 +87,7 @@ const Main = (props) => {
     const classes = useStyles();
     const { isLoggedIn } = useContext(LoginContext);
     const { screenWidth } = useContext(WidthContext);
-
+  console.log(screenWidth)
   return isLoggedIn === false ? (
     <div className={classes.page}>
       <NavBar></NavBar>
