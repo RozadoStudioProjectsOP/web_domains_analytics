@@ -2,25 +2,57 @@ import React from 'react'
 import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
-import { useContext } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import { LoginContext } from '../contexts/login';
 import { WidthContext } from '../contexts/screenWidth';
 import Landing from './Landing';
 import NavBar from './NavBar';
 import background from '../media/andyone--WW8jBak7bo-unsplash.jpg'
+import sentimentVideo from '../media/Recording_sentiment.mp4'
 
 const useStyles = createUseStyles({
     page: {
       height: '100%',
       background: '#E9EAEC',
-      backgroundImage: 'url(' + background + ')',
-      backgroundSize: 'cover'
+      '& > section': {
+        height: '80vh',
+        width: '100%',
+        display:'flex',
+        justifyContent: 'center',
+        '& > div': {
+          marginTop: '10vh',
+          marginBottom: '5vh',
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          background: 'rgb(255,255,255,0.3)',
+          boxShadow: '10px 10px 5px rgba(0, 0, 0, 0.3)',
+          maxWidth: '80%',
+          height: 'auto',
+          padding: 20,
+          borderRadius: 20,
+          '& > h2': {
+            textWrap: 'wrap',
+            color: '#191970',
+            fontFamily: 'Consolas, monaco, monospace',
+            fontSize: '2.5vw',
+            letterSpacing: '0.5rem',
+            textTransform: 'uppercase',
+            lineHeight: '1.8em',
+            fontWeight: 'bold',
+            maxWidth: '40%',
+            textShadow: '2px 2px 0 rgb(0, 0, 0, 0.2)',
+          }
+        },
+      },
     },
     main: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       height: '100vh',
+      backgroundImage: 'url(' + background + ')',
+      backgroundSize: 'cover',
     },
     menu: {
       display: 'flex',
@@ -81,6 +113,13 @@ const useStyles = createUseStyles({
               }
             }
         }
+    },
+    videoDiv: {
+      borderRadius: 20,
+      maxHeight: '100%',
+      maxWidth: '47%',
+      overflow: 'hidden',
+      boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.2)',
     }
   })
 
@@ -90,6 +129,14 @@ const Main = (props) => {
     const classes = useStyles();
     const { isLoggedIn } = useContext(LoginContext);
     const { screenWidth } = useContext(WidthContext);
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+      // When the component mounts, play the video when it's ready
+      videoRef.current.addEventListener('canplay', () => {
+        videoRef.current.play();
+      });
+    }, []);
     
   return isLoggedIn === false ? (
     <div className={classes.page}>
@@ -105,6 +152,19 @@ const Main = (props) => {
             ) : null}
         </div>
       </div>
+      <section>
+        <div>
+          <div className={classes.videoDiv}>
+            <video ref={videoRef} width="100%" height="100%" autoplay loop muted>
+              <source src={sentimentVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <h2>
+            Analyze text sentiment with Meta's Llama2 LLM model
+          </h2>
+        </div>
+      </section>
     </div>
   ) : (
     <>
