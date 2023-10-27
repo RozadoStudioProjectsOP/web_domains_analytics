@@ -8,6 +8,7 @@ import { LoginContext } from '../contexts/login';
 import NavBar from './NavBar';
 import { SocialLogins } from './OAuth/Loginfunc.js';
 import { ProgressBar } from 'react-loader-spinner';
+import background from '../media/andyone--WW8jBak7bo-unsplash.jpg'
 
 const useStyles = createUseStyles({
     main: {
@@ -15,18 +16,20 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '90vh',
+        height: '93vh',
         backgroundColor: '#E9EAEC',
+        backgroundImage: 'url(' + background + ')',
+        backgroundSize: 'cover',
         '& > form': {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
+            boxShadow: '15px 15px 5px rgba(0, 0, 0, 0.5)',
             padding: 40,
             borderRadius: 5,
             width: '20vw',
-            background: 'white',
+            background: 'rgb(255,255,255,1)',
             maxHeight: '70vh',
             '@media (max-width: 1100px)': {
                 width: '60%'
@@ -88,7 +91,6 @@ const Login = (props) => {
   }, [changeLogin]);
 
   const loginUser = async (name, email, password) => {
-    //console.log(name, email, password)
     setIsLoading(true);
     try {
         //Fetch backend login route
@@ -125,7 +127,7 @@ const Login = (props) => {
   }
 
   return (
-    <>
+    <div>
     <NavBar></NavBar>
     <div className={classes.main}>
         <form onSubmit={handleSubmit}>
@@ -158,7 +160,7 @@ const Login = (props) => {
             <SocialLogins />
         </form>
     </div>
-    </>
+    </div>
   )
 }
 

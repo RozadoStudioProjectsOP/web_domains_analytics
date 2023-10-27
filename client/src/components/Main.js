@@ -15,7 +15,6 @@ const useStyles = createUseStyles({
       background: '#E9EAEC',
       backgroundImage: 'url(' + background + ')',
       backgroundSize: 'cover'
-
     },
     main: {
       display: 'flex',
@@ -31,8 +30,8 @@ const useStyles = createUseStyles({
       borderRadius: 5,
       width: '98vw',
       height: '90vh',
-      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
-      background: 'rgb(255,255,255,0.7)',
+      boxShadow: '15px 15px 5px rgba(0, 0, 0, 0.7)',
+      background: 'rgb(233,234,236,0.7)',
       '@media (min-width: 926px)': {
         width: '60%',
         maxWidth: '1100px',
@@ -41,11 +40,11 @@ const useStyles = createUseStyles({
       "& > h1": {
         letterSpacing: 10,
         fontSize: 70,
-        color: 'black',
+        color: '#191970',
         textAlign: 'center',
         fontFamily: 'DO Futuristic',
         borderWidth: 5,
-        padding: 50,
+        padding: 25,
         lineHeight: 1.5,
         '@media (max-width: 500px)': {
           fontSize: 50
@@ -91,7 +90,7 @@ const Main = (props) => {
     const classes = useStyles();
     const { isLoggedIn } = useContext(LoginContext);
     const { screenWidth } = useContext(WidthContext);
-  console.log(screenWidth)
+    
   return isLoggedIn === false ? (
     <div className={classes.page}>
       <NavBar></NavBar>

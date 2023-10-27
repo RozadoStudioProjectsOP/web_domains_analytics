@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom'
 import NavBar from './NavBar';
 import { SocialLogins } from './OAuth/Loginfunc.js';
 import { ProgressBar } from 'react-loader-spinner';
+import background from '../media/andyone--WW8jBak7bo-unsplash.jpg'
 
 import axios from 'axios'
 
@@ -16,14 +17,16 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        height: '90vh',
+        height: '93vh',
         backgroundColor: '#E9EAEC',
+        backgroundImage: 'url(' + background + ')',
+        backgroundSize: 'cover',
         '& > form': {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
+            boxShadow: '15px 15px 5px rgba(0, 0, 0, 0.5)',
             padding: 40,
             paddingBottom: 0,
             borderRadius: 5,
