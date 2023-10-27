@@ -7,17 +7,21 @@ import { LoginContext } from '../contexts/login';
 import { WidthContext } from '../contexts/screenWidth';
 import Landing from './Landing';
 import NavBar from './NavBar';
+import background from '../media/andyone--WW8jBak7bo-unsplash.jpg'
 
 const useStyles = createUseStyles({
     page: {
       height: '100%',
       background: '#E9EAEC',
+      backgroundImage: 'url(' + background + ')',
+      backgroundSize: 'cover'
+
     },
     main: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '90vh',
+      height: '100vh',
     },
     menu: {
       display: 'flex',
@@ -28,16 +32,16 @@ const useStyles = createUseStyles({
       width: '98vw',
       height: '90vh',
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
-      background: 'white',
+      background: 'rgb(255,255,255,0.7)',
       '@media (min-width: 926px)': {
-        width: '70%',
+        width: '60%',
         maxWidth: '1100px',
         height: 'auto'
       },
       "& > h1": {
         letterSpacing: 10,
         fontSize: 70,
-        color: '#385E72',
+        color: 'black',
         textAlign: 'center',
         fontFamily: 'DO Futuristic',
         borderWidth: 5,

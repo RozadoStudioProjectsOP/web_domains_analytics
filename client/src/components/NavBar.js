@@ -11,7 +11,7 @@ const useStyles = createUseStyles({
     bar: {
         display: 'flex',
         justifyContent: 'space-between',
-        background: '#E9EAEC',
+        background: 'rgb(233,234,236,0.9)',
         '& > a': {
           marginLeft: 20,
           color: '#191970',
