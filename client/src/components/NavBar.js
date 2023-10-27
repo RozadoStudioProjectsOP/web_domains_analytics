@@ -42,11 +42,12 @@ const useStyles = createUseStyles({
         display: 'none'
       },
       '& > h2': {
+        marginRight: 30,
         color: '#191970',
+        background: '#f7f7f8',
         fontFamily: 'DejaVu Sans Mono, monospace',
         whiteSpace: 'nowrap',
         letterSpacing: 1,
-        border: '1px solid #191970',
         borderRadius: 10,
         padding: 5,
         paddingLeft: 30,
@@ -73,7 +74,7 @@ const useStyles = createUseStyles({
         fontFamily: 'DejaVu Sans Mono, monospace',
         letterSpacing: 1,
         '& > h2': {
-          border: '1px solid #191970',
+          background: '#f7f7f8',
           borderRadius: 10,
           padding: 5,
           paddingLeft: 30,
