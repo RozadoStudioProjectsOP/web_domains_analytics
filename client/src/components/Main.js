@@ -173,7 +173,7 @@ const Main = (props) => {
         videoRef3.current.play();
       });
     }
-  }, [videoRef.current, isLoggedIn]);
+  }, [videoRef.current, isLoggedIn]); // eslint-disable-line
 
   return isLoggedIn === false ? (
     <div className={classes.page}>
