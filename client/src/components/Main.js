@@ -31,6 +31,11 @@ const useStyles = createUseStyles({
           height: 'auto',
           padding: 20,
           borderRadius: 20,
+          '@media (max-width: 925px)': {
+            flexDirection: 'column-reverse',
+            maxWidth: '95%',
+            margin: 0,
+          },
           '& > h2': {
             textWrap: 'wrap',
             color: '#191970',
@@ -42,7 +47,13 @@ const useStyles = createUseStyles({
             fontWeight: 'bold',
             maxWidth: '40%',
             textShadow: '2px 2px 0 rgb(0, 0, 0, 0.2)',
-          }
+            '@media (max-width: 925px)': {
+              maxWidth: '80%',
+              textAlign: 'center',
+              fontSize: '5vw'
+            },
+          },
+          
         },
       },
     },
@@ -120,6 +131,9 @@ const useStyles = createUseStyles({
       maxWidth: '47%',
       overflow: 'hidden',
       boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.2)',
+      '@media (max-width: 925px)': {
+        maxWidth: '90%',
+      },
     }
   })
 
@@ -132,12 +146,14 @@ const Main = (props) => {
     const videoRef = useRef(null);
 
     useEffect(() => {
-      // When the component mounts, play the video when it's ready
-      videoRef.current.addEventListener('canplay', () => {
-        videoRef.current.play();
-      });
-    }, []);
-    
+      if(videoRef.current != null){
+        // When the component mounts, play the video when it's ready
+        videoRef.current.addEventListener('canplay', () => {
+          videoRef.current.play();
+        });
+      }
+    }, [videoRef.current]);
+    console.log(videoRef)
   return isLoggedIn === false ? (
     <div className={classes.page}>
       <NavBar></NavBar>
