@@ -10,6 +10,7 @@ import NavBar from './NavBar';
 import background from '../media/andyone--WW8jBak7bo-unsplash.jpg'
 import sentimentVideo from '../media/Recording_sentiment.mp4'
 import classificationVideo from '../media/Recording_classification.mp4'
+import histogramVideo from '../media/Recording_histogram.mp4'
 
 const useStyles = createUseStyles({
   page: {
@@ -157,15 +158,19 @@ const Main = (props) => {
   const { screenWidth } = useContext(WidthContext);
   const videoRef = useRef(null);
   const videoRef2 = useRef(null);
+  const videoRef3 = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current != null && videoRef2.current != null) {
+    if (videoRef.current != null && videoRef2.current != null && videoRef3.current != null) {
       // When the component mounts, play the video when it's ready
       videoRef.current.addEventListener('canplay', () => {
         videoRef.current.play();
       });
       videoRef2.current.addEventListener('canplay', () => {
         videoRef2.current.play();
+      });
+      videoRef3.current.addEventListener('canplay', () => {
+        videoRef3.current.play();
       });
     }
   }, [videoRef.current, isLoggedIn]);
@@ -188,30 +193,45 @@ const Main = (props) => {
       <section className={classes.section}>
         <div>
           <div className={classes.videoDiv}>
-            <video ref={videoRef} width="100%" height="100%" autoplay loop muted>
-              <source src={sentimentVideo} type="video/mp4" />
+            <video ref={videoRef3} width="100%" height="100%" autoplay loop muted>
+              <source src={histogramVideo} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
           <h2>
-            Analyze text sentiment with Meta's Llama2 LLM model
+            Display the most repeated words, nGrams and Name Entities
           </h2>
         </div>
       </section>
 
       <section className={`${classes.section} ${classes.sectionRev}`}>
         <div>
-          <h2>
-            Get URL's classified into various predefined categories.
+          <h2 style={{textAlign: 'right'}}>
+            Analyze text sentiment with Meta's Llama2 LLM model
           </h2>
+          <div className={classes.videoDiv}>
+            <video ref={videoRef} width="100%" height="100%" autoplay loop muted>
+              <source src={sentimentVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <section className={classes.section}>
+        <div>
           <div className={classes.videoDiv}>
             <video ref={videoRef2} width="100%" height="100%" autoplay loop muted>
               <source src={classificationVideo} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
+          <h2>
+            Get URL's classified into various predefined categories.
+          </h2>
         </div>
       </section>
+
     </div>
   ) : (
     <>
