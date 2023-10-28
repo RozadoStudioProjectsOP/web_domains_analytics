@@ -152,7 +152,7 @@ const Main = (props) => {
           videoRef.current.play();
         });
       }
-    }, [videoRef.current]);
+    }, [videoRef.current, isLoggedIn]);
     console.log(videoRef)
   return isLoggedIn === false ? (
     <div className={classes.page}>
