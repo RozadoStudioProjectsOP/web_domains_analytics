@@ -98,7 +98,7 @@ const useStyles = createUseStyles({
     },
     "& > h1": {
       letterSpacing: 10,
-      fontSize: 70,
+      fontSize: 80,
       color: '#191970',
       textAlign: 'center',
       fontFamily: 'DO Futuristic',
