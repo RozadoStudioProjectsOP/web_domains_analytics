@@ -14,6 +14,7 @@ const useStyles = createUseStyles({
     position: 'sticky',
     top: 0,
     alignItems: 'baseline',
+    zIndex: 999,
     '& > a': {
       marginLeft: 20,
       color: '#191970',
