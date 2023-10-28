@@ -65,9 +65,12 @@ const useStyles = createUseStyles({
       '@media (max-width: 925px)': {
         flexDirection: 'column'
       },
-    },
-    '& > h2': {
-      textAlign: 'right'
+      '& > h2': {
+        textAlign: 'right',
+        '@media (max-width: 925px)': {
+          textAlign: 'center'
+        },
+      },
     },
   },
   main: {
@@ -206,7 +209,7 @@ const Main = (props) => {
 
       <section className={`${classes.section} ${classes.sectionRev}`}>
         <div>
-          <h2 style={{textAlign: 'right'}}>
+          <h2>
             Analyze text sentiment with Meta's Llama2 LLM model
           </h2>
           <div className={classes.videoDiv}>
@@ -227,7 +230,7 @@ const Main = (props) => {
             </video>
           </div>
           <h2>
-            Get URL's classified into various predefined categories.
+            Get URL's classified into various predefined categories
           </h2>
         </div>
       </section>
