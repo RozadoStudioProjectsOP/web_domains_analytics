@@ -57,7 +57,11 @@ const expiredStream = async (req, res) => {
       { $project: { 'fullDocument.expired': 1, 'fullDocument.expiredChecked': 1 } }
     ];
     const data = await Data.findOne({ domain: url, singlePage: singlePage }, { _id: 0, expired: 1 });
-    if (!data.expired) {
+    if (data.expired === true) {
+      const msg = 'Possible changes in source material detected, data may no longer be accurate. (Re-Scrape to fix)'
+      return res.status(200).json({ success: true, data: msg });
+    }
+    else {
       const options = { fullDocument: 'updateLookup' };
       const stream = Data.watch(filter, options)
       const doc = await stream.next()
@@ -68,12 +72,6 @@ const expiredStream = async (req, res) => {
         `Source checked ${doc.fullDocument.expiredChecked}`
       return res.status(200).json({ success: true, data: msg });
     }
-    else {
-      const msg = 'Possible changes in source material detected, data may no longer be accurate. (Re-Scrape to fix)'
-      return res.status(200).json({ success: true, data: msg });
-    }
-
-
   } catch (err) {
     return res.status(500).json({
       msg: err.message || "Something went wrong while getting data.",
