@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
@@ -22,13 +22,13 @@ const useStyles = createUseStyles({
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            border: "2px solid #385E72",
+            boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
             padding: 40,
             borderRadius: 5,
             width: '20vw',
             background: 'white',
             maxHeight: '70vh',
-            '@media (max-width: 1600px)': {
+            '@media (max-width: 1100px)': {
                 width: '60%'
               },
             '& > h1': {
@@ -77,10 +77,15 @@ const Login = (props) => {
   const emailRef = useRef();
   const passRef = useRef();
   const nameRef = useRef();
-  const classes = useStyles();  
-  const [isLoading, setIsLoading] = useState(false); 
-  const [isHome, setIsHome] = useState(false)
+  const classes = useStyles();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isHome, setIsHome] = useState(false);
   const { changeLogin } = useContext(LoginContext);
+
+  useEffect(() => {
+    changeLogin(false, null);
+    sessionStorage.setItem("isLoggedIn", false);
+  }, [changeLogin]);
 
   const loginUser = async (name, email, password) => {
     //console.log(name, email, password)

@@ -1,0 +1,31 @@
+.search {
+    width: 85%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 15px #919090;
+    border-radius: 5px;
+    margin-top: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.searchSettings {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #efefef;
+}
+
+.searchResult {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.searchResult:hover {
+    background-color: #efefef;
+}

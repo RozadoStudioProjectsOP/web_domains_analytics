@@ -18,7 +18,7 @@ const SocialLogins = () => {
 
     return (
         <div className="socialContainer">
-            <p>Login with social media</p>
+            <p style={{textAlign: "center"}}>Login with social media</p>
             <div className="socials">
                 <div className="socialItem" onClick={googleLogin}>
                     <img src={googleImage} alt="" />
