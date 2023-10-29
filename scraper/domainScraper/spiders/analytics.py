@@ -17,8 +17,9 @@ class AnalyticSpider(scrapy.Spider):
             'domainScraper.pipelines.ner.NamedEntityRecognitionPipeline': 301,
             'domainScraper.pipelines.count.CountPipeline': 310,
             'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
-            'domainScraper.pipelines.sentiment.SentimentPipeline': 395,
-            'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
+            'domainScraper.pipelines.llama2_sentiment.Llama2SentimentPipeline': 394,
+            #'domainScraper.pipelines.sentiment.SentimentPipeline': 396,
+            #'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
             'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
         }
     }
