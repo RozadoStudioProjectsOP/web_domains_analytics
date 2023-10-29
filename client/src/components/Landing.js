@@ -236,7 +236,7 @@ const Landing = (props) => {
           id="singlePage"
           name="crawlLength"
         />
-        <label for="singlePage">Single Page</label>
+        <label htmlFor="singlePage">Single Page</label>
         <input
           disabled={isScraping}
           onChange={() => setCollectionFound(undefined)}
@@ -245,7 +245,7 @@ const Landing = (props) => {
           id="manyPages"
           name="crawlLength"
         />
-        <label for="manyPages">Deep Search</label>
+        <label htmlFor="manyPages">Deep Search</label>
       </div>
 
       <div className={'buttonsDiv'}> 
