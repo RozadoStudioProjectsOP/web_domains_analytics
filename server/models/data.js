@@ -11,6 +11,9 @@ const wordCloudSchema = new mongoose.Schema({
     },
     scrapeDate: {
         type: Date,
+    },
+    expired: {
+        tpye: Boolean
     }
 }, {
     collection: 'wordClouds' // specify the collection name here

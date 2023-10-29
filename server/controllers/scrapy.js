@@ -36,8 +36,8 @@ const scrape = async (req, res) => {
 const getDomains = async (req, res) => {
   const { domain, limit } = req.query;
   try {
-    const data = domain ? 
-      await Data.find({domain: { $regex: domain, $options: "i" }, singlePage: limit == 1 ? true : false}).distinct("domain") : 
+    const data = domain ?
+      await Data.find({ domain: { $regex: domain, $options: "i" }, singlePage: limit == 1 ? true : false }).distinct("domain") :
       await Data.find().distinct("domain");
 
     return res.status(200).json({ success: true, data: data });
@@ -56,15 +56,24 @@ const expiredStream = async (req, res) => {
       { $match: { 'fullDocument.domain': url, 'fullDocument.singlePage': singlePage } },
       { $project: { 'fullDocument.expired': 1, 'fullDocument.expiredChecked': 1 } }
     ];
-    const options = { fullDocument: 'updateLookup' };
-    const stream = Data.watch(filter, options)
-    const doc = await stream.next()
-    stream.close()
-    const msg = doc.fullDocument.expired ?
-      'Possible changes in source material detected, data may no longer be accurate. (Re-Scrape to fix)'
-      :
-      `Source checked ${doc.fullDocument.expiredChecked}`
-    return res.status(200).json({ success: true, data: msg });
+    const data = await Data.findOne({ domain: url, singlePage: singlePage }, { _id: 0, expired: 1 });
+    if (!data.expired) {
+      const options = { fullDocument: 'updateLookup' };
+      const stream = Data.watch(filter, options)
+      const doc = await stream.next()
+      stream.close()
+      const msg = doc.fullDocument.expired ?
+        'Possible changes in source material detected, data may no longer be accurate. (Re-Scrape to fix)'
+        :
+        `Source checked ${doc.fullDocument.expiredChecked}`
+      return res.status(200).json({ success: true, data: msg });
+    }
+    else {
+      const msg = 'Possible changes in source material detected, data may no longer be accurate. (Re-Scrape to fix)'
+      return res.status(200).json({ success: true, data: msg });
+    }
+
+
   } catch (err) {
     return res.status(500).json({
       msg: err.message || "Something went wrong while getting data.",
