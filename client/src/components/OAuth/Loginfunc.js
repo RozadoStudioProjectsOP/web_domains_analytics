@@ -20,12 +20,16 @@ const SocialLogins = () => {
         <div className="socialContainer">
             <p style={{textAlign: "center"}}>Login with social media</p>
             <div className="socials">
-                <div className="socialItem" onClick={googleLogin}>
-                    <img src={googleImage} alt="" />
-                </div>
-                <div className="socialItem" onClick={githubLogin}>
-                    <img src={githubImage} alt="" />
-                </div>
+                {typeof(googleImage) == 'string' ? (
+                    <>
+                        <div className="socialItem" onClick={googleLogin}>
+                            <img src={googleImage} alt="google" />
+                        </div>
+                        <div className="socialItem" onClick={githubLogin}>
+                            <img src={githubImage} alt="github" />
+                        </div>
+                    </>
+                ) : null}
             </div>
         </div>
     )
