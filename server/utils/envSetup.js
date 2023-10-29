@@ -16,3 +16,8 @@ export const CALLBACK_URL = process.env.NODE_ENV === "production" ? process.env.
 export const MONGO_URI = process.env.NODE_ENV === "production" ? process.env.MONGO_URI_PROD
     : process.env.NODE_ENV === "development" ? process.env.MONGO_URI_DEV
     : process.env.MONGO_URI_TEST;
+// SSH
+export const SSH_HOST = process.env.SSH_HOST;
+export const SSH_USER = process.env.SSH_USER;
+export const SSH_PASS = process.env.SSH_PASS;
+export const SSH_DIR = process.env.SSH_DIR;
