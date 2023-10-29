@@ -21,17 +21,14 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2)
 }
 
-@media (max-width: 960px) {
-  .page > div {
-    width: 99%;
-    margin-left: 0;
-    height: 80vh;
-  }
+.page > div:first-child, .page > div:nth-child(2){
+  height: 85vh;
 }
+
 
 .page > div > h3 {
   font-family: Gill Sans;
-  font-size: 1.5rem;
+  font-size: 2vw;
   letter-spacing: 0.3rem;
   color: #191970;
   white-space: nowrap;
@@ -97,4 +94,16 @@
 .results {
   color: #191970;
   font-size: 1.2rem;
+}
+
+@media (max-width: 960px) {
+  .page > div {
+    width: 99%;
+    margin-left: 0;
+    height: 80vh;
+  }
+
+  .page > div > h3 {
+    font-size: 1.5rem;
+  }
 }
