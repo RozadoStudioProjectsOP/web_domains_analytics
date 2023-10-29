@@ -6,19 +6,11 @@ const baseSentimentData =
     },
     {
       Total: 0,
-      name: 'Positive'
-    },
-    {
-      Total: 0,
       name: 'Surprise'
     },
     {
       Total: 0,
       name: 'Trust'
-    },
-    {
-      Total: 0,
-      name: 'Anticipation'
     },
     {
       Total: 0,
@@ -30,15 +22,7 @@ const baseSentimentData =
     },
     {
       Total: 0,
-      name: 'Negative'
-    },
-    {
-      Total: 0,
       name: 'Sadness'
-    },
-    {
-      Total: 0,
-      name: 'Disgust'
     },
   ]
 
