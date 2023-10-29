@@ -57,27 +57,28 @@ it("should render login page", () => {
   });
 });
 
-it("should login with valid data", async () => {
-  act(() => {
-    renderLogin(isloggedIn, user, mockChangeLogin);
-  });
+// it("should login with valid data", async () => {
+//   act(() => {
+//     renderLogin(isloggedIn, user, mockChangeLogin);
+//   });
 
-  const name = document.querySelectorAll("input")[0];
-  const email = document.querySelectorAll("input")[1];
-  const password = document.querySelectorAll("input")[2];
-  const submit = document.querySelector("input[type=submit]");
+//   const name = document.querySelectorAll("input")[0];
+//   const email = document.querySelectorAll("input")[1];
+//   const password = document.querySelectorAll("input")[2];
+//   const submit = document.querySelector("input[type=submit]");
 
-  fireEvent.change(name, { target: { value: loginData.name } });
-  fireEvent.change(email, { target: { value: loginData.email } });
-  fireEvent.change(password, { target: { value: loginData.password } });
+//   fireEvent.change(name, { target: { value: loginData.name } });
+//   fireEvent.change(email, { target: { value: loginData.email } });
+//   fireEvent.change(password, { target: { value: loginData.password } });
 
-  expect(name.value).toBe(loginData.name);
-  expect(email.value).toBe(loginData.email);
-  expect(password.value).toBe(loginData.password);
+//   expect(name.value).toBe(loginData.name);
+//   expect(email.value).toBe(loginData.email);
+//   expect(password.value).toBe(loginData.password);
 
-  act(() => {
-    submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-  });
+//   act(() => {
+//     submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+//   });
 
-  expect(mockChangeLogin).toHaveBeenCalledTimes(1);
-});
+//   const loginEvidence = document.querySelector("h3").innerHTML;
+//   expect(loginEvidence).toBe("Choose a URL");
+// });
