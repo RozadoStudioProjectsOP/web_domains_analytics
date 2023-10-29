@@ -13,11 +13,11 @@ class MongoDBPipeline:
         'bigrams': {},
         'trigrams': {},
         'classification': {},
+        'ner': {},
+        'headers': [],
+        'expired': False
         'llama2_sentiment': {},
         'llama2_posNeg': {},
-        # 'sentiment': {},
-        # 'AI_Sentiment': {},
-        'ner': {}
     }
     counts = {
         'words': 0,
@@ -73,6 +73,13 @@ class MongoDBPipeline:
         self.counts['ner'] += item['counts']['ner']
 
         self.payload['singlePage'] = item['singlePage']
+
+        if b'Etag' in item['headers']:
+            # Decode the header from bytes to string so it can be used in JSON.
+            self.payload['headers'].append(item['headers']['Etag'].decode('utf-8'))
+        else:
+            self.payload['headers'].append(item['headers']['Last-Modified'].decode('utf-8'))
+
 
         def buildPayload(wordList, target):
             for key, value in wordList.items():                

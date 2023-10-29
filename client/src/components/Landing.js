@@ -15,6 +15,7 @@ import { checkUrl } from "../utils/checkUrl.js";
 import "../styles/Landing.css";
 
 const Landing = (props) => {
+  const [changeNotification, setChangeNotification] = useState('')
   const wordRef = useRef();
   const urlRef = useRef();
   const { domain, changeDomain } = useContext(DomainContext);
@@ -59,6 +60,12 @@ const Landing = (props) => {
     }
   }, [isScraping, limit]);
 
+  const detectChange = async (urlInput) => {
+    await axios.post(`${BASE_URL}/scrapy/scrape`, { url: urlInput, LIMIT: limit, spider: 'viewHeader' });    
+    const res = await axios.get(`${BASE_URL}/scrapy/expiredStream`, { params: {url: urlInput, LIMIT: limit}});
+    setChangeNotification(res.data.data)
+  }
+
   const getURL = async (urlInput, LIMIT) => {
     setIsLoading(true);
     setIsLoaded(false);
@@ -79,6 +86,8 @@ const Landing = (props) => {
         },
       });
       if (res.data.data) {
+        setChangeNotification('')
+        detectChange(urlInput)
         setCollectionFound(true);
         setUrl(res.data.data);
         setIsLoaded(true);
@@ -101,6 +110,7 @@ const Landing = (props) => {
     await axios.post(`${BASE_URL}/scrapy/scrape`, {
       url: urlInput,
       LIMIT: limit,
+      spider: 'analytics'
     });
   };
 
@@ -246,6 +256,7 @@ const Landing = (props) => {
     </>
   )
 
+
   const logout = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/auth/logout`, {
@@ -277,6 +288,7 @@ if (isHome === true) {
         <div>
           <h3>Choose a URL</h3>
           <div className={"inputs"}>{form}</div>
+          <h4>{changeNotification}</h4>
           <Search results={searchResults}></Search>
           <h3>Find n-gram: </h3>
           <div className={"inputs"}>

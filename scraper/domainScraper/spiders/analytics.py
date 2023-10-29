@@ -7,10 +7,23 @@ import tldextract
 from scrapy.linkextractors import LinkExtractor
 from ..items import DomainAnalyitcs
 
-class AuthorSpider(scrapy.Spider):
+class AnalyticSpider(scrapy.Spider):
     # Name used to call spider.
-    name = 'spider'    
-
+    name = 'analytics'    
+    custom_settings = {
+        "ITEM_PIPELINES": {
+            'domainScraper.pipelines.ngrams.NGramPipeline': 290,
+            'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,
+            'domainScraper.pipelines.ner.NamedEntityRecognitionPipeline': 301,
+            'domainScraper.pipelines.count.CountPipeline': 310,
+            'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
+            'domainScraper.pipelines.llama2_sentiment.Llama2SentimentPipeline': 394,
+            #'domainScraper.pipelines.sentiment.SentimentPipeline': 396,
+            #'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
+            'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
+        }
+    }
+    
     def start_requests(self):
         # Starts making requests to targeted website from inputted URL, and downloads
         # the HTML and returns it into the response argument in the parse method.
@@ -24,8 +37,10 @@ class AuthorSpider(scrapy.Spider):
         # Use Trafilatura extraction method to pull text out of the HTML that was
         # downloaded from scrapy into a string.
         item['raw'] = extract(response.body)
+        
+        item['headers'] = response.headers
 
-        if (self.settings.attributes['CLOSESPIDER_PAGECOUNT'].value == "1"):
+        if (self.settings.attributes['CLOSESPIDER_PAGECOUNT'].value in (1, '1')):
             item['singlePage'] = True
         else:
             item['singlePage'] = False

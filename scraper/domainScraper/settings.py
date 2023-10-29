@@ -24,6 +24,7 @@ CLOSESPIDER_PAGECOUNT=50
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
+CLOSESPIDER_TIMEOUT = 120
 
 COOKIES_ENABLED = False
 
@@ -78,17 +79,7 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 # Format: Directory, pipeline order.
-ITEM_PIPELINES = {
-   'domainScraper.pipelines.ngrams.NGramPipeline': 290,
-   'domainScraper.pipelines.sanitiser.SanitiserPipeline': 300,
-   'domainScraper.pipelines.ner.NamedEntityRecognitionPipeline': 301,
-   'domainScraper.pipelines.count.CountPipeline': 310,
-   'domainScraper.pipelines.web_classification.WebClassificationPipeline': 393,
-   'domainScraper.pipelines.llama2_sentiment.Llama2SentimentPipeline': 394,
-   #'domainScraper.pipelines.sentiment.SentimentPipeline': 396,
-   #'domainScraper.pipelines.AI_Sentiment.AISentimentPipeline': 397,
-   'domainScraper.pipelines.mongo.MongoDBPipeline': 399,
-}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

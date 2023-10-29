@@ -15,3 +15,4 @@ class DomainAnalyitcs(Item):
     AI_Sentiment = Field()
     ner = Field()
     singlePage = Field()
+    headers = Field()
