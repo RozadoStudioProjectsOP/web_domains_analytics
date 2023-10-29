@@ -85,11 +85,6 @@ const Login = (props) => {
   const [isHome, setIsHome] = useState(false);
   const { changeLogin } = useContext(LoginContext);
 
-  useEffect(() => {
-    changeLogin(false, null);
-    sessionStorage.setItem("isLoggedIn", false);
-  }, [changeLogin]);
-
   const loginUser = async (name, email, password) => {
     setIsLoading(true);
     try {
