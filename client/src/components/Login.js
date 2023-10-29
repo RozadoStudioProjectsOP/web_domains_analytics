@@ -3,7 +3,7 @@ import { useRef, useState, useContext, useEffect } from 'react';
 import { createUseStyles } from "react-jss";
 import axios from 'axios';
 import { BASE_URL } from '../utils/base_url';
-import { Navigate } from 'react-router-dom'
+import { Navigate, redirect } from 'react-router-dom'
 import { LoginContext } from '../contexts/login';
 import NavBar from './NavBar';
 import { SocialLogins } from './OAuth/Loginfunc.js';
@@ -85,6 +85,13 @@ const Login = (props) => {
   const [isHome, setIsHome] = useState(false);
   const { changeLogin } = useContext(LoginContext);
 
+  useEffect(() => {
+    if(!sessionStorage.getItem("token")){
+      changeLogin(false, null);
+      sessionStorage.setItem("isLoggedIn", false);
+    }
+  }, [changeLogin]);
+
   const loginUser = async (name, email, password) => {
     setIsLoading(true);
     try {
@@ -102,6 +109,7 @@ const Login = (props) => {
             setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
             window.alert("Login Successful")
+            redirect("/");
         }else{
             console.log("Error")
         }
