@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
         flexDirection: 'column',
         height: '93vh',
         backgroundColor: '#E9EAEC',
-        backgroundImage: 'url(' + background + ')',
+        // backgroundImage: 'url(' + background + ')',
         backgroundSize: 'cover',
         '& > form': {
             display: 'flex',
@@ -104,7 +104,7 @@ const Register = (props) => {
         })
         if (res.status === 201){
             console.log(`Register successful. Email: ${email}`)
-            window.alert("Register Successful")
+            // window.alert("Register Successful")
             changeLogin(true)
             setIsHome(true)
         }else{
