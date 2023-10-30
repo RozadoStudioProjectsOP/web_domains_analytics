@@ -57,28 +57,63 @@ it("should render login page", () => {
   });
 });
 
-// it("should login with valid data", async () => {
-//   act(() => {
-//     renderLogin(isloggedIn, user, mockChangeLogin);
-//   });
+it("should login with valid data", async () => {
+  act(() => {
+    renderLogin(isloggedIn, user, mockChangeLogin);
+  });
 
-//   const name = document.querySelectorAll("input")[0];
-//   const email = document.querySelectorAll("input")[1];
-//   const password = document.querySelectorAll("input")[2];
-//   const submit = document.querySelector("input[type=submit]");
+  const name = document.querySelectorAll("input")[0];
+  const email = document.querySelectorAll("input")[1];
+  const password = document.querySelectorAll("input")[2];
+  const submit = document.querySelector("input[type=submit]");
+  console.log(submit)
 
-//   fireEvent.change(name, { target: { value: loginData.name } });
-//   fireEvent.change(email, { target: { value: loginData.email } });
-//   fireEvent.change(password, { target: { value: loginData.password } });
+  fireEvent.change(name, { target: { value: loginData.name } });
+  fireEvent.change(email, { target: { value: loginData.email } });
+  fireEvent.change(password, { target: { value: loginData.password } });
 
-//   expect(name.value).toBe(loginData.name);
-//   expect(email.value).toBe(loginData.email);
-//   expect(password.value).toBe(loginData.password);
+  expect(name.value).toBe(loginData.name);
+  expect(email.value).toBe(loginData.email);
+  expect(password.value).toBe(loginData.password);
 
-//   act(() => {
-//     submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-//   });
+  act(() => {
+    submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
 
-//   const loginEvidence = document.querySelector("h3").innerHTML;
-//   expect(loginEvidence).toBe("Choose a URL");
-// });
+  setTimeout(() => {
+    console.log('This code runs after 2000 milliseconds (2 seconds).');
+    const logOutButton = document.querySelector("div.bar-0-2-8 > div > h2").innerHTML;
+    expect(logOutButton).toBe("Log out");
+  }, 2000);
+
+});
+
+it("should not login with invalid data", async () => {
+  act(() => {
+    renderLogin(isloggedIn, user, mockChangeLogin);
+  });
+
+  const name = document.querySelectorAll("input")[0];
+  const email = document.querySelectorAll("input")[1];
+  const password = document.querySelectorAll("input")[2];
+  const submit = document.querySelector("input[type=submit]");
+  console.log(submit)
+
+  fireEvent.change(name, { target: { value: badLoginData.name } });
+  fireEvent.change(email, { target: { value: badLoginData.email } });
+  fireEvent.change(password, { target: { value: badLoginData.password } });
+
+  expect(name.value).toBe(badLoginData.name);
+  expect(email.value).toBe(badLoginData.email);
+  expect(password.value).toBe(badLoginData.password);
+
+  act(() => {
+    submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+
+  setTimeout(() => {
+    const logInButton = document.querySelector("div.bar-0-2-8 > div > a:nth-child(1) > h2").innerHTML;
+    expect(logInButton).toBe("Login");
+  }, 2000);
+
+});

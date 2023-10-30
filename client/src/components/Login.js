@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
         flexDirection: 'column',
         height: '93vh',
         backgroundColor: '#E9EAEC',
-        backgroundImage: 'url(' + background + ')',
+        // backgroundImage: 'url(' + background + ')',
         backgroundSize: 'cover',
         '& > form': {
             display: 'flex',
@@ -108,7 +108,6 @@ const Login = (props) => {
             sessionStorage.setItem("isLoggedIn", true)
             setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
-            window.alert("Login Successful")
             redirect("/");
         }else{
             console.log("Error")

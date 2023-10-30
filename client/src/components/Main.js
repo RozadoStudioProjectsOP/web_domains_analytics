@@ -78,7 +78,7 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    backgroundImage: 'url(' + background + ')',
+    // backgroundImage: 'url(' + background + ')',
     backgroundSize: 'cover',
   },
   menu: {
@@ -193,7 +193,7 @@ const Main = (props) => {
         </div>
       </div>
 
-      <section className={classes.section}>
+      {/* <section className={classes.section}>
         <div>
           <div className={classes.videoDiv}>
             <video ref={videoRef3} width="100%" height="100%" autoplay loop muted>
@@ -233,7 +233,7 @@ const Main = (props) => {
             Get URL's classified into various predefined categories
           </h2>
         </div>
-      </section>
+      </section> */}
 
     </div>
   ) : (
