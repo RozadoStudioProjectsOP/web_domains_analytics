@@ -104,7 +104,7 @@ const Register = (props) => {
         })
         if (res.status === 201){
             console.log(`Register successful. Email: ${email}`)
-            window.alert("Register Successful")
+            //window.alert("Register Successful")
             changeLogin(true)
             setIsHome(true)
         }else{
