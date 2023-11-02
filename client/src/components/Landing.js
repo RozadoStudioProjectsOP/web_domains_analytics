@@ -268,7 +268,8 @@ const Landing = (props) => {
       if (res.status === 200) {
         changeLogin(false, null)
         sessionStorage.clear();       
-        alert("Logout successful");  
+        // alert("Logout successful");  
+        console.log("wfwef")
         setIsHome(true);
       }
     } catch (error) {

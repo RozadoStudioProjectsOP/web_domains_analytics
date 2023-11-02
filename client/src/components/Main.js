@@ -201,7 +201,7 @@ const Main = (props) => {
     const prepare = async () => {
       try {
         // Artificially delay for 3 seconds to simulate a slow loading
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       } catch (err) {
         console.log(err);
       } finally {
@@ -209,7 +209,7 @@ const Main = (props) => {
       }
     };
     prepare(); 
-  }, []);
+  }, [isLoggedIn]);
 
 
   return isLoggedIn === false ? (
