@@ -15,7 +15,7 @@ class MongoDBPipeline:
         'classification': {},
         'ner': {},
         'headers': [],
-        'expired': False
+        'expired': False,
         'llama2_sentiment': {},
         'llama2_posNeg': {},
     }
