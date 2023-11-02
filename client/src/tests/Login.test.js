@@ -16,16 +16,16 @@ const user = null;
 const changeLogin = jest.fn();
 
 const loginData = {
-  name: "test",
-  email: "test@mail.com",
+  name: "userTest",
+  email: "userTest@mail.com",
   password: "password",
-  repeatPass: "password"
 }
 
 const badLoginData = {
-  name: "testUser",
-  email: "test",
-  password: "P@ssw0rd"
+  name: "userTest2",
+  email: "userTest2@mail.com",
+  password: "password",
+  confirmPass: "different"
 }
 
 function renderRegister(isLoggedIn, currentUser, changeLogin) {
@@ -90,22 +90,24 @@ it("should register with valid data", async () => {
   fireEvent.change(name, { target: { value: loginData.name } });
   fireEvent.change(email, { target: { value: loginData.email } });
   fireEvent.change(password, { target: { value: loginData.password } });
-  fireEvent.change(repPassword, { target: { value: loginData.repeatPass } });
+  fireEvent.change(repPassword, { target: { value: loginData.password } });
 
   expect(name.value).toBe(loginData.name);
   expect(email.value).toBe(loginData.email);
   expect(password.value).toBe(loginData.password);
-  expect(repPassword.value).toBe(loginData.repeatPass);
+  expect(repPassword.value).toBe(loginData.password);
 
   act(() => {
     submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
 
+  await new Promise((r) => setTimeout(r, 2000));
+
   expect(changeLogin).toHaveBeenCalledTimes(1);
 
 });
 
-it("should not register with invalid data", async () => {
+it("should not register with different passwords", async () => {
   
   render(
     <LoginContext.Provider value={{ isloggedIn, user, changeLogin }}>
@@ -122,19 +124,21 @@ it("should not register with invalid data", async () => {
   const repPassword = document.querySelectorAll("input")[3];
   const submit = document.querySelector("input[type=submit]");
 
-  fireEvent.change(name, { target: { value: loginData.name } });
-  fireEvent.change(email, { target: { value: loginData.email } });
-  fireEvent.change(password, { target: { value: loginData.password } });
-  // fireEvent.change(repPassword, { target: { value: loginData.repeatPass } });
+  fireEvent.change(name, { target: { value: badLoginData.name } });
+  fireEvent.change(email, { target: { value: badLoginData.email } });
+  fireEvent.change(password, { target: { value: badLoginData.password } });
+  fireEvent.change(repPassword, { target: { value: badLoginData.confirmPass } });
 
-  expect(name.value).toBe(loginData.name);
-  expect(email.value).toBe(loginData.email);
-  expect(password.value).toBe(loginData.password);
-  expect(repPassword.value).toBe("");
+  expect(name.value).toBe(badLoginData.name);
+  expect(email.value).toBe(badLoginData.email);
+  expect(password.value).toBe(badLoginData.password);
+  expect(repPassword.value).toBe(badLoginData.confirmPass);
 
   act(() => {
     submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+
+  await new Promise((r) => setTimeout(r, 2000));
 
   expect(changeLogin).toHaveBeenCalledTimes(0);
 
@@ -147,37 +151,38 @@ it("should render login page", () => {
   });
 });
 
-// it("should login with valid data", async () => {
-//   act(() => {
-//     renderLogin(isloggedIn, user, mockChangeLogin);
-//   });
+it("should login with valid data", async () => {
+  render(
+    <LoginContext.Provider value={{ isloggedIn, user, changeLogin }}>
+      <Router>
+        <Login />
+      </Router>
+    </LoginContext.Provider>,
+    container
+  );
 
-//   const name = document.querySelectorAll("input")[0];
-//   const email = document.querySelectorAll("input")[1];
-//   const password = document.querySelectorAll("input")[2];
-//   const submit = document.querySelector("input[type=submit]");
+  const name = document.querySelectorAll("input")[0];
+  const email = document.querySelectorAll("input")[1];
+  const password = document.querySelectorAll("input")[2];
+  const submit = document.querySelector("input[type=submit]");
 
-//   fireEvent.change(name, { target: { value: loginData.name } });
-//   fireEvent.change(email, { target: { value: loginData.email } });
-//   fireEvent.change(password, { target: { value: loginData.password } });
+  fireEvent.change(name, { target: { value: loginData.name } });
+  fireEvent.change(email, { target: { value: loginData.email } });
+  fireEvent.change(password, { target: { value: loginData.password } });
 
-//   expect(name.value).toBe(loginData.name);
-//   expect(email.value).toBe(loginData.email);
-//   expect(password.value).toBe(loginData.password);
+  expect(name.value).toBe(loginData.name);
+  expect(email.value).toBe(loginData.email);
+  expect(password.value).toBe(loginData.password);
 
-//   act(() => {
-//     submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-//   });
+  act(() => {
+    submit.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
 
-//   let logOutButton;
+  await new Promise((r) => setTimeout(r, 2000));
 
-//   await new Promise((r) => setTimeout(r, 3000));
+  expect(changeLogin).toHaveBeenCalledTimes(1);
 
-//   logOutButton = document.querySelector("#root > div > div.bar-0-2-8 > div > h2").innerHTML;
-
-//   expect(logOutButton).toBe("Log out");
-
-// });
+});
 
 // it("should not login with invalid data", async () => {
 //   act(() => {

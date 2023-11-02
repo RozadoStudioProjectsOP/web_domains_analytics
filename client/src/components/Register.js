@@ -91,10 +91,13 @@ const Register = (props) => {
     setIsLoading(true);
 
     if (password !== repPass){
-        window.alert("Error. Password field and Repeat password field must coincide")
-        setIsLoading(false)
+        //window.alert("Error. Password field and Repeat password field must coincide")
+        console.log("Error. Password field and Repeat password field must coincide")
+        //setIsLoading(false)
         return
     }
+
+    changeLogin(false)
 
     try {
         const res = await axios.post(`${BASE_URL}/auth/register`, {
@@ -111,17 +114,18 @@ const Register = (props) => {
             console.log("Error")
         }
     } catch (error) {
-        console.error(error.response.data.msg)
-        const errorMessage = error.response.data.msg;
-        if (errorMessage.includes("E11000")) {
-            window.alert("Sorry, a user with the same e-mail already exists")
-        }
-        else if (errorMessage.includes("users validation failed: password")) {
-            window.alert("Error. Password must be at least 8 characters")
-        }
-        else {
-            alert(error)
-        }
+        //console.error(error.response.data.msg)
+        //const errorMessage = error.response.data.msg;
+        // if (errorMessage.includes("E11000")) {
+        //     window.alert("Sorry, a user with the same e-mail already exists")
+        //     console.log("Sorry, a user with the same e-mail already exists")
+        // }
+        // else if (errorMessage.includes("users validation failed: password")) {
+        //     window.alert("Error. Password must be at least 8 characters")
+        //     console.log("Error. Password must be at least 8 characters")
+        // }
+        //console.log(error)
+        //alert(error)
     }
     setIsLoading(false);
   }

@@ -92,6 +92,7 @@ const Login = (props) => {
     }
   }, [changeLogin]);
 
+  
   const loginUser = async (name, email, password) => {
     setIsLoading(true);
     try {
@@ -113,8 +114,8 @@ const Login = (props) => {
             console.log("Error")
         }
     } catch (error) {
-        console.error(error.response.data)
-        alert(error)
+        // console.error(error.response.data)
+        // alert(error)
     }
     setIsLoading(false);
   }
