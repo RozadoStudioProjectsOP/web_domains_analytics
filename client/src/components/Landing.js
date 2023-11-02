@@ -22,6 +22,7 @@ const Landing = (props) => {
   const { changeLogin } = useContext(LoginContext);
   const { screenWidth } = useContext(WidthContext);
   const [limit, setLimit] = useState(1);
+  const [ssh, setSSH] = useState(false);
   const [url, setUrl] = useState({ words: "" });
   const [wordNum, setWordNumb] = useState({ total: 0, frequency: 0 });
   const [wordFound, setWordFound] = useState();
@@ -110,7 +111,8 @@ const Landing = (props) => {
     await axios.post(`${BASE_URL}/scrapy/scrape`, {
       url: urlInput,
       LIMIT: limit,
-      spider: 'analytics'
+      spider: 'analytics',
+      target: ssh,
     });
   };
 
@@ -246,6 +248,26 @@ const Landing = (props) => {
           name="crawlLength"
         />
         <label for="manyPages">Deep Search</label>
+      </div>
+      <div className="searchSettings">
+        <h4>SSH</h4>
+        <input
+          disabled={isScraping}
+          onClick={() => setSSH(false)}
+          checked={ssh === false ? true : false}
+          type="radio"
+          id="noSSH"
+          name="ssh"
+        />
+        <label for="noSSH">No</label>
+        <input
+          disabled={isScraping}
+          onClick={() => setSSH(true)}
+          type="radio"
+          id="yesSSH"
+          name="ssh"
+        />
+        <label for="yesSSH">Yes</label>
       </div>
 
       <div className={'buttonsDiv'}> 
