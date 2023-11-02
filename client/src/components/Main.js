@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'reactstrap'
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
-import { useContext, useRef, useEffect } from 'react';
+import { useContext, useRef, useEffect, useState } from 'react';
 import { LoginContext } from '../contexts/login';
 import { WidthContext } from '../contexts/screenWidth';
 import Landing from './Landing';
@@ -10,7 +10,9 @@ import NavBar from './NavBar';
 import background from '../media/andyone--WW8jBak7bo-unsplash.jpg'
 import sentimentVideo from '../media/Recording_sentiment.mp4'
 import classificationVideo from '../media/Recording_classification.mp4'
+import { Dna } from 'react-loader-spinner';
 import histogramVideo from '../media/Recording_histogram.mp4'
+import FontFaceObserver from 'fontfaceobserver'
 
 const useStyles = createUseStyles({
   page: {
@@ -162,7 +164,10 @@ const Main = (props) => {
   const videoRef = useRef(null);
   const videoRef2 = useRef(null);
   const videoRef3 = useRef(null);
-
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [fontLoaded, setFontLoaded] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  
   useEffect(() => {
     if (videoRef.current != null && videoRef2.current != null && videoRef3.current != null) {
       // When the component mounts, play the video when it's ready
@@ -176,10 +181,41 @@ const Main = (props) => {
         videoRef3.current.play();
       });
     }
-  }, [videoRef.current, isLoggedIn]); // eslint-disable-line
+  }, [videoRef.current, isLoggedIn, imageLoaded, fontLoaded, isReady]); // eslint-disable-line
+
+  useEffect(() => {
+    // Load the image
+    const image = new Image();
+    image.src = background;
+
+    image.onload = () => {
+      setImageLoaded(true);
+    };
+
+    // Check if the font is loaded
+    const font = new FontFaceObserver('DO Futuristic');
+    font.load().then(() => {
+      setFontLoaded(true);
+    });
+
+    const prepare = async () => {
+      try {
+        // Artificially delay for 3 seconds to simulate a slow loading
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsReady(true);
+      }
+    };
+    prepare(); 
+  }, []);
+
 
   return isLoggedIn === false ? (
     <div className={classes.page}>
+      {imageLoaded && fontLoaded && isReady ? (
+      <>
       <NavBar></NavBar>
       <div className={classes.main}>
         <div className={classes.menu}>
@@ -234,6 +270,17 @@ const Main = (props) => {
           </h2>
         </div>
       </section>
+      </>
+      ) : (
+      <div style={{display: 'flex', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center'}}>
+      <Dna visible={true}
+        height="300"
+        width="300"
+        ariaLabel="dna-loading"
+        wrapperStyle={{}}
+        wrapperClass="dna-wrapper"/>
+      </div>
+      )}
 
     </div>
   ) : (
