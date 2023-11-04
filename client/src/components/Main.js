@@ -190,7 +190,10 @@ const Main = (props) => {
 
     image.onload = () => {
       setImageLoaded(true);
+      console.log("image loaded")
     };
+
+    if (image.complete) image.onload();
 
     // Check if the font is loaded
     const font = new FontFaceObserver('DO Futuristic');
