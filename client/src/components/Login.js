@@ -108,7 +108,7 @@ const Login = (props) => {
             sessionStorage.setItem("isLoggedIn", true)
             setIsHome(true)
             console.log(`Login successful. Email: ${email}`)
-            window.alert("Login Successful")
+            //window.alert("Login Successful")
             redirect("/");
         }else{
             console.log("Error")
