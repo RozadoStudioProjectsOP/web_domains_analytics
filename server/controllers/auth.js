@@ -9,7 +9,7 @@ const register = async (req, res) => {
     try {
         if (req.body.role === "admin") {
             return res.status(401).json({
-              msg: "Not authorized to register as an admin",
+                msg: "Not authorized to register as an admin",
             });
         }
         const salt = await bcryptjs.genSalt(10)
