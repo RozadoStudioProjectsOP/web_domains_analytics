@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "mocha --timeout 10000 tests/setup.test.js tests/auth.test.js tests/scrapy.test.js --exit" 
+    "test": "npx c8 mocha --timeout 10000 test/setup.test.js test/auth.test.js test/scrapy.test.js --exit",
+    "testReport": "npx c8"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
+    "c8": "^8.0.1",
     "chai": "^4.3.10",
     "chai-http": "^4.4.0",
     "cookie-parser": "^1.4.6",

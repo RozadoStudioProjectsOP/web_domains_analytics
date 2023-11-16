@@ -31,6 +31,14 @@ const wrongPass = {
     password: 'wrongPass'
 }
 
+const emptyField = {
+    username: 'empty'
+}
+
+const emptyFieldLogin = {
+    username: 'John Doe',
+}
+
 /**
  * This file runs all tests related with authentication
  */
@@ -43,6 +51,16 @@ it('should register user with valid input', (done) => {
             chai.expect(res.status).to.be.equal(201)
             chai.expect(res.body).to.be.a('object')
             chai.expect(res.body.msg).to.be.equal('Registered')
+            done()
+        })
+})
+
+it('should fail register user with empty field', (done) => {
+    agent
+        .post('/auth/register')
+        .send(emptyField)
+        .end((error, res) => {
+            chai.expect(res.status).to.be.equal(500)
             done()
         })
 })
@@ -61,6 +79,17 @@ it('should fail to register user with admin role', (done) => {
         })
 }
 )
+
+it('should fail login with empty field', (done) => {
+    agent
+        .post('/auth/login')
+        .send(emptyFieldLogin)
+        .end((error, res) => {
+            chai.expect(res.status).to.be.equal(500)
+            done()
+        })
+})
+
 it('should fail login with invalid password', (done) => {
     agent
         .post('/auth/login')

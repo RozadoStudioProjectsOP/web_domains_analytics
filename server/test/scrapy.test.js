@@ -6,7 +6,7 @@ chai.use(chaiHttp)
 
 const search = {
     domain: 'https://quotes.toscrape.com/',
-    limit: 1
+    // limit: 1
 }
 
 it('should get scraped data', (done) => {
